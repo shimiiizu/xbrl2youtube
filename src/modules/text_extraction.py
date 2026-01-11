@@ -48,9 +48,26 @@ def extract_text_from_xbrl(file_path: str) -> str:
     return result
 
 
+def save_text(text: str, output_path: str) -> None:
+    """
+    抽出したテキストをファイルに保存する
+
+    Args:
+        text: 保存するテキスト
+        output_path: 出力ファイルのパス
+    """
+    print(f"[INFO] Saving text to: {output_path}")
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(text)
+
+    print(f"[INFO] Text saved successfully")
+
+
 if __name__ == "__main__":
     # デバッグ用
     test_file = "../../data/qualitative.htm"
+    output_file = "../../data/processed/extracted_text.txt"
 
     print("=" * 50)
     print("テキスト抽出テスト開始")
@@ -65,3 +82,7 @@ if __name__ == "__main__":
     print("\n" + "=" * 50)
     print(f"抽出文字数: {len(extracted_text)} 文字")
     print("=" * 50)
+
+    # テキストを保存
+    print()
+    save_text(extracted_text, output_file)
