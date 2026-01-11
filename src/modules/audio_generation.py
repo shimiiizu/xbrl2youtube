@@ -1,7 +1,9 @@
 # src/modules/audio_generation.py
 
 from gtts import gTTS
-from pydub import AudioSegment
+import librosa
+import soundfile as sf
+import os
 
 
 def generate_audio(text_path: str, output_path: str, speed: float = 1.3) -> None:
@@ -31,12 +33,11 @@ def generate_audio(text_path: str, output_path: str, speed: float = 1.3) -> None
     tts.save(temp_path)
 
     # 速度調整
-    audio = AudioSegment.from_mp3(temp_path)
-    audio_fast = audio.speedup(playback_speed=speed)
-    audio_fast.export(output_path, format="mp3")
+    y, sr = librosa.load(temp_path)
+    y_fast = librosa.effects.time_stretch(y, rate=speed)
+    sf.write(output_path, y_fast, sr)
 
     # 一時ファイル削除
-    import os
     os.remove(temp_path)
 
     print(f"[INFO] Audio saved to: {output_path}")
