@@ -39,7 +39,7 @@ def extract_text_from_xbrl(file_path: str) -> str:
             break
 
         # セクション内のテキストを収集
-        if in_target_section:
+        if in_target_section and len(text) > 10:
             texts.append(text)
 
     result = '\n\n'.join(texts)
