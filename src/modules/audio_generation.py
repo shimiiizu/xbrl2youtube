@@ -1,15 +1,17 @@
 # src/modules/audio_generation.py
 
 from gtts import gTTS
+from pydub import AudioSegment
 
 
-def generate_audio(text_path: str, output_path: str) -> None:
+def generate_audio(text_path: str, output_path: str, speed: float = 1.3) -> None:
     """
     テキストファイルから音声ファイル（MP3）を生成する
 
     Args:
         text_path: 読み上げるテキストファイルのパス
         output_path: 出力する音声ファイルのパス（MP3）
+        speed: 再生速度（1.0が通常速度、1.3が1.3倍速）
     """
     print(f"[INFO] Reading text from: {text_path}")
 
@@ -19,12 +21,23 @@ def generate_audio(text_path: str, output_path: str) -> None:
 
     print(f"[INFO] Generating audio from text...")
     print(f"[INFO] Text length: {len(text)} characters")
+    print(f"[INFO] Speed: {speed}x")
 
     # 日本語でTTS生成
     tts = gTTS(text=text, lang='ja')
 
-    # MP3として保存
-    tts.save(output_path)
+    # 一時ファイルとして保存
+    temp_path = output_path.replace('.mp3', '_temp.mp3')
+    tts.save(temp_path)
+
+    # 速度調整
+    audio = AudioSegment.from_mp3(temp_path)
+    audio_fast = audio.speedup(playback_speed=speed)
+    audio_fast.export(output_path, format="mp3")
+
+    # 一時ファイル削除
+    import os
+    os.remove(temp_path)
 
     print(f"[INFO] Audio saved to: {output_path}")
 
@@ -38,7 +51,7 @@ if __name__ == "__main__":
     print("音声生成テスト開始")
     print("=" * 50)
 
-    generate_audio(test_text_file, test_output)
+    generate_audio(test_text_file, test_output, speed=1.3)
 
     print("\n" + "=" * 50)
     print("音声生成完了")
