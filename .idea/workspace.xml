@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="とりあえず、テキスト抽出までできるようになった。">
-      <change beforePath="$PROJECT_DIR$/src/modules/audio_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/audio_generation.py" afterDir="false" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768110067017</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加">
+      <option name="closed" value="true" />
+      <created>1768110830387</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1768110830387</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,7 +137,8 @@
     <MESSAGE value="ディレクトリ構成の作成&#10;ファイルの準備" />
     <MESSAGE value="各モジュール＆mainスクリプトの下書き" />
     <MESSAGE value="とりあえず、テキスト抽出までできるようになった。" />
-    <option name="LAST_COMMIT_MESSAGE" value="とりあえず、テキスト抽出までできるようになった。" />
+    <MESSAGE value="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

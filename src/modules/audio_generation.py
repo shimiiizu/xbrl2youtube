@@ -3,14 +3,20 @@
 from gtts import gTTS
 
 
-def generate_audio(text: str, output_path: str) -> None:
+def generate_audio(text_path: str, output_path: str) -> None:
     """
-    テキストから音声ファイル（MP3）を生成する
+    テキストファイルから音声ファイル（MP3）を生成する
 
     Args:
-        text: 読み上げるテキスト
+        text_path: 読み上げるテキストファイルのパス
         output_path: 出力する音声ファイルのパス（MP3）
     """
+    print(f"[INFO] Reading text from: {text_path}")
+
+    # テキストファイルを読み込む
+    with open(text_path, 'r', encoding='utf-8') as f:
+        text = f.read()
+
     print(f"[INFO] Generating audio from text...")
     print(f"[INFO] Text length: {len(text)} characters")
 
@@ -25,14 +31,14 @@ def generate_audio(text: str, output_path: str) -> None:
 
 if __name__ == "__main__":
     # デバッグ用
-    test_text = "これは音声生成のテストです。決算短信の内容を読み上げます。"
-    test_output = "../../data/processed/test_output.mp3"
+    test_text_file = "../../data/processed/extracted_text.txt"
+    test_output = "../../data/processed/output.mp3"
 
     print("=" * 50)
     print("音声生成テスト開始")
     print("=" * 50)
 
-    generate_audio(test_text, test_output)
+    generate_audio(test_text_file, test_output)
 
     print("\n" + "=" * 50)
     print("音声生成完了")
