@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 def extract_text_from_xbrl(file_path: str) -> str:
     """
-    HTMLファイルから「経営成績に関する説明」セクションのテキストを抽出する
+    HTMLファイルから「当中間期の経営成績の概況」部分のテキストを抽出する
 
     Args:
         file_path: HTMLファイルのパス
@@ -29,8 +29,8 @@ def extract_text_from_xbrl(file_path: str) -> str:
         if not text or text == '　':
             continue
 
-        # 「経営成績に関する説明」セクションの開始
-        if "経営成績に関する説明" in text:
+        # 「当中間期の経営成績の概況」セクションの開始
+        if "経営成績の概況" in text:
             in_target_section = True
             continue
 
@@ -39,7 +39,7 @@ def extract_text_from_xbrl(file_path: str) -> str:
             break
 
         # セクション内のテキストを収集
-        if in_target_section and len(text) > 10:
+        if in_target_section:
             texts.append(text)
 
     result = '\n\n'.join(texts)
