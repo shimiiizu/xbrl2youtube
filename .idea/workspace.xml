@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="動画の生成に成功">
-      <change beforePath="$PROJECT_DIR$/data/qualitative_cut.htm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/youtube_upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/youtube_upload.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,7 @@
     "Python.main.executor": "Run",
     "Python.text_extraction.executor": "Run",
     "Python.video_generation.executor": "Run",
+    "Python.youtube_upload.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -157,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768182189004</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した">
+      <option name="closed" value="true" />
+      <created>1768182838780</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1768182838780</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -194,7 +203,8 @@
     <MESSAGE value="テキストの読み上げスピードを設定できるように変更" />
     <MESSAGE value="生成した音声ファイルを元に動画ファイルを作成する機能を追加" />
     <MESSAGE value="動画の生成に成功" />
-    <option name="LAST_COMMIT_MESSAGE" value="動画の生成に成功" />
+    <MESSAGE value="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した" />
+    <option name="LAST_COMMIT_MESSAGE" value="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
