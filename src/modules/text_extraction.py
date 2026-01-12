@@ -29,8 +29,8 @@ def extract_text_from_xbrl(file_path: str) -> str:
         if not text or text == '　':
             continue
 
-        # 「当中間期の経営成績の概況」セクションの開始
-        if "経営成績の概況" in text:
+        # 「経営成績の概況」または「経営成績等の概況」セクションの開始
+        if "経営成績の概況" in text or "経営成績等の概況" in text:
             in_target_section = True
             continue
 
