@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="テキストの読み上げスピードを設定できるように変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="生成した音声ファイルを元に動画ファイルを作成する機能を追加">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/audio_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/audio_generation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,19 +39,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.audio_generation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.text_extraction.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Shimizu/PycharmProjects/xbrl2youtube/data&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.audio_generation.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.text_extraction.executor": "Run",
+    "Python.video_generation.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/Shimizu/PycharmProjects/xbrl2youtube/data"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data" />
@@ -141,7 +140,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768174296013</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="生成した音声ファイルを元に動画ファイルを作成する機能を追加">
+      <option name="closed" value="true" />
+      <created>1768175868120</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1768175868120</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,7 +183,8 @@
     <MESSAGE value="経営成績の概況だけテキスト抽出する仕様に変更した" />
     <MESSAGE value="10文字以上のテキストのみ抽出する仕様に変更" />
     <MESSAGE value="テキストの読み上げスピードを設定できるように変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="テキストの読み上げスピードを設定できるように変更" />
+    <MESSAGE value="生成した音声ファイルを元に動画ファイルを作成する機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="生成した音声ファイルを元に動画ファイルを作成する機能を追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

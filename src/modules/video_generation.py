@@ -1,6 +1,6 @@
 # src/modules/video_generation.py
 
-from moviepy.editor import AudioFileClip, ColorClip
+from moviepy import AudioFileClip, ColorClip
 
 
 def generate_video(audio_path: str, output_path: str) -> None:
@@ -23,7 +23,7 @@ def generate_video(audio_path: str, output_path: str) -> None:
     video = ColorClip(size=(1280, 720), color=(0, 0, 0), duration=audio.duration)
 
     # 音声を動画に追加
-    video = video.set_audio(audio)
+    video = video.with_audio(audio)
 
     # MP4として出力
     video.write_videofile(
