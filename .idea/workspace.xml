@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="youtubeに自動Uploadすることに成功">
-      <change afterPath="$PROJECT_DIR$/src/modules/xbrl_downloader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/text_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/text_extraction.py" afterDir="false" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="xbrl_downloader.pyを取りあえず作成">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +48,36 @@
     "Python.main.executor": "Run",
     "Python.text_extraction.executor": "Run",
     "Python.video_generation.executor": "Run",
+    "Python.xbrl_downloader.executor": "Run",
+    "Python.xbrl_downloader_test.executor": "Run",
+    "Python.xbrl_downloader_test10.executor": "Run",
+    "Python.xbrl_downloader_test11.executor": "Run",
+    "Python.xbrl_downloader_test12.executor": "Run",
+    "Python.xbrl_downloader_test13.executor": "Run",
+    "Python.xbrl_downloader_test14.executor": "Run",
+    "Python.xbrl_downloader_test15.executor": "Run",
+    "Python.xbrl_downloader_test16.executor": "Run",
+    "Python.xbrl_downloader_test17.executor": "Run",
+    "Python.xbrl_downloader_test18.executor": "Run",
+    "Python.xbrl_downloader_test19.executor": "Run",
+    "Python.xbrl_downloader_test2.executor": "Run",
+    "Python.xbrl_downloader_test20.executor": "Run",
+    "Python.xbrl_downloader_test21.executor": "Run",
+    "Python.xbrl_downloader_test22.executor": "Run",
+    "Python.xbrl_downloader_test24.executor": "Run",
+    "Python.xbrl_downloader_test25.executor": "Run",
+    "Python.xbrl_downloader_test26.executor": "Run",
+    "Python.xbrl_downloader_test27.executor": "Run",
+    "Python.xbrl_downloader_test29.executor": "Run",
+    "Python.xbrl_downloader_test3.executor": "Run",
+    "Python.xbrl_downloader_test31.executor": "Run",
+    "Python.xbrl_downloader_test32.executor": "Run",
+    "Python.xbrl_downloader_test4.executor": "Run",
+    "Python.xbrl_downloader_test5.executor": "Run",
+    "Python.xbrl_downloader_test6.executor": "Run",
+    "Python.xbrl_downloader_test7.executor": "Run",
+    "Python.xbrl_downloader_test8.executor": "Run",
+    "Python.xbrl_downloader_test9.executor": "Run",
     "Python.youtube_upload.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -62,6 +93,132 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
+  </component>
+  <component name="RunManager" selected="Python.xbrl_downloader_test32">
+    <configuration name="xbrl_downloader_test26" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/xbrl_downloader_test26.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="xbrl_downloader_test27" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/xbrl_downloader_test27.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="xbrl_downloader_test29" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/xbrl_downloader_test29.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="xbrl_downloader_test31" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/xbrl_downloader_test31.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="xbrl_downloader_test32" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/xbrl_downloader_test32.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.xbrl_downloader_test32" />
+        <item itemvalue="Python.xbrl_downloader_test31" />
+        <item itemvalue="Python.xbrl_downloader_test29" />
+        <item itemvalue="Python.xbrl_downloader_test27" />
+        <item itemvalue="Python.xbrl_downloader_test26" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -174,7 +331,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768194755634</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="xbrl_downloader.pyを取りあえず作成">
+      <option name="closed" value="true" />
+      <created>1768195849420</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1768195849420</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -213,7 +378,8 @@
     <MESSAGE value="動画の生成に成功" />
     <MESSAGE value="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した" />
     <MESSAGE value="youtubeに自動Uploadすることに成功" />
-    <option name="LAST_COMMIT_MESSAGE" value="youtubeに自動Uploadすることに成功" />
+    <MESSAGE value="xbrl_downloader.pyを取りあえず作成" />
+    <option name="LAST_COMMIT_MESSAGE" value="xbrl_downloader.pyを取りあえず作成" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

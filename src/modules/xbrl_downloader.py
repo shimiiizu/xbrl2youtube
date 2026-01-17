@@ -1,144 +1,191 @@
-# src/modules/xbrl_downloader.py
+"""
+TDnet RSS → 企業名取得 → JPX企業名検索 → XBRLダウンロード
+（デバッグ出力・堅牢化済み）
+"""
+
+import requests
+import xml.etree.ElementTree as ET
+from pathlib import Path
+import time
+import re
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-import zipfile
-import os
-from pathlib import Path
+from selenium.common.exceptions import TimeoutException
+
+from tqdm import tqdm
 
 
-def download_xbrl(date: str) -> None:
-    """
-    指定日の決算短信のqualitative.htmファイルをダウンロード
+class TdnetXBRLDownloader:
+    def __init__(self, download_dir="downloads"):
+        self.rss_url = "https://webapi.yanoshin.jp/webapi/tdnet/list/recent.rss"
+        self.jpx_url = "https://www2.jpx.co.jp/tseHpFront/JJK010010Action.do?Show=Show"
+        self.download_dir = Path(download_dir)
+        self.download_dir.mkdir(exist_ok=True)
 
-    Args:
-        date: 公開日（YYYY-MM-DD形式、例: "2026-01-12"）
-    """
-    print(f"[INFO] Downloading XBRL files for date: {date}")
+    # -------------------------------------------------
+    def fetch_rss(self):
+        print("=== RSS取得開始 ===")
+        r = requests.get(self.rss_url, timeout=30)
+        r.raise_for_status()
+        print(f"RSS取得成功: {len(r.content)} bytes")
+        return r.content
 
-    # ダウンロード先を設定
-    download_dir = os.path.abspath("../../downloads")
-    os.makedirs(download_dir, exist_ok=True)
+    # -------------------------------------------------
+    def parse_rss(self, rss_content):
+        print("=== RSS解析開始 ===")
+        items = []
+        root = ET.fromstring(rss_content)
 
-    # Chromeオプション設定
-    options = webdriver.ChromeOptions()
-    prefs = {
-        "download.default_directory": download_dir,
-        "download.prompt_for_download": False,
-    }
-    options.add_experimental_option("prefs", prefs)
-
-    # ブラウザ起動
-    driver = webdriver.Chrome(options=options)
-
-    try:
-        # Tdnetにアクセス
-        driver.get("https://www.release.tdnet.info/inbs/I_main_00.html")
-
-        # 日付入力（例: 2026/01/12形式に変換）
-        date_formatted = date.replace("-", "/")
-
-        # 日付フィールドに入力（実際のフィールド名は要確認）
-        # ※Tdnetの実際のHTML構造に合わせて調整が必要
-        date_input = driver.find_element(By.NAME, "date_input_field_name")  # 要確認
-        date_input.clear()
-        date_input.send_keys(date_formatted)
-
-        # 検索ボタンをクリック
-        search_button = driver.find_element(By.ID, "search_button_id")  # 要確認
-        search_button.click()
-
-        time.sleep(2)
-
-        # XBRLボタンを全て取得
-        xbrl_buttons = driver.find_elements(By.XPATH, "//button[contains(text(), 'XBRL')]")
-
-        if not xbrl_buttons:
-            print("[WARNING] No XBRL files found for this date")
-            return
-
-        print(f"[INFO] Found {len(xbrl_buttons)} XBRL files")
-
-        for i, button in enumerate(xbrl_buttons):
-            try:
-                # 企業コードと会社名を取得（同じ行から）
-                row = button.find_element(By.XPATH, "./ancestor::tr")
-                code = row.find_element(By.XPATH, ".//td[2]").text  # コード列
-                company = row.find_element(By.XPATH, ".//td[3]").text  # 会社名列
-
-                print(f"[INFO] Downloading: {code} - {company}")
-
-                # XBRLボタンをクリック
-                button.click()
-                time.sleep(3)  # ダウンロード待機
-
-                # ダウンロードされたzipファイルを処理
-                latest_zip = get_latest_file(download_dir, ".zip")
-                if latest_zip:
-                    extract_qualitative(latest_zip, code, company)
-
-            except Exception as e:
-                print(f"[WARNING] Failed to download XBRL for item {i + 1}: {e}")
+        for item in root.findall(".//item"):
+            title = item.findtext("title", "").strip()
+            if "決算短信" not in title:
                 continue
 
-        print("[INFO] Download completed")
+            m = re.match(r"^([^:：]+)[：:]", title)
+            if not m:
+                print(f"[SKIP] タイトル解析失敗: {title}")
+                continue
 
-    finally:
-        driver.quit()
+            company = re.sub(r"\b\d{4}\b", "", m.group(1)).strip()
+            print(f"[RSS] 企業名抽出: {company}")
+
+            items.append({"company": company, "title": title})
+
+        print(f"RSS解析完了: {len(items)} 社")
+        return items
+
+    # -------------------------------------------------
+    def download_xbrl_by_company(self, company, max_files=3):
+        print(f"\n=== JPX検索開始: {company} ===")
+
+        chrome_options = webdriver.ChromeOptions()
+        prefs = {
+            "download.default_directory": str(self.download_dir.resolve()),
+            "download.prompt_for_download": False,
+        }
+        chrome_options.add_experimental_option("prefs", prefs)
+
+        driver = webdriver.Chrome(options=chrome_options)
+        wait = WebDriverWait(driver, 10)
+
+        try:
+            print("[JPX] トップページアクセス")
+            driver.get(self.jpx_url)
+
+            # ★ 正しい入力欄：銘柄名（会社名）
+            input_box = wait.until(
+                EC.presence_of_element_located((By.NAME, "mgrMiTxtBx"))
+            )
+            input_box.clear()
+            input_box.send_keys(company)
+            print(f"[JPX] 銘柄名入力: {company}")
+
+            driver.find_element(By.NAME, "searchButton").click()
+            print("[JPX] 検索ボタンクリック")
+            time.sleep(2)
+
+            try:
+                detail = wait.until(
+                    EC.presence_of_element_located((By.NAME, "detail_button"))
+                )
+                print("[JPX] detail_button 見つかりました")
+                detail.click()
+            except TimeoutException:
+                print("[NG] detail_button が見つかりません（検索ヒットなし）")
+                return 0
+
+            time.sleep(2)
+
+            print("[JPX] 有価証券報告書タブへ切替")
+            driver.execute_script("changeTab('2');")
+            time.sleep(2)
+
+            try:
+                kaiji = wait.until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH,
+                         "/html/body/div/form/div/div[3]/div/table[4]/tbody/tr/th/input")
+                    )
+                )
+                kaiji.click()
+                print("[JPX] 開示情報 展開")
+            except TimeoutException:
+                print("[NG] 開示ボタンが見つかりません")
+                return 0
+
+            time.sleep(2)
+
+            elements = driver.find_elements(By.XPATH, '//img[@alt="XBRL"]')
+            print(f"[JPX] XBRLアイコン検出数: {len(elements)}")
+
+            if not elements:
+                print("[INFO] XBRLなし")
+                return 0
+
+            clicked = 0
+            for idx, e in enumerate(elements, 1):
+                try:
+                    if not e.is_displayed():
+                        print(f"[SKIP] {idx}: 非表示")
+                        continue
+
+                    driver.execute_script(
+                        "arguments[0].scrollIntoView({block:'center'});", e
+                    )
+                    time.sleep(0.5)
+
+                    e.click()
+                    print(f"[OK] {idx}: XBRLクリック")
+                    time.sleep(2)
+
+                    clicked += 1
+                    if clicked >= max_files:
+                        break
+
+                except Exception as ex:
+                    print(f"[NG] {idx}: {type(ex).__name__}")
+                    continue
+
+            return clicked
+
+        finally:
+            print("[JPX] ブラウザ終了")
+            driver.quit()
+
+    # -------------------------------------------------
+    def run(self, limit=10, max_files_per_company=3):
+        rss = self.fetch_rss()
+        items = self.parse_rss(rss)
+
+        seen = set()
+        unique = []
+        for i in items:
+            if i["company"] not in seen:
+                seen.add(i["company"])
+                unique.append(i)
+
+        unique = unique[:limit]
+        print(f"\n=== 処理対象企業数: {len(unique)} ===")
+
+        total = 0
+        for idx, item in enumerate(unique, 1):
+            print(f"\n[{idx}/{len(unique)}] {item['company']}")
+            total += self.download_xbrl_by_company(
+                item["company"], max_files_per_company
+            )
+            time.sleep(3)
+
+        print("\n=== 処理完了 ===")
+        print(f"総ダウンロード数: {total}")
+        print(f"保存先: {self.download_dir.resolve()}")
 
 
-def get_latest_file(directory: str, extension: str) -> str:
-    """最新のファイルを取得"""
-    files = Path(directory).glob(f"*{extension}")
-    files = sorted(files, key=os.path.getmtime, reverse=True)
-    return str(files[0]) if files else None
-
-
-def extract_qualitative(zip_path: str, code: str, company: str) -> None:
-    """
-    zipファイルからqualitative.htmを抽出
-
-    Args:
-        zip_path: zipファイルのパス
-        code: 企業コード
-        company: 会社名
-    """
-    try:
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            # qualitative.htmを探す
-            for file in zip_ref.namelist():
-                if 'qualitative.htm' in file.lower():
-                    # 抽出
-                    content = zip_ref.read(file)
-
-                    # data/フォルダに保存
-                    output_path = f"../../data/qualitative_{code}_{company}.htm"
-                    with open(output_path, 'wb') as f:
-                        f.write(content)
-
-                    print(f"[INFO] Saved: {output_path}")
-                    break
-
-        # zipファイルを削除
-        os.remove(zip_path)
-
-    except Exception as e:
-        print(f"[WARNING] Failed to extract qualitative.htm: {e}")
-
-
+# -------------------------------------------------
 if __name__ == "__main__":
-    # デバッグ用
-    test_date = "2026-01-12"
-
-    print("=" * 50)
-    print("XBRL ダウンロードテスト開始")
-    print("=" * 50)
-
-    download_xbrl(test_date)
-
-    print("\n" + "=" * 50)
-    print("ダウンロード完了")
-    print("=" * 50)
+    TdnetXBRLDownloader("tdnet_xbrl").run(
+        limit=10,
+        max_files_per_company=3
+    )

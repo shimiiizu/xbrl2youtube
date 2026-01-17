@@ -1,0 +1,12 @@
+beautifulsoup4
+lxml
+gtts
+librosa
+soundfile
+moviepy
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+selenium
+webdriver-manager
