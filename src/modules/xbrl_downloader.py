@@ -22,8 +22,8 @@ class TdnetXBRLDownloader:
     def __init__(self, download_dir="downloads"):
         self.rss_url = "https://webapi.yanoshin.jp/webapi/tdnet/list/recent.rss"
         self.jpx_url = "https://www2.jpx.co.jp/tseHpFront/JJK010010Action.do?Show=Show"
-        self.download_dir = Path(download_dir)
-        self.download_dir.mkdir(exist_ok=True)
+        self.download_dir = Path(download_dir) / "zip"  # zipサブフォルダを追加
+        self.download_dir.mkdir(parents=True, exist_ok=True)  # parents=True で親も作成
 
     # -------------------------------------------------
     def fetch_rss(self):
