@@ -124,3 +124,4 @@ if __name__ == "__main__":
     print("\n..." if len(extracted_text) > 500 else "")
     print("\n" + "=" * 50)
     print(f"抽出文字数: {len(extracted_text)} 文字")
+    save_text(extracted_text, str(output_file))
