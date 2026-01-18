@@ -49,9 +49,17 @@ class QualitativeExtractor:
 
                     # 見つかったqualitative.htmを抽出
                     for qual_file in qualitative_files:
-                        # 元のZIPファイル名をベースにした新しいファイル名を作成
-                        base_name = zip_path.stem  # .zipを除いたファイル名
-                        output_filename = f"{base_name}_qualitative.htm"
+                        # 元のZIPファイル名から企業名を抽出
+                        # ファイル名形式: {企業名}_{元のファイル名}.zip
+                        zip_base_name = zip_path.stem
+                        # 最初のアンダースコアまでを企業名とする
+                        parts = zip_base_name.split('_', 1)
+                        if len(parts) >= 1:
+                            company_name = parts[0]
+                        else:
+                            company_name = zip_base_name
+
+                        output_filename = f"{company_name}_qualitative.htm"
                         output_path = self.output_dir / output_filename
 
                         # ファイルを抽出
