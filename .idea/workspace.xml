@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="インポートパスの誤りを修正">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/text_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/text_extraction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +95,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.text_extraction">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -142,6 +142,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="text_extraction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/modules" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/text_extraction.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="xbrl_downloader" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -157,29 +180,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/xbrl_downloader.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="xbrl_downloader_test31" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="xbrl2youtube" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/xbrl_downloader_test31.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -213,11 +213,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.text_extraction" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.qualitative_extractor" />
         <item itemvalue="Python.xbrl_downloader" />
         <item itemvalue="Python.xbrl_downloader_test32" />
-        <item itemvalue="Python.xbrl_downloader_test31" />
       </list>
     </recent_temporary>
   </component>
@@ -436,7 +436,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768701739449</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更">
+      <option name="closed" value="true" />
+      <created>1768703595773</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1768703595773</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -463,7 +471,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ディレクトリ構成の作成&#10;ファイルの準備" />
     <MESSAGE value="各モジュール＆mainスクリプトの下書き" />
     <MESSAGE value="とりあえず、テキスト抽出までできるようになった。" />
     <MESSAGE value="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加" />
@@ -488,7 +495,8 @@
     <MESSAGE value="認証のパスを修正" />
     <MESSAGE value="メニュー形式で選択可能に変更" />
     <MESSAGE value="インポートパスの誤りを修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="インポートパスの誤りを修正" />
+    <MESSAGE value="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
