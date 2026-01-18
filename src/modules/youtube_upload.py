@@ -4,6 +4,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+from pathlib import Path
 import os
 
 
@@ -24,9 +25,13 @@ def upload_to_youtube(video_path: str, title: str = "決算短信解説動画",
     # OAuth 2.0認証
     SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 
+    # プロジェクトルートからの絶対パスを構築
+    project_root = Path(__file__).parent.parent.parent
+    client_secrets_path = project_root / "data" / "client_secrets.json"
+
     # 認証情報の読み込み
     flow = InstalledAppFlow.from_client_secrets_file(
-        '../../data/client_secrets.json', SCOPES)
+        str(client_secrets_path), SCOPES)
     credentials = flow.run_local_server(port=0)
 
     # YouTube APIクライアント作成
@@ -66,13 +71,14 @@ def upload_to_youtube(video_path: str, title: str = "決算短信解説動画",
 
 if __name__ == "__main__":
     # デバッグ用
-    test_video = "../../data/processed/output.mp4"
+    project_root = Path(__file__).parent.parent.parent
+    test_video = project_root / "data" / "processed" / "output.mp4"
 
     print("=" * 50)
     print("YouTube アップロードテスト開始")
     print("=" * 50)
 
-    upload_to_youtube(test_video, privacy="private")
+    upload_to_youtube(str(test_video), privacy="private")
 
     print("\n" + "=" * 50)
     print("アップロード完了")
