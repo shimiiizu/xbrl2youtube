@@ -52,10 +52,8 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None) 
             text=display_text,
             font_size=24,
             color='white',
-            bg_color='rgba(0,0,0,0.7)',
             size=(1200, 650),
-            method='caption',
-            align='West'
+            method='caption'
         ).with_position(('center', 'center')).with_duration(audio.duration)
 
         # 背景とテキストを合成
