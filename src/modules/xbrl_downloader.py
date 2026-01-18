@@ -22,8 +22,10 @@ class TdnetXBRLDownloader:
     def __init__(self, download_dir="downloads"):
         self.rss_url = "https://webapi.yanoshin.jp/webapi/tdnet/list/recent.rss"
         self.jpx_url = "https://www2.jpx.co.jp/tseHpFront/JJK010010Action.do?Show=Show"
-        self.download_dir = Path(download_dir) / "zip"  # zipサブフォルダを追加
-        self.download_dir.mkdir(parents=True, exist_ok=True)  # parents=True で親も作成
+        # プロジェクトルートからの絶対パスを構築
+        project_root = Path(__file__).parent.parent.parent
+        self.download_dir = project_root / download_dir / "zip"
+        self.download_dir.mkdir(parents=True, exist_ok=True)
 
     # -------------------------------------------------
     def fetch_rss(self):
@@ -185,7 +187,7 @@ class TdnetXBRLDownloader:
 
 # -------------------------------------------------
 if __name__ == "__main__":
-    TdnetXBRLDownloader("tdnet_xbrl").run(
+    TdnetXBRLDownloader("downloads").run(
         limit=10,
         max_files_per_company=3
     )
