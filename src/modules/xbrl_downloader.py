@@ -233,5 +233,5 @@ class TdnetXBRLDownloader:
 if __name__ == "__main__":
     TdnetXBRLDownloader("downloads").run(
         limit=10,
-        max_files_per_company=3
+        max_files_per_company=1
     )
