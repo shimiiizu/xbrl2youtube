@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="抽出終了条件を変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/text_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/text_extraction.py" afterDir="false" />
     </list>
@@ -444,7 +444,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768703595773</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="抽出終了条件を変更">
+      <option name="closed" value="true" />
+      <created>1768709792984</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1768709792984</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -471,7 +479,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="各モジュール＆mainスクリプトの下書き" />
     <MESSAGE value="とりあえず、テキスト抽出までできるようになった。" />
     <MESSAGE value="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加" />
     <MESSAGE value="生成したテキストファイルを元に音声を生成する形に修正した。" />
@@ -496,7 +503,8 @@
     <MESSAGE value="メニュー形式で選択可能に変更" />
     <MESSAGE value="インポートパスの誤りを修正" />
     <MESSAGE value="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更" />
+    <MESSAGE value="抽出終了条件を変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="抽出終了条件を変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
