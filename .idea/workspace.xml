@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="h3タグを使って、抽出トリガーをかける仕様の変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="開始トリガーをh1,h2,h3にまで広げた">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/text_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/text_extraction.py" afterDir="false" />
     </list>
@@ -96,7 +96,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.text_extraction">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -214,9 +214,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.text_extraction" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.qualitative_extractor" />
         <item itemvalue="Python.xbrl_downloader" />
       </list>
@@ -461,7 +461,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768711519830</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="開始トリガーをh1,h2,h3にまで広げた">
+      <option name="closed" value="true" />
+      <created>1768740158105</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1768740158105</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -488,7 +496,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加" />
     <MESSAGE value="生成したテキストファイルを元に音声を生成する形に修正した。" />
     <MESSAGE value="経営成績の概況だけテキスト抽出する仕様に変更した" />
     <MESSAGE value="10文字以上のテキストのみ抽出する仕様に変更" />
@@ -513,7 +520,8 @@
     <MESSAGE value="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更" />
     <MESSAGE value="抽出終了条件を変更" />
     <MESSAGE value="h3タグを使って、抽出トリガーをかける仕様の変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="h3タグを使って、抽出トリガーをかける仕様の変更" />
+    <MESSAGE value="開始トリガーをh1,h2,h3にまで広げた" />
+    <option name="LAST_COMMIT_MESSAGE" value="開始トリガーをh1,h2,h3にまで広げた" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
