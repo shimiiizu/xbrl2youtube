@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="認証のパスを修正">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="インポートパスの誤りを修正">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
@@ -420,7 +420,23 @@
       <option name="project" value="LOCAL" />
       <updated>1768700644385</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="メニュー形式で選択可能に変更">
+      <option name="closed" value="true" />
+      <created>1768701637665</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1768701637665</updated>
+    </task>
+    <task id="LOCAL-00025" summary="インポートパスの誤りを修正">
+      <option name="closed" value="true" />
+      <created>1768701739449</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1768701739449</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -470,7 +486,9 @@
     <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理する仕様に変更" />
     <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更" />
     <MESSAGE value="認証のパスを修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="認証のパスを修正" />
+    <MESSAGE value="メニュー形式で選択可能に変更" />
+    <MESSAGE value="インポートパスの誤りを修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="インポートパスの誤りを修正" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

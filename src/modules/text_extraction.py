@@ -5,7 +5,8 @@ from bs4 import BeautifulSoup
 
 def extract_text_from_xbrl(file_path: str) -> str:
     """
-    HTMLファイルから「当中間期の経営成績の概況」部分のテキストを抽出する
+    HTMLファイルから「（１）当四半期の経営成績の概況」または
+    「（１）当中間期の経営成績の概況」部分のテキストのみを抽出する
 
     Args:
         file_path: HTMLファイルのパス
@@ -22,28 +23,41 @@ def extract_text_from_xbrl(file_path: str) -> str:
 
     texts = []
     in_target_section = False
+    target_keywords = [
+        "（１）当四半期の経営成績の概況",
+        "（１）当中間期の経営成績の概況",
+        "(1)当四半期の経営成績の概況",
+        "(1)当中間期の経営成績の概況"
+    ]
 
-    for element in soup.find_all(['h3', 'p']):
+    for element in soup.find_all('p'):
         text = element.get_text(strip=True)
 
+        # 空のテキストや空白のみはスキップ
         if not text or text == '　':
             continue
 
-        # 「経営成績の概況」または「経営成績等の概況」セクションの開始
-        if "経営成績の概況" in text or "経営成績等の概況" in text:
-            in_target_section = True
+        # ターゲットセクションの開始を検出
+        if not in_target_section:
+            for keyword in target_keywords:
+                if keyword in text:
+                    in_target_section = True
+                    print(f"[INFO] Found section: {text}")
+                    break
             continue
 
-        # 次の見出しが来たら終了
-        if in_target_section and element.name == 'h3':
+        # 次の見出し（２）が来たら終了
+        if text.startswith("（２）") or text.startswith("(2)"):
+            print(f"[INFO] End section detected: {text}")
             break
 
-        # セクション内のテキストを収集
-        if in_target_section and len(text) > 10:
+        # セクション内のテキストを収集（10文字以上）
+        if len(text) > 10:
             texts.append(text)
 
     result = '\n\n'.join(texts)
     print(f"[INFO] Extracted {len(texts)} paragraphs")
+    print(f"[INFO] Total characters: {len(result)}")
 
     return result
 
@@ -66,14 +80,17 @@ def save_text(text: str, output_path: str) -> None:
 
 if __name__ == "__main__":
     # デバッグ用
-    test_file = "../../data/qualitative.htm"
-    output_file = "../../data/processed/extracted_text.txt"
+    from pathlib import Path
+
+    project_root = Path(__file__).parent.parent.parent
+    test_file = project_root / "data" / "qualitative.htm"
+    output_file = project_root / "data" / "processed" / "extracted_text.txt"
 
     print("=" * 50)
     print("テキスト抽出テスト開始")
     print("=" * 50)
 
-    extracted_text = extract_text_from_xbrl(test_file)
+    extracted_text = extract_text_from_xbrl(str(test_file))
 
     print("\n" + "=" * 50)
     print("抽出結果:")
@@ -85,4 +102,4 @@ if __name__ == "__main__":
 
     # テキストを保存
     print()
-    save_text(extracted_text, output_file)
+    save_text(extracted_text, str(output_file))

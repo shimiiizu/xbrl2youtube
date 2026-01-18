@@ -3,15 +3,12 @@
 import sys
 from pathlib import Path
 
-# パスを追加
-sys.path.append(str(Path(__file__).parent / "modules" / "tdnet_xbrl"))
+# modulesフォルダをパスに追加
+sys.path.insert(0, str(Path(__file__).parent / "modules"))
 
 # 各モジュールをインポート
 from xbrl_downloader import TdnetXBRLDownloader
 from qualitative_extractor import QualitativeExtractor
-
-# その他のモジュール
-sys.path.append(str(Path(__file__).parent / "modules"))
 from text_extraction import extract_text_from_xbrl, save_text
 from audio_generation import generate_audio
 from video_generation import generate_video
