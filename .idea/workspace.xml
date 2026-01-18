@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="認証のパスを修正">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +412,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768699847925</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="認証のパスを修正">
+      <option name="closed" value="true" />
+      <created>1768700644385</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1768700644385</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -460,7 +469,8 @@
     <MESSAGE value="ダウンロードしたzipファイルを１つに変更" />
     <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理する仕様に変更" />
     <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更" />
+    <MESSAGE value="認証のパスを修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="認証のパスを修正" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
