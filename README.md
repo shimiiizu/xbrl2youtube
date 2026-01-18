@@ -16,7 +16,9 @@ project_root/
 │   └── processed/        # 処理後のファイル（テキスト化、音声ファイルなど）
 │
 ├── src/main.py                   # メインのソースコード
-│   ├── text_extraction.py   # XBRLからテキストを抽出するモジュール
+│   ├── xbrl_downloader.py  # Tdnetからzipファイルをダウンロードするモジュール
+│   ├── qualitive_extractor.py  # zipファイルを解凍してqualitive_extractor.htmを抽出するモジュール
+│   ├── text_extraction.py   # 『qualitative.htm』からテキストを抽出するモジュール
 │   ├── audio_generation.py  # 音声ファイルを生成するモジュール
 │   ├── video_generation.py  # 動画を生成するモジュール
 │   └── youtube_upload.py    # YouTubeへアップロードするモジュール

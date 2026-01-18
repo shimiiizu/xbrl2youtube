@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="保存さきを変更に成功">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="qualitative.htmの抽出に成功">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/zipfile_mover.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/xbrl_downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/xbrl_downloader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +46,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.audio_generation.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.qualitative_extractor.executor": "Run",
     "Python.text_extraction.executor": "Run",
     "Python.video_generation.executor": "Run",
     "Python.xbrl_downloader.executor": "Run",
@@ -95,7 +96,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.qualitative_extractor">
+  <component name="RunManager" selected="Python.xbrl_downloader">
     <configuration name="qualitative_extractor" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -213,8 +214,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.qualitative_extractor" />
         <item itemvalue="Python.xbrl_downloader" />
+        <item itemvalue="Python.qualitative_extractor" />
         <item itemvalue="Python.xbrl_downloader_test32" />
         <item itemvalue="Python.xbrl_downloader_test31" />
         <item itemvalue="Python.xbrl_downloader_test29" />
@@ -372,7 +373,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768695314117</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="qualitative.htmの抽出に成功">
+      <option name="closed" value="true" />
+      <created>1768696587591</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1768696587591</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -416,7 +425,8 @@
     <MESSAGE value="保存さきを変更前" />
     <MESSAGE value="保存さきを変更後" />
     <MESSAGE value="保存さきを変更に成功" />
-    <option name="LAST_COMMIT_MESSAGE" value="保存さきを変更に成功" />
+    <MESSAGE value="qualitative.htmの抽出に成功" />
+    <option name="LAST_COMMIT_MESSAGE" value="qualitative.htmの抽出に成功" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

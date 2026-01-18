@@ -1,6 +1,6 @@
 """
 TDnet RSS → 企業名取得 → JPX企業名検索 → XBRLダウンロード
-（デバッグ出力・堅牢化済み）
+（企業名をファイル名に含める仕様）
 """
 
 import requests
@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 import time
 import re
+import os
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -60,8 +61,43 @@ class TdnetXBRLDownloader:
         return items
 
     # -------------------------------------------------
+    def rename_downloaded_files(self, company_name, download_before_count):
+        """ダウンロードされたファイルに企業名を付与"""
+        time.sleep(3)  # ダウンロード完了を待つ
+
+        # ダウンロードフォルダ内の新しいZIPファイルを検索
+        zip_files = sorted(
+            self.download_dir.glob("*.zip"),
+            key=lambda p: p.stat().st_mtime,
+            reverse=True
+        )
+
+        # 新規ダウンロードファイルのみを対象
+        new_files = zip_files[:len(zip_files) - download_before_count]
+
+        renamed_count = 0
+        for zip_file in new_files:
+            # 企業名を含む新しいファイル名を作成
+            # ファイル名に使えない文字を除去
+            safe_company_name = re.sub(r'[\\/:*?"<>|]', '', company_name)
+            new_name = f"{safe_company_name}_{zip_file.name}"
+            new_path = zip_file.parent / new_name
+
+            try:
+                zip_file.rename(new_path)
+                print(f"[RENAME] {zip_file.name} → {new_name}")
+                renamed_count += 1
+            except Exception as e:
+                print(f"[RENAME ERROR] {zip_file.name}: {e}")
+
+        return renamed_count
+
+    # -------------------------------------------------
     def download_xbrl_by_company(self, company, max_files=3):
         print(f"\n=== JPX検索開始: {company} ===")
+
+        # ダウンロード前のファイル数をカウント
+        download_before_count = len(list(self.download_dir.glob("*.zip")))
 
         chrome_options = webdriver.ChromeOptions()
         prefs = {
@@ -151,11 +187,19 @@ class TdnetXBRLDownloader:
                     print(f"[NG] {idx}: {type(ex).__name__}")
                     continue
 
+            # ブラウザを閉じる前にファイル名を変更
+            driver.quit()
+
+            # ダウンロードされたファイルに企業名を付与
+            if clicked > 0:
+                self.rename_downloaded_files(company, download_before_count)
+
             return clicked
 
-        finally:
-            print("[JPX] ブラウザ終了")
+        except Exception as e:
+            print(f"[ERROR] {type(e).__name__}: {e}")
             driver.quit()
+            return 0
 
     # -------------------------------------------------
     def run(self, limit=10, max_files_per_company=3):
