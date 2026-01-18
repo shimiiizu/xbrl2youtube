@@ -92,7 +92,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.xbrl_downloader">
+  <component name="RunManager" selected="Python.qualitative_extractor">
     <configuration name="qualitative_extractor" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -210,8 +210,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.xbrl_downloader" />
         <item itemvalue="Python.qualitative_extractor" />
+        <item itemvalue="Python.xbrl_downloader" />
         <item itemvalue="Python.xbrl_downloader_test32" />
         <item itemvalue="Python.xbrl_downloader_test31" />
         <item itemvalue="Python.xbrl_downloader_test29" />
