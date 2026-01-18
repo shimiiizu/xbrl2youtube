@@ -2,11 +2,12 @@
 xbrlファイルからテキストデータを抽出し、音声データに変換したのち、画像データと合わせて動画を作成し、youtubeにUploadする。
 
 ## 機能
-### Tdnetから『qualitative.htm』をダウンロードする。
-### xbrlﾌｧｲﾙからテキスト情報を抽出する。
-### テキスト情報から音声データを作成する。
-### 音声データから動画を生成する。
-### 動画をYoutubeにアップロードする。
+### ✅Tdnetから『zipファイル』をダウンロードする。
+### 『zipファイル』を解凍して、qualitative.htmを抽出する。
+### ✅『qualitative.htm』からテキスト情報（経営状況）を抽出する。
+### ✅テキスト情報から音声データを作成する。
+### ✅音声データから動画を生成する。
+### ✅動画をYoutubeにアップロードする。
 
 
 project_root/
@@ -34,5 +35,6 @@ project_root/
 │
 └── requirements.txt   # 必要なパッケージ一覧
 
-### Tdnetから『qualitative.htm』をダウンロードする。
-- TdnetのAPI（https://webapi.yanoshin.jp/tdnet/）を使用して、指定した企業コードと日付に基づいて『qualitative.htm』ファイルをダウンロードします。
+### Tdnetから『zipファイル』をダウンロードする。
+- TdnetのAPI（https://webapi.yanoshin.jp/tdnet/）
+- を使用して、指定した企業コードと日付に基づいてzipファイルをダウンロードします。
