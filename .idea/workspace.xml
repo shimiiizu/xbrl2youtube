@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="メインを追加機能に対応する形に変更した。">
+      <change afterPath="$PROJECT_DIR$/src/modules/subtitle_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
@@ -40,53 +41,54 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.audio_generation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.qualitative_extractor.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.text_extraction.executor&quot;: &quot;Run&quot;,
-    &quot;Python.video_generation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test10.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test11.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test12.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test13.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test14.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test15.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test16.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test17.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test18.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test19.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test2.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test20.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test21.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test22.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test24.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test25.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test26.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test27.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test29.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test3.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test31.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test32.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test4.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test5.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test6.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test7.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test8.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test9.executor&quot;: &quot;Run&quot;,
-    &quot;Python.youtube_upload.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Shimizu/PycharmProjects/xbrl2youtube/src/modules&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.audio_generation.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.qualitative_extractor.executor": "Run",
+    "Python.subtitle_generator.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.text_extraction.executor": "Run",
+    "Python.video_generation.executor": "Run",
+    "Python.xbrl_downloader.executor": "Run",
+    "Python.xbrl_downloader_test.executor": "Run",
+    "Python.xbrl_downloader_test10.executor": "Run",
+    "Python.xbrl_downloader_test11.executor": "Run",
+    "Python.xbrl_downloader_test12.executor": "Run",
+    "Python.xbrl_downloader_test13.executor": "Run",
+    "Python.xbrl_downloader_test14.executor": "Run",
+    "Python.xbrl_downloader_test15.executor": "Run",
+    "Python.xbrl_downloader_test16.executor": "Run",
+    "Python.xbrl_downloader_test17.executor": "Run",
+    "Python.xbrl_downloader_test18.executor": "Run",
+    "Python.xbrl_downloader_test19.executor": "Run",
+    "Python.xbrl_downloader_test2.executor": "Run",
+    "Python.xbrl_downloader_test20.executor": "Run",
+    "Python.xbrl_downloader_test21.executor": "Run",
+    "Python.xbrl_downloader_test22.executor": "Run",
+    "Python.xbrl_downloader_test24.executor": "Run",
+    "Python.xbrl_downloader_test25.executor": "Run",
+    "Python.xbrl_downloader_test26.executor": "Run",
+    "Python.xbrl_downloader_test27.executor": "Run",
+    "Python.xbrl_downloader_test29.executor": "Run",
+    "Python.xbrl_downloader_test3.executor": "Run",
+    "Python.xbrl_downloader_test31.executor": "Run",
+    "Python.xbrl_downloader_test32.executor": "Run",
+    "Python.xbrl_downloader_test4.executor": "Run",
+    "Python.xbrl_downloader_test5.executor": "Run",
+    "Python.xbrl_downloader_test6.executor": "Run",
+    "Python.xbrl_downloader_test7.executor": "Run",
+    "Python.xbrl_downloader_test8.executor": "Run",
+    "Python.xbrl_downloader_test9.executor": "Run",
+    "Python.youtube_upload.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/Shimizu/PycharmProjects/xbrl2youtube/src/modules"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
@@ -96,7 +98,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.video_generation">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -143,7 +145,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="subtitle_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -157,7 +159,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/subtitle_generator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -214,11 +216,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.video_generation" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.text_extraction" />
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.qualitative_extractor" />
+        <item itemvalue="Python.subtitle_generator" />
+        <item itemvalue="Python.video_generation" />
+        <item itemvalue="Python.text_extraction" />
       </list>
     </recent_temporary>
   </component>
@@ -525,7 +527,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769244594077</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="メインを追加機能に対応する形に変更した。">
+      <option name="closed" value="true" />
+      <created>1769245198143</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1769245198143</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -552,7 +562,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="youtubeに自動Uploadすることに成功" />
     <MESSAGE value="xbrl_downloader.pyを取りあえず作成" />
     <MESSAGE value="zipファイルを取得することに成功" />
     <MESSAGE value="保存さきを変更前" />
@@ -577,7 +586,8 @@
     <MESSAGE value="タイトルを表示するサムネイルを作成する機能を追加" />
     <MESSAGE value="タイトルに企業名を追加" />
     <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
+    <MESSAGE value="メインを追加機能に対応する形に変更した。" />
+    <option name="LAST_COMMIT_MESSAGE" value="メインを追加機能に対応する形に変更した。" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
