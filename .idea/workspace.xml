@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="字幕ファイルに企業名を追加する機能を追加">
-      <change beforePath="$PROJECT_DIR$/src/modules/subtitle_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/subtitle_generation.py" afterDir="false" />
-    </list>
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="エラーを修正" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -598,7 +596,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769267310173</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="エラーを修正">
+      <option name="closed" value="true" />
+      <created>1769267800520</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1769267800520</updated>
+    </task>
+    <task id="LOCAL-00047" summary="エラーを修正">
+      <option name="closed" value="true" />
+      <created>1769267935460</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1769267935460</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -643,14 +657,14 @@
     <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
     <MESSAGE value="メインを追加機能に対応する形に変更した。" />
     <MESSAGE value="機能を分離して、動画作成とアップロードを分けた" />
-    <MESSAGE value="エラーを修正" />
     <MESSAGE value="スコープを変更" />
     <MESSAGE value="音声と字幕の同期がとれるように変更" />
     <MESSAGE value=" Whisperで音声認識" />
     <MESSAGE value="テキストの抽出のみの機能を追加" />
     <MESSAGE value="字幕生成のみの機能を追加" />
     <MESSAGE value="字幕ファイルに企業名を追加する機能を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="字幕ファイルに企業名を追加する機能を追加" />
+    <MESSAGE value="エラーを修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="エラーを修正" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
