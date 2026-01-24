@@ -7,10 +7,16 @@ import os
 FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
 
 
-def generate_thumbnail(output_path: str, title: str = "決算サマリー") -> None:
+def generate_thumbnail(output_path: str, company_name: str | None = None) -> None:
     """動画用のカスタムサムネイルを生成"""
 
     print("[INFO] Generating thumbnail...")
+
+    # タイトルテキスト作成
+    if company_name:
+        title_text = f"{company_name}\n決算サマリー"
+    else:
+        title_text = "決算サマリー"
 
     # サムネイルのサイズ（YouTube推奨: 1280x720）
     thumb_size = (1280, 720)
@@ -21,7 +27,7 @@ def generate_thumbnail(output_path: str, title: str = "決算サマリー") -> N
     # タイトル（大きく中央に）
     title_clip = (
         TextClip(
-            text=title,
+            text=title_text,
             font=FONT_PATH,
             font_size=80,  # かなり大きく
             color="white",
@@ -42,7 +48,8 @@ def generate_thumbnail(output_path: str, title: str = "決算サマリー") -> N
     print(f"[INFO] Thumbnail saved to: {thumbnail_path}")
 
 
-def generate_video(audio_path: str, output_path: str, text_content: str | None = None) -> None:
+def generate_video(audio_path: str, output_path: str, text_content: str | None = None,
+                   company_name: str | None = None) -> None:
     print(f"[INFO] Reading audio from: {audio_path}")
 
     # ===== フォント存在チェック（重要）=====
@@ -64,9 +71,15 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
     clips = [background]
 
     # ===== タイトル（即時表示）=====
+    # タイトルテキスト作成
+    if company_name:
+        title_text = f"{company_name} 決算サマリー"
+    else:
+        title_text = "決算サマリー"
+
     title_clip = (
         TextClip(
-            text="決算サマリー",
+            text=title_text,
             font=FONT_PATH,
             font_size=48,
             color="white",
@@ -113,7 +126,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
     print(f"[INFO] Video saved to: {output_path}")
 
     # ===== サムネイル生成 =====
-    generate_thumbnail(output_path, title="決算サマリー")
+    generate_thumbnail(output_path, company_name=company_name)
 
 
 # ===== デバッグ実行 =====
@@ -136,7 +149,8 @@ if __name__ == "__main__":
     generate_video(
         audio_path=str(test_audio),
         output_path=str(test_output),
-        text_content=text_content
+        text_content=text_content,
+        company_name="トヨタ自動車"  # テスト用の企業名
     )
 
     print("=" * 50)

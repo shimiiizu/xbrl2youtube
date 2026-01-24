@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="本文の表示のタイミングを早めた">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="タイトルを表示するサムネイルを作成する機能を追加">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/qualitative.htm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +95,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.video_generation">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -215,8 +213,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.video_generation" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.text_extraction" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.qualitative_extractor" />
@@ -502,7 +500,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768747079699</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="タイトルを表示するサムネイルを作成する機能を追加">
+      <option name="closed" value="true" />
+      <created>1769241813437</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1769241813437</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -529,7 +535,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="生成した音声ファイルを元に動画ファイルを作成する機能を追加" />
     <MESSAGE value="動画の生成に成功" />
     <MESSAGE value="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した" />
     <MESSAGE value="youtubeに自動Uploadすることに成功" />
@@ -554,7 +559,8 @@
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py" />
     <MESSAGE value="文字化け対策" />
     <MESSAGE value="本文の表示のタイミングを早めた" />
-    <option name="LAST_COMMIT_MESSAGE" value="本文の表示のタイミングを早めた" />
+    <MESSAGE value="タイトルを表示するサムネイルを作成する機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="タイトルを表示するサムネイルを作成する機能を追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
