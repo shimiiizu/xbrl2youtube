@@ -89,7 +89,7 @@ def process_single_file_video(qualitative_path, processed_dir):
 
         # 4. テキスト + 音声 → 字幕
         print(f"[4/5] 字幕生成中...")
-        generate_subtitle(str(text_path), str(audio_path), str(subtitle_path))
+        generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), company_name=company_name)
 
         # 5. 音声 → 動画（企業名を渡してサムネイルとタイトルに反映）
         print(f"[5/5] 動画生成中...")
@@ -360,7 +360,7 @@ def generate_subtitles():
                 continue
 
             # 音声 → 字幕
-            generate_subtitle(str(text_path), str(audio_file), str(subtitle_path))
+            generate_subtitle(str(text_path), str(audio_file), str(subtitle_path), company_name=company_name)
 
             print(f"✓ {company_name} の字幕生成が完了しました")
             success_count += 1
