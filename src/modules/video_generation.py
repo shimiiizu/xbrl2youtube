@@ -29,7 +29,7 @@ def generate_thumbnail(output_path: str, company_name: str | None = None) -> Non
         TextClip(
             text=title_text,
             font=FONT_PATH,
-            font_size=80,  # かなり大きく
+            font_size=90,  # かなり大きく
             color="white",
             size=(1100, None),
             method="caption"
