@@ -242,6 +242,79 @@ def upload_videos():
     return success_count > 0
 
 
+def extract_texts():
+    """テキスト抽出のみ"""
+    print("\n" + "=" * 60)
+    print("ステップ: テキスト抽出")
+    print("=" * 60)
+
+    # パスの設定
+    project_root = Path(__file__).parent.parent
+    qualitative_dir = project_root / "downloads" / "qualitative"
+    processed_dir = project_root / "data" / "processed"
+
+    # 処理済みディレクトリを作成
+    processed_dir.mkdir(parents=True, exist_ok=True)
+
+    # qualitativeフォルダ内のすべての.htmファイルを取得
+    htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
+
+    if not htm_files:
+        print("✗ 処理対象のqualitative.htmファイルが見つかりません")
+        print(f"  検索パス: {qualitative_dir}")
+        return False
+
+    print(f"検出されたファイル数: {len(htm_files)}")
+
+    # 処理結果のカウント
+    success_count = 0
+    error_count = 0
+
+    # 各ファイルを順番に処理
+    for idx, htm_file in enumerate(htm_files, 1):
+        print(f"\n進捗: [{idx}/{len(htm_files)}]")
+
+        try:
+            # ファイル名から企業名を抽出
+            file_stem = htm_file.stem
+            company_name = file_stem.replace('_qualitative', '')
+
+            print(f"処理中: {company_name}")
+
+            # 出力ファイルのパスを設定
+            text_path = processed_dir / f"{company_name}_extracted_text.txt"
+
+            # 既存ファイルがあればスキップ
+            if text_path.exists():
+                print(f"[SKIP] 既にテキストファイルが存在します: {text_path.name}")
+                success_count += 1
+                continue
+
+            # XBRL → テキスト抽出
+            text = extract_text_from_xbrl(str(htm_file))
+
+            # テキストをファイルに保存
+            save_text(text, str(text_path))
+
+            print(f"✓ {company_name} のテキスト抽出が完了しました")
+            success_count += 1
+
+        except Exception as e:
+            print(f"✗ エラーが発生しました: {company_name}")
+            print(f"  エラー内容: {type(e).__name__}: {e}")
+            error_count += 1
+
+    # 最終結果を表示
+    print(f"\n{'=' * 60}")
+    print(f"テキスト抽出完了")
+    print(f"{'=' * 60}")
+    print(f"成功: {success_count} 件")
+    print(f"失敗: {error_count} 件")
+    print(f"合計: {len(htm_files)} 件")
+
+    return success_count > 0
+
+
 def show_menu():
     """メニューを表示"""
     print("\n" + "=" * 60)
@@ -250,8 +323,9 @@ def show_menu():
     print("1. すべて実行（ダウンロード → 抽出 → 動画作成 → アップロード）")
     print("2. XBRLダウンロードのみ")
     print("3. qualitative.htm抽出のみ")
-    print("4. 動画作成のみ")
-    print("5. YouTubeアップロードのみ")
+    print("4. テキスト抽出のみ")
+    print("5. 動画作成のみ")
+    print("6. YouTubeアップロードのみ")
     print("0. 終了")
     print("=" * 60)
 
@@ -260,7 +334,7 @@ def main():
     """メイン処理"""
     while True:
         show_menu()
-        choice = input("\n選択してください (0-5): ").strip()
+        choice = input("\n選択してください (0-6): ").strip()
 
         if choice == "0":
             print("\n終了します")
@@ -307,15 +381,19 @@ def main():
             extract_qualitative_files()
 
         elif choice == "4":
+            # テキスト抽出のみ
+            extract_texts()
+
+        elif choice == "5":
             # 動画作成のみ
             create_videos()
 
-        elif choice == "5":
+        elif choice == "6":
             # YouTubeアップロードのみ
             upload_videos()
 
         else:
-            print("✗ 無効な選択です。0-5の数字を入力してください")
+            print("✗ 無効な選択です。0-6の数字を入力してください")
 
 
 if __name__ == "__main__":
