@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="機能を分離して、動画作成とアップロードを分けた">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/subtitle_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/subtitle_generation.py" afterDir="false" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="エラーを修正">
+      <change beforePath="$PROJECT_DIR$/src/modules/youtube_upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/youtube_upload.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -542,7 +541,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769246511894</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="エラーを修正">
+      <option name="closed" value="true" />
+      <created>1769247579407</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1769247579407</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -585,7 +592,6 @@
     <MESSAGE value="抽出終了条件を変更" />
     <MESSAGE value="h3タグを使って、抽出トリガーをかける仕様の変更" />
     <MESSAGE value="開始トリガーをh1,h2,h3にまで広げた" />
-    <MESSAGE value="エラーを修正" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py" />
     <MESSAGE value="文字化け対策" />
     <MESSAGE value="本文の表示のタイミングを早めた" />
@@ -594,7 +600,8 @@
     <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
     <MESSAGE value="メインを追加機能に対応する形に変更した。" />
     <MESSAGE value="機能を分離して、動画作成とアップロードを分けた" />
-    <option name="LAST_COMMIT_MESSAGE" value="機能を分離して、動画作成とアップロードを分けた" />
+    <MESSAGE value="エラーを修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="エラーを修正" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

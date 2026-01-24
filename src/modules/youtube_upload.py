@@ -9,7 +9,10 @@ from pathlib import Path
 import os
 import json
 
-SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+SCOPES = [
+    'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/youtube.force-ssl'  # 字幕アップロードに必要
+]
 
 
 def get_authenticated_service(client_secrets_path: str, token_path: str):
