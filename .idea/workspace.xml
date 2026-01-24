@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="タイトルに企業名を追加">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -517,7 +517,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769242851446</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加">
+      <option name="closed" value="true" />
+      <created>1769244594077</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1769244594077</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -544,7 +552,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="テキストを直接渡す形ではなくて、ファイルのパスを渡す形に修正した" />
     <MESSAGE value="youtubeに自動Uploadすることに成功" />
     <MESSAGE value="xbrl_downloader.pyを取りあえず作成" />
     <MESSAGE value="zipファイルを取得することに成功" />
@@ -569,7 +576,8 @@
     <MESSAGE value="本文の表示のタイミングを早めた" />
     <MESSAGE value="タイトルを表示するサムネイルを作成する機能を追加" />
     <MESSAGE value="タイトルに企業名を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="タイトルに企業名を追加" />
+    <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

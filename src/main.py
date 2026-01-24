@@ -67,6 +67,7 @@ def process_single_file(qualitative_path, processed_dir):
         text_path = processed_dir / f"{company_name}_extracted_text.txt"
         audio_path = processed_dir / f"{company_name}_output.mp3"
         video_path = processed_dir / f"{company_name}_output.mp4"
+        subtitle_path = processed_dir / f"{company_name}_subtitle.srt"  # 字幕用（将来の拡張用）
 
         # 既存ファイルがあればスキップ
         if video_path.exists():
@@ -85,14 +86,28 @@ def process_single_file(qualitative_path, processed_dir):
         print(f"[3/5] 音声生成中...")
         generate_audio(str(text_path), str(audio_path))
 
-        # 4. 音声 → 動画
+        # 4. 音声 → 動画（企業名を渡してサムネイルとタイトルに反映）
         print(f"[4/5] 動画生成中...")
-        generate_video(str(audio_path), str(video_path))
+        generate_video(
+            audio_path=str(audio_path),
+            output_path=str(video_path),
+            text_content=text,
+            company_name=company_name  # 企業名を追加
+        )
 
-        # 5. YouTubeへアップロード
-        video_title = f"さくっと決算短信 {company_name}"
+        # 5. YouTubeへアップロード（企業名とタグを設定）
+        video_title = f"{company_name} 決算サマリー"
+        video_description = f"{company_name}の決算短信の内容を音声で解説した動画です。"
+
         print(f"[5/5] YouTubeアップロード中: {video_title}")
-        upload_to_youtube(str(video_path), title=video_title)
+        upload_to_youtube(
+            video_path=str(video_path),
+            title=video_title,
+            description=video_description,
+            privacy="private",
+            company_name=company_name,  # タグに企業名を追加
+            subtitle_path=str(subtitle_path) if subtitle_path.exists() else None  # 字幕があれば追加
+        )
 
         print(f"✓ {company_name} の処理が完了しました")
         return True
