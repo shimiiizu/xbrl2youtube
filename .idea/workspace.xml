@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="エラーを修正">
-      <change beforePath="$PROJECT_DIR$/src/modules/youtube_upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/youtube_upload.py" afterDir="false" />
-    </list>
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="スコープを変更" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -549,7 +547,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769247579407</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="スコープを変更">
+      <option name="closed" value="true" />
+      <created>1769247732327</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1769247732327</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -576,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="zipファイルを取得することに成功" />
     <MESSAGE value="保存さきを変更前" />
     <MESSAGE value="保存さきを変更後" />
     <MESSAGE value="保存さきを変更に成功" />
@@ -601,7 +606,8 @@
     <MESSAGE value="メインを追加機能に対応する形に変更した。" />
     <MESSAGE value="機能を分離して、動画作成とアップロードを分けた" />
     <MESSAGE value="エラーを修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="エラーを修正" />
+    <MESSAGE value="スコープを変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="スコープを変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

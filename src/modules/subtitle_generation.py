@@ -66,7 +66,8 @@ def format_timestamp(seconds: float) -> str:
     return f"{hours:02d}:{minutes:02d}:{secs:02d},{millis:03d}"
 
 
-def generate_subtitle(text_path: str, audio_path: str, output_path: str) -> None:
+def generate_subtitle(text_path: str, audio_path: str, output_path: str,
+                      max_chars: int = 40, min_duration: float = 2.0) -> None:
     """
     テキストと音声から字幕ファイル(.srt)を生成
 
@@ -74,6 +75,8 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str) -> None
         text_path: テキストファイルのパス
         audio_path: 音声ファイルのパス
         output_path: 出力する字幕ファイル(.srt)のパス
+        max_chars: 1行あたりの最大文字数（デフォルト: 40）
+        min_duration: 1字幕あたりの最小表示時間（秒）（デフォルト: 2.0）
     """
     print(f"[INFO] Generating subtitle from: {text_path}")
 
@@ -89,7 +92,7 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str) -> None
     print(f"[INFO] Audio duration: {total_duration:.2f} seconds")
 
     # テキストを字幕チャンクに分割
-    chunks = split_text_into_chunks(text, max_chars=40)
+    chunks = split_text_into_chunks(text, max_chars=max_chars)
 
     if not chunks:
         print("[WARNING] No text chunks to create subtitles")
@@ -99,6 +102,12 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str) -> None
 
     # 各チャンクの表示時間を計算
     duration_per_chunk = total_duration / len(chunks)
+
+    # 最小表示時間を確保（字幕が速すぎる場合の対策）
+    if duration_per_chunk < min_duration:
+        print(f"[WARNING] Calculated duration ({duration_per_chunk:.2f}s) is less than minimum ({min_duration}s)")
+        print(f"[WARNING] Using minimum duration: {min_duration}s per subtitle")
+        duration_per_chunk = min_duration
 
     # SRT形式で字幕を生成
     srt_content = []
@@ -125,6 +134,7 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str) -> None
 
     print(f"[INFO] Subtitle saved to: {output_path}")
     print(f"[INFO] Total subtitles: {len(chunks)}")
+    print(f"[INFO] Duration per subtitle: {duration_per_chunk:.2f} seconds")
 
 
 # ===== デバッグ実行 =====
