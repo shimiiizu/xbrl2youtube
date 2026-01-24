@@ -23,7 +23,7 @@ def format_timestamp(seconds: float) -> str:
 
 
 def generate_subtitle(text_path: str, audio_path: str, output_path: str,
-                      model_size: str = "base") -> None:
+                      model_size: str = "small") -> None:
     """
     Whisperを使って音声から字幕ファイル(.srt)を生成
 

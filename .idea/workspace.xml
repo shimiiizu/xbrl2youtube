@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="字幕生成のみの機能を追加" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="字幕ファイルに企業名を追加する機能を追加">
+      <change beforePath="$PROJECT_DIR$/src/modules/subtitle_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/subtitle_generation.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -588,7 +590,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769267123182</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="字幕ファイルに企業名を追加する機能を追加">
+      <option name="closed" value="true" />
+      <created>1769267310173</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1769267310173</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -615,7 +625,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ダウンロードしたzipファイルに企業名を追加" />
     <MESSAGE value="ダウンロードしたzipファイルを１つに変更" />
     <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理する仕様に変更" />
     <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更" />
@@ -640,7 +649,8 @@
     <MESSAGE value=" Whisperで音声認識" />
     <MESSAGE value="テキストの抽出のみの機能を追加" />
     <MESSAGE value="字幕生成のみの機能を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="字幕生成のみの機能を追加" />
+    <MESSAGE value="字幕ファイルに企業名を追加する機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="字幕ファイルに企業名を追加する機能を追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
