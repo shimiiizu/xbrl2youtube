@@ -4,8 +4,42 @@ from moviepy import AudioFileClip, ColorClip, TextClip, CompositeVideoClip
 from pathlib import Path
 import os
 
-
 FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
+
+
+def generate_thumbnail(output_path: str, title: str = "決算サマリー") -> None:
+    """動画用のカスタムサムネイルを生成"""
+
+    print("[INFO] Generating thumbnail...")
+
+    # サムネイルのサイズ（YouTube推奨: 1280x720）
+    thumb_size = (1280, 720)
+
+    # 背景（グラデーション風に濃いめの色）
+    background = ColorClip(size=thumb_size, color=(20, 30, 50)).with_duration(1)
+
+    # タイトル（大きく中央に）
+    title_clip = (
+        TextClip(
+            text=title,
+            font=FONT_PATH,
+            font_size=80,  # かなり大きく
+            color="white",
+            size=(1100, None),
+            method="caption"
+        )
+        .with_duration(1)
+        .with_position("center")
+    )
+
+    # 合成
+    thumbnail = CompositeVideoClip([background, title_clip])
+
+    # 最初のフレームを画像として保存
+    thumbnail_path = output_path.replace(".mp4", "_thumbnail.png")
+    thumbnail.save_frame(thumbnail_path, t=0)
+
+    print(f"[INFO] Thumbnail saved to: {thumbnail_path}")
 
 
 def generate_video(audio_path: str, output_path: str, text_content: str | None = None) -> None:
@@ -52,7 +86,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
             TextClip(
                 text=text_content,
                 font=FONT_PATH,
-                font_size=28,
+                font_size=13,
                 color="white",
                 size=(1100, None),
                 method="caption"
@@ -77,6 +111,9 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
     )
 
     print(f"[INFO] Video saved to: {output_path}")
+
+    # ===== サムネイル生成 =====
+    generate_thumbnail(output_path, title="決算サマリー")
 
 
 # ===== デバッグ実行 =====
