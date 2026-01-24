@@ -23,7 +23,7 @@ def format_timestamp(seconds: float) -> str:
 
 
 def generate_subtitle(text_path: str, audio_path: str, output_path: str,
-                      model_size: str = "small") -> None:
+                      model_size: str = "base", company_name: str = None) -> None:
     """
     Whisperを使って音声から字幕ファイル(.srt)を生成
 
@@ -32,12 +32,11 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str,
         audio_path: 音声ファイルのパス
         output_path: 出力する字幕ファイル(.srt)のパス
         model_size: Whisperモデルのサイズ ("tiny", "base", "small", "medium", "large")
-                   - tiny: 最速、精度低
-                   - base: バランス（推奨）
-                   - small: 高精度、少し遅い
-                   - medium/large: 最高精度、かなり遅い
+        company_name: 企業名（ログ表示用）
     """
-    print(f"[INFO] Generating subtitle from audio: {audio_path}")
+    if company_name:
+        print(f"[INFO] Generating subtitle for: {company_name}")
+    print(f"[INFO] Audio file: {audio_path}")
     print(f"[INFO] Loading Whisper model: {model_size}")
 
     # Whisperモデルをロード
@@ -47,9 +46,9 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str,
     print(f"[INFO] Transcribing audio... (this may take a while)")
     result = model.transcribe(
         audio_path,
-        language="ja",  # 日本語
+        language="ja",
         verbose=False,
-        word_timestamps=True  # 単語レベルのタイムスタンプを取得
+        word_timestamps=True
     )
 
     # セグメント（文章の区切り）を取得
@@ -65,19 +64,14 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str,
     srt_content = []
 
     for i, segment in enumerate(segments):
-        # 字幕番号（1から始まる）
         subtitle_number = i + 1
-
-        # 開始・終了時間
         start_time = segment['start']
         end_time = segment['end']
         text = segment['text'].strip()
 
-        # タイムスタンプを作成
         start_timestamp = format_timestamp(start_time)
         end_timestamp = format_timestamp(end_time)
 
-        # SRT形式のエントリを作成
         srt_entry = f"{subtitle_number}\n{start_timestamp} --> {end_timestamp}\n{text}\n"
         srt_content.append(srt_entry)
 
@@ -88,45 +82,7 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str,
     print(f"[INFO] Subtitle saved to: {output_path}")
     print(f"[INFO] Total subtitles: {len(segments)}")
 
-    # 文字起こし結果も表示（確認用）
+    # 文字起こし結果も表示
     print(f"[INFO] Transcribed text preview:")
     full_text = ' '.join([seg['text'].strip() for seg in segments[:3]])
     print(f"  {full_text}...")
-
-
-# ===== デバッグ実行 =====
-if __name__ == "__main__":
-    project_root = Path(__file__).parent.parent.parent
-
-    test_audio = project_root / "data" / "processed" / "output.mp3"
-    test_output = project_root / "data" / "processed" / "subtitle.srt"
-
-    print("=" * 50)
-    print("字幕生成テスト開始（Whisper使用）")
-    print("=" * 50)
-
-    if test_audio.exists():
-        generate_subtitle(
-            text_path="",  # 使用しない
-            audio_path=str(test_audio),
-            output_path=str(test_output),
-            model_size="base"  # base を推奨
-        )
-
-        print("\n" + "=" * 50)
-        print("字幕生成完了")
-        print(f"ファイル: {test_output}")
-        print("=" * 50)
-
-        # 生成された字幕の先頭を表示
-        if test_output.exists():
-            print("\n[プレビュー] 最初の3エントリ:")
-            with open(test_output, 'r', encoding='utf-8') as f:
-                content = f.read()
-                entries = content.split('\n\n')[:3]
-                for entry in entries:
-                    print(entry)
-                    print()
-    else:
-        print("テストファイルが見つかりません")
-        print(f"音声: {test_audio.exists()}")
