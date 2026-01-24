@@ -315,6 +315,72 @@ def extract_texts():
     return success_count > 0
 
 
+def generate_subtitles():
+    """字幕生成のみ"""
+    print("\n" + "=" * 60)
+    print("ステップ: 字幕生成")
+    print("=" * 60)
+
+    # パスの設定
+    project_root = Path(__file__).parent.parent
+    processed_dir = project_root / "data" / "processed"
+
+    # processedフォルダ内のすべての.mp3ファイルを取得
+    audio_files = list(processed_dir.glob("*_output.mp3"))
+
+    if not audio_files:
+        print("✗ 処理対象の音声ファイルが見つかりません")
+        print(f"  検索パス: {processed_dir}")
+        return False
+
+    print(f"検出された音声ファイル数: {len(audio_files)}")
+
+    # 処理結果のカウント
+    success_count = 0
+    error_count = 0
+
+    # 各音声ファイルを順番に処理
+    for idx, audio_file in enumerate(audio_files, 1):
+        print(f"\n進捗: [{idx}/{len(audio_files)}]")
+
+        try:
+            # ファイル名から企業名を抽出
+            company_name = audio_file.stem.replace('_output', '')
+
+            print(f"処理中: {company_name}")
+
+            # 出力ファイルのパスを設定
+            text_path = processed_dir / f"{company_name}_extracted_text.txt"
+            subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
+
+            # 既存ファイルがあればスキップ
+            if subtitle_path.exists():
+                print(f"[SKIP] 既に字幕ファイルが存在します: {subtitle_path.name}")
+                success_count += 1
+                continue
+
+            # 音声 → 字幕
+            generate_subtitle(str(text_path), str(audio_file), str(subtitle_path))
+
+            print(f"✓ {company_name} の字幕生成が完了しました")
+            success_count += 1
+
+        except Exception as e:
+            print(f"✗ エラーが発生しました: {company_name}")
+            print(f"  エラー内容: {type(e).__name__}: {e}")
+            error_count += 1
+
+    # 最終結果を表示
+    print(f"\n{'=' * 60}")
+    print(f"字幕生成完了")
+    print(f"{'=' * 60}")
+    print(f"成功: {success_count} 件")
+    print(f"失敗: {error_count} 件")
+    print(f"合計: {len(audio_files)} 件")
+
+    return success_count > 0
+
+
 def show_menu():
     """メニューを表示"""
     print("\n" + "=" * 60)
@@ -324,8 +390,9 @@ def show_menu():
     print("2. XBRLダウンロードのみ")
     print("3. qualitative.htm抽出のみ")
     print("4. テキスト抽出のみ")
-    print("5. 動画作成のみ")
-    print("6. YouTubeアップロードのみ")
+    print("5. 字幕生成のみ")
+    print("6. 動画作成のみ")
+    print("7. YouTubeアップロードのみ")
     print("0. 終了")
     print("=" * 60)
 
@@ -334,7 +401,7 @@ def main():
     """メイン処理"""
     while True:
         show_menu()
-        choice = input("\n選択してください (0-6): ").strip()
+        choice = input("\n選択してください (0-7): ").strip()
 
         if choice == "0":
             print("\n終了します")
@@ -385,15 +452,19 @@ def main():
             extract_texts()
 
         elif choice == "5":
+            # 字幕生成のみ
+            generate_subtitles()
+
+        elif choice == "6":
             # 動画作成のみ
             create_videos()
 
-        elif choice == "6":
+        elif choice == "7":
             # YouTubeアップロードのみ
             upload_videos()
 
         else:
-            print("✗ 無効な選択です。0-6の数字を入力してください")
+            print("✗ 無効な選択です。0-7の数字を入力してください")
 
 
 if __name__ == "__main__":
