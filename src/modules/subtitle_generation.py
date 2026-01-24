@@ -1,51 +1,7 @@
 # src/modules/subtitle_generation.py
 
-from moviepy import AudioFileClip
+import whisper
 from pathlib import Path
-import re
-
-
-def split_text_into_chunks(text: str, max_chars: int = 40) -> list[str]:
-    """
-    テキストを字幕用のチャンクに分割
-
-    Args:
-        text: 分割するテキスト
-        max_chars: 1行あたりの最大文字数
-
-    Returns:
-        分割されたテキストのリスト
-    """
-    # 句点や改行で文章を分割
-    sentences = re.split(r'([。\n]+)', text)
-
-    chunks = []
-    current_chunk = ""
-
-    for i in range(0, len(sentences), 2):
-        sentence = sentences[i]
-        delimiter = sentences[i + 1] if i + 1 < len(sentences) else ""
-
-        # 空の文を無視
-        if not sentence.strip():
-            continue
-
-        full_sentence = sentence + delimiter
-
-        # 現在のチャンクに追加しても最大文字数以内なら追加
-        if len(current_chunk) + len(full_sentence) <= max_chars:
-            current_chunk += full_sentence
-        else:
-            # チャンクを保存して新しいチャンクを開始
-            if current_chunk.strip():
-                chunks.append(current_chunk.strip())
-            current_chunk = full_sentence
-
-    # 最後のチャンクを追加
-    if current_chunk.strip():
-        chunks.append(current_chunk.strip())
-
-    return chunks
 
 
 def format_timestamp(seconds: float) -> str:
@@ -67,65 +23,62 @@ def format_timestamp(seconds: float) -> str:
 
 
 def generate_subtitle(text_path: str, audio_path: str, output_path: str,
-                      max_chars: int = 40, min_duration: float = 2.0) -> None:
+                      model_size: str = "base") -> None:
     """
-    テキストと音声から字幕ファイル(.srt)を生成
+    Whisperを使って音声から字幕ファイル(.srt)を生成
 
     Args:
-        text_path: テキストファイルのパス
+        text_path: テキストファイルのパス（使用しないが互換性のため残す）
         audio_path: 音声ファイルのパス
         output_path: 出力する字幕ファイル(.srt)のパス
-        max_chars: 1行あたりの最大文字数（デフォルト: 40）
-        min_duration: 1字幕あたりの最小表示時間（秒）（デフォルト: 2.0）
+        model_size: Whisperモデルのサイズ ("tiny", "base", "small", "medium", "large")
+                   - tiny: 最速、精度低
+                   - base: バランス（推奨）
+                   - small: 高精度、少し遅い
+                   - medium/large: 最高精度、かなり遅い
     """
-    print(f"[INFO] Generating subtitle from: {text_path}")
+    print(f"[INFO] Generating subtitle from audio: {audio_path}")
+    print(f"[INFO] Loading Whisper model: {model_size}")
 
-    # テキストを読み込み
-    with open(text_path, 'r', encoding='utf-8') as f:
-        text = f.read()
+    # Whisperモデルをロード
+    model = whisper.load_model(model_size)
 
-    # 音声の長さを取得
-    audio = AudioFileClip(audio_path)
-    total_duration = audio.duration
-    audio.close()
+    # 音声を文字起こし（タイムスタンプ付き）
+    print(f"[INFO] Transcribing audio... (this may take a while)")
+    result = model.transcribe(
+        audio_path,
+        language="ja",  # 日本語
+        verbose=False,
+        word_timestamps=True  # 単語レベルのタイムスタンプを取得
+    )
 
-    print(f"[INFO] Audio duration: {total_duration:.2f} seconds")
+    # セグメント（文章の区切り）を取得
+    segments = result['segments']
 
-    # テキストを字幕チャンクに分割
-    chunks = split_text_into_chunks(text, max_chars=max_chars)
-
-    if not chunks:
-        print("[WARNING] No text chunks to create subtitles")
+    if not segments:
+        print("[WARNING] No segments found in transcription")
         return
 
-    print(f"[INFO] Created {len(chunks)} subtitle chunks")
-
-    # 各チャンクの表示時間を計算
-    duration_per_chunk = total_duration / len(chunks)
-
-    # 最小表示時間を確保（字幕が速すぎる場合の対策）
-    if duration_per_chunk < min_duration:
-        print(f"[WARNING] Calculated duration ({duration_per_chunk:.2f}s) is less than minimum ({min_duration}s)")
-        print(f"[WARNING] Using minimum duration: {min_duration}s per subtitle")
-        duration_per_chunk = min_duration
+    print(f"[INFO] Created {len(segments)} subtitle segments")
 
     # SRT形式で字幕を生成
     srt_content = []
 
-    for i, chunk in enumerate(chunks):
+    for i, segment in enumerate(segments):
         # 字幕番号（1から始まる）
         subtitle_number = i + 1
 
         # 開始・終了時間
-        start_time = i * duration_per_chunk
-        end_time = (i + 1) * duration_per_chunk
+        start_time = segment['start']
+        end_time = segment['end']
+        text = segment['text'].strip()
 
         # タイムスタンプを作成
         start_timestamp = format_timestamp(start_time)
         end_timestamp = format_timestamp(end_time)
 
         # SRT形式のエントリを作成
-        srt_entry = f"{subtitle_number}\n{start_timestamp} --> {end_timestamp}\n{chunk}\n"
+        srt_entry = f"{subtitle_number}\n{start_timestamp} --> {end_timestamp}\n{text}\n"
         srt_content.append(srt_entry)
 
     # ファイルに保存
@@ -133,27 +86,31 @@ def generate_subtitle(text_path: str, audio_path: str, output_path: str,
         f.write('\n'.join(srt_content))
 
     print(f"[INFO] Subtitle saved to: {output_path}")
-    print(f"[INFO] Total subtitles: {len(chunks)}")
-    print(f"[INFO] Duration per subtitle: {duration_per_chunk:.2f} seconds")
+    print(f"[INFO] Total subtitles: {len(segments)}")
+
+    # 文字起こし結果も表示（確認用）
+    print(f"[INFO] Transcribed text preview:")
+    full_text = ' '.join([seg['text'].strip() for seg in segments[:3]])
+    print(f"  {full_text}...")
 
 
 # ===== デバッグ実行 =====
 if __name__ == "__main__":
     project_root = Path(__file__).parent.parent.parent
 
-    test_text = project_root / "data" / "processed" / "extracted_text.txt"
     test_audio = project_root / "data" / "processed" / "output.mp3"
     test_output = project_root / "data" / "processed" / "subtitle.srt"
 
     print("=" * 50)
-    print("字幕生成テスト開始")
+    print("字幕生成テスト開始（Whisper使用）")
     print("=" * 50)
 
-    if test_text.exists() and test_audio.exists():
+    if test_audio.exists():
         generate_subtitle(
-            text_path=str(test_text),
+            text_path="",  # 使用しない
             audio_path=str(test_audio),
-            output_path=str(test_output)
+            output_path=str(test_output),
+            model_size="base"  # base を推奨
         )
 
         print("\n" + "=" * 50)
@@ -172,5 +129,4 @@ if __name__ == "__main__":
                     print()
     else:
         print("テストファイルが見つかりません")
-        print(f"テキスト: {test_text.exists()}")
         print(f"音声: {test_audio.exists()}")
