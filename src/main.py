@@ -87,10 +87,10 @@ def process_single_file_video(qualitative_path, processed_dir):
         print(f"[3/5] 音声生成中...")
         generate_audio(str(text_path), str(audio_path))
 
-        # 4. テキスト + 音声 → 字幕
+        # 4. テキスト + 音声 → 字幕（company_name引数を削除）
         print(f"[4/5] 字幕生成中...")
         generate_subtitle(str(text_path), str(audio_path), str(subtitle_path),
-                          model_size="small", company_name=company_name)
+                          model_size="small")
 
         # 5. 音声 → 動画（企業名を渡してサムネイルとタイトルに反映）
         print(f"[5/5] 動画生成中...")
@@ -425,9 +425,9 @@ def generate_subtitles():
                 success_count += 1
                 continue
 
-            # 音声 → 字幕
+            # 音声 → 字幕（company_name引数を削除）
             generate_subtitle(str(text_path), str(audio_file), str(subtitle_path),
-                              model_size="small", company_name=company_name)
+                              model_size="small")
 
             print(f"✓ {company_name} の字幕生成が完了しました")
             success_count += 1
@@ -453,7 +453,7 @@ def show_menu():
     print("\n" + "=" * 60)
     print("XBRL → YouTube 自動化ツール")
     print("=" * 60)
-    print("1. すべて実行（ダウンロード → 抽出 → 動画作成 → アップロード）")
+    print("1. すべて実行(ダウンロード → 抽出 → 動画作成 → アップロード)")
     print("2. XBRLダウンロードのみ")
     print("3. qualitative.htm抽出のみ")
     print("4. テキスト抽出のみ")
@@ -502,7 +502,7 @@ def main():
             upload_videos()
 
             print("\n" + "=" * 60)
-            print("すべての処理が完了しました！")
+            print("すべての処理が完了しました!")
             print("=" * 60)
 
         elif choice == "2":
