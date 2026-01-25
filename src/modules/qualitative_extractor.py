@@ -1,11 +1,13 @@
 """
 downloadsのzipフォルダ内のZIPファイルを解凍して
 qualitative.htmファイルだけを抽出する
+（企業名と日付をファイル名に含める）
 """
 
 import zipfile
 from pathlib import Path
 import shutil
+import re
 
 
 class QualitativeExtractor:
@@ -15,6 +17,37 @@ class QualitativeExtractor:
         self.zip_dir = project_root / zip_dir
         self.output_dir = project_root / output_dir
         self.output_dir.mkdir(parents=True, exist_ok=True)
+
+    def extract_company_and_date(self, zip_filename):
+        """
+        ZIPファイル名から企業名と日付を抽出
+
+        想定形式:
+        - {企業名}_{YYYYMMDD}.zip
+        - {企業名}_{YYYYMMDD}_1.zip (連番付き)
+        - {企業名}.zip (日付なし)
+
+        Returns:
+            tuple: (企業名, 日付 or None)
+        """
+        zip_base_name = Path(zip_filename).stem
+
+        # アンダースコアで分割
+        parts = zip_base_name.split('_')
+
+        if len(parts) == 1:
+            # アンダースコアがない場合は全体を企業名とする
+            return zip_base_name, None
+
+        company_name = parts[0]
+
+        # 2番目の要素が日付（YYYYMMDD形式）かチェック
+        if len(parts) >= 2 and re.match(r'^\d{8}$', parts[1]):
+            pub_date = parts[1]
+            return company_name, pub_date
+        else:
+            # 日付がない場合
+            return company_name, None
 
     def extract_qualitative_files(self):
         """すべてのZIPファイルからqualitative.htmを抽出"""
@@ -47,19 +80,22 @@ class QualitativeExtractor:
                         print(f"  [SKIP] qualitative.htmが見つかりません")
                         continue
 
+                    # ZIPファイル名から企業名と日付を抽出
+                    company_name, pub_date = self.extract_company_and_date(zip_path.name)
+
+                    if pub_date:
+                        print(f"  [INFO] 企業名: {company_name}, 日付: {pub_date}")
+                    else:
+                        print(f"  [INFO] 企業名: {company_name} (日付なし)")
+
                     # 見つかったqualitative.htmを抽出
                     for qual_file in qualitative_files:
-                        # 元のZIPファイル名から企業名を抽出
-                        # ファイル名形式: {企業名}_{元のファイル名}.zip
-                        zip_base_name = zip_path.stem
-                        # 最初のアンダースコアまでを企業名とする
-                        parts = zip_base_name.split('_', 1)
-                        if len(parts) >= 1:
-                            company_name = parts[0]
+                        # 出力ファイル名を生成
+                        if pub_date:
+                            output_filename = f"{company_name}_{pub_date}_qualitative.htm"
                         else:
-                            company_name = zip_base_name
+                            output_filename = f"{company_name}_qualitative.htm"
 
-                        output_filename = f"{company_name}_qualitative.htm"
                         output_path = self.output_dir / output_filename
 
                         # ファイルを抽出
