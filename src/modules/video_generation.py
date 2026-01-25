@@ -7,7 +7,7 @@ import os
 FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
 
 
-def generate_thumbnail(output_path: str, company_name: str | None = None) -> None:
+def generate_thumbnail(output_path: str, company_name: str = None) -> None:
     """動画用のカスタムサムネイルを生成"""
 
     print("[INFO] Generating thumbnail...")
@@ -29,7 +29,7 @@ def generate_thumbnail(output_path: str, company_name: str | None = None) -> Non
         TextClip(
             text=title_text,
             font=FONT_PATH,
-            font_size=90,  # かなり大きく
+            font_size=90,
             color="white",
             size=(1100, None),
             method="caption"
@@ -48,8 +48,8 @@ def generate_thumbnail(output_path: str, company_name: str | None = None) -> Non
     print(f"[INFO] Thumbnail saved to: {thumbnail_path}")
 
 
-def generate_video(audio_path: str, output_path: str, text_content: str | None = None,
-                   company_name: str | None = None) -> None:
+def generate_video(audio_path: str, output_path: str, text_content: str = None,
+                   company_name: str = None) -> None:
     print(f"[INFO] Reading audio from: {audio_path}")
 
     # ===== フォント存在チェック（重要）=====
@@ -60,7 +60,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
     duration = audio.duration
 
     print(f"[INFO] Audio duration: {duration:.2f} seconds")
-    print("[INFO] Adding title and body text (simultaneous)")
+    print("[INFO] Creating video with scrolling text")
 
     # ===== 背景 =====
     background = (
@@ -70,8 +70,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
 
     clips = [background]
 
-    # ===== タイトル（即時表示）=====
-    # タイトルテキスト作成
+    # ===== タイトル（固定表示）=====
     if company_name:
         title_text = f"{company_name} 決算サマリー"
     else:
@@ -93,23 +92,53 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
 
     clips.append(title_clip)
 
-    # ===== 本文（即時表示）=====
+    # ===== 本文（スクロール表示）=====
     if text_content:
+        # フォントサイズを大きく（13 → 24）
         body_clip = (
             TextClip(
                 text=text_content,
                 font=FONT_PATH,
-                font_size=13,
+                font_size=24,  # フォントサイズを大きく
                 color="white",
                 size=(1100, None),
                 method="caption"
             )
             .with_start(0)
             .with_duration(duration)
-            .with_position((90, 120))
         )
 
+        # テキストの高さを取得
+        text_height = body_clip.h
+        screen_height = 720
+        scroll_area_top = 100  # タイトルの下
+        scroll_area_bottom = 720  # 画面下端
+        scroll_area_height = scroll_area_bottom - scroll_area_top
+
+        # スクロール速度を計算（画面外から画面外まで移動）
+        # 開始位置: 画面下端、終了位置: テキスト全体が画面上に消える位置
+        start_y = screen_height
+        end_y = scroll_area_top - text_height
+
+        # スクロール距離
+        scroll_distance = start_y - end_y
+
+        # スクロール関数: 時間に応じてY座標を変化
+        def scroll_position(t):
+            # t: 現在の時間（0 ~ duration）
+            # 線形にスクロール
+            progress = t / duration  # 0.0 ~ 1.0
+            current_y = start_y - (scroll_distance * progress)
+            return ("center", current_y)
+
+        # スクロール適用
+        body_clip = body_clip.with_position(scroll_position)
+
         clips.append(body_clip)
+
+        print(f"[INFO] Text height: {text_height}px")
+        print(f"[INFO] Scroll distance: {scroll_distance}px")
+        print(f"[INFO] Scroll speed: {scroll_distance / duration:.2f}px/sec")
 
     # ===== 合成 & 音声 =====
     video = CompositeVideoClip(clips).with_audio(audio)
@@ -128,6 +157,10 @@ def generate_video(audio_path: str, output_path: str, text_content: str | None =
     # ===== サムネイル生成 =====
     generate_thumbnail(output_path, company_name=company_name)
 
+    # リソースのクリーンアップ
+    audio.close()
+    video.close()
+
 
 # ===== デバッグ実行 =====
 if __name__ == "__main__":
@@ -135,6 +168,7 @@ if __name__ == "__main__":
 
     test_audio = project_root / "data" / "processed" / "output.mp3"
     test_text = project_root / "data" / "processed" / "extracted_text.txt"
+    test_subtitle = project_root / "data" / "processed" / "subtitle.srt"
     test_output = project_root / "data" / "processed" / "output.mp4"
 
     print("=" * 50)
@@ -146,11 +180,17 @@ if __name__ == "__main__":
         text_content = test_text.read_text(encoding="utf-8")
         print(f"[INFO] テキスト読み込み: {len(text_content)} 文字")
 
+    # 字幕ファイルの確認
+    if test_subtitle.exists():
+        print(f"[INFO] 字幕ファイル検出: {test_subtitle}")
+    else:
+        print(f"[INFO] 字幕ファイルなし（スクロールテキストのみ）")
+
     generate_video(
         audio_path=str(test_audio),
         output_path=str(test_output),
         text_content=text_content,
-        company_name="トヨタ自動車"  # テスト用の企業名
+        company_name="トヨタ自動車"
     )
 
     print("=" * 50)
