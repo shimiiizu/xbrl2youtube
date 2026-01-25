@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="公開日をファイル名に付与する仕様に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="公開日をファイル名に付与する仕様に変更（シンプルに）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/xbrl_downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/xbrl_downloader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,14 +240,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00003" summary="とりあえず、テキスト抽出までできるようになった。">
-      <option name="closed" value="true" />
-      <created>1768110067017</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1768110067017</updated>
     </task>
     <task id="LOCAL-00004" summary="抽出したテキストを保存&#10;テキストを音声に変換する機能を追加">
       <option name="closed" value="true" />
@@ -634,7 +625,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769312910377</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="公開日をファイル名に付与する仕様に変更（シンプルに）">
+      <option name="closed" value="true" />
+      <created>1769319370844</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1769319370844</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -661,7 +660,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="メニュー形式で選択可能に変更" />
     <MESSAGE value="インポートパスの誤りを修正" />
     <MESSAGE value="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更" />
     <MESSAGE value="抽出終了条件を変更" />
@@ -686,7 +684,8 @@
     <MESSAGE value="字幕スクロール。字幕ファイル読み込み機能追加" />
     <MESSAGE value="企業名の入れ替えを簡単に変更" />
     <MESSAGE value="公開日をファイル名に付与する仕様に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="公開日をファイル名に付与する仕様に変更" />
+    <MESSAGE value="公開日をファイル名に付与する仕様に変更（シンプルに）" />
+    <option name="LAST_COMMIT_MESSAGE" value="公開日をファイル名に付与する仕様に変更（シンプルに）" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

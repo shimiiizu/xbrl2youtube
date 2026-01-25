@@ -96,18 +96,27 @@ class TdnetXBRLDownloader:
         new_files = zip_files[:len(zip_files) - download_before_count]
 
         renamed_count = 0
-        for zip_file in new_files:
+        for idx, zip_file in enumerate(new_files, 1):
             # 企業名を含む新しいファイル名を作成
             # ファイル名に使えない文字を除去
             safe_company_name = re.sub(r'[\\/:*?"<>|]', '', company_name)
 
-            # 公開日がある場合はファイル名に含める
+            # ファイル名形式: {企業名}_{YYYYMMDD}.zip または {企業名}.zip
             if pub_date:
-                new_name = f"{safe_company_name}_{pub_date}_{zip_file.name}"
+                new_name = f"{safe_company_name}_{pub_date}.zip"
             else:
-                new_name = f"{safe_company_name}_{zip_file.name}"
+                new_name = f"{safe_company_name}.zip"
 
+            # 同じ名前のファイルが既に存在する場合は連番を付ける
             new_path = zip_file.parent / new_name
+            counter = 1
+            while new_path.exists():
+                if pub_date:
+                    new_name = f"{safe_company_name}_{pub_date}_{counter}.zip"
+                else:
+                    new_name = f"{safe_company_name}_{counter}.zip"
+                new_path = zip_file.parent / new_name
+                counter += 1
 
             try:
                 zip_file.rename(new_path)
@@ -117,7 +126,6 @@ class TdnetXBRLDownloader:
                 print(f"[RENAME ERROR] {zip_file.name}: {e}")
 
         return renamed_count
-
     # -------------------------------------------------
     def download_xbrl_by_company(self, company, pub_date=None, max_files=3):
         print(f"\n=== JPX検索開始: {company} ===")
