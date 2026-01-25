@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="字幕スクロール。字幕ファイル読み込み機能追加">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="企業名の入れ替えを簡単に変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/youtube_upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/youtube_upload.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,8 +86,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Shimizu/PycharmProjects/xbrl2youtube/src/modules"
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/Shimizu/PycharmProjects/xbrl2youtube/src/modules",
+    "to.speed.mode.migration.done": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -98,7 +102,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.video_generation">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -114,29 +118,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="qualitative_extractor" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="xbrl2youtube" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/modules" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/qualitative_extractor.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -214,13 +195,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="youtube_upload" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/modules" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/youtube_upload.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.video_generation" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.youtube_upload" />
+        <item itemvalue="Python.video_generation" />
         <item itemvalue="Python.subtitle_generation (1)" />
         <item itemvalue="Python.text_extraction" />
-        <item itemvalue="Python.qualitative_extractor" />
       </list>
     </recent_temporary>
   </component>
@@ -238,14 +242,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00001" summary="ディレクトリ構成の作成&#10;ファイルの準備">
-      <option name="closed" value="true" />
-      <created>1768105966883</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1768105966883</updated>
     </task>
     <task id="LOCAL-00002" summary="各モジュール＆mainスクリプトの下書き">
       <option name="closed" value="true" />
@@ -631,7 +627,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769302092264</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="企業名の入れ替えを簡単に変更">
+      <option name="closed" value="true" />
+      <created>1769302854069</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1769302854069</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -658,7 +662,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更" />
     <MESSAGE value="認証のパスを修正" />
     <MESSAGE value="メニュー形式で選択可能に変更" />
     <MESSAGE value="インポートパスの誤りを修正" />
@@ -683,7 +686,8 @@
     <MESSAGE value="エラーを修正" />
     <MESSAGE value="音声ファイル生成機能を追加" />
     <MESSAGE value="字幕スクロール。字幕ファイル読み込み機能追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="字幕スクロール。字幕ファイル読み込み機能追加" />
+    <MESSAGE value="企業名の入れ替えを簡単に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="企業名の入れ替えを簡単に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

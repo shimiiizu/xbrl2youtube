@@ -156,21 +156,35 @@ def upload_to_youtube(video_path: str,
 
 
 if __name__ == "__main__":
-    # デバッグ用
+    # ===== ここを変更するだけで企業を切り替え可能 =====
+    COMPANY_NAME = "ヒガシＨＤ"
+    # =============================================
+
     project_root = Path(__file__).parent.parent.parent
-    test_video = project_root / "data" / "processed" / "output.mp4"
-    test_subtitle = project_root / "data" / "processed" / "subtitle.srt"
+    processed_dir = project_root / "data" / "processed"
+
+    # 企業名から各ファイルパスを自動生成
+    test_video = processed_dir / f"{COMPANY_NAME}_output.mp4"
+    test_subtitle = processed_dir / f"{COMPANY_NAME}_subtitle.srt"
 
     print("=" * 50)
-    print("YouTube アップロードテスト開始")
+    print(f"YouTube アップロードテスト開始: {COMPANY_NAME}")
     print("=" * 50)
+
+    # ファイル存在確認
+    print(f"[CHECK] 動画ファイル: {test_video.exists()}")
+    print(f"[CHECK] 字幕ファイル: {test_subtitle.exists()}")
+
+    if not test_video.exists():
+        print(f"[ERROR] 動画ファイルが見つかりません: {test_video}")
+        exit(1)
 
     video_id = upload_to_youtube(
         video_path=str(test_video),
-        title="トヨタ自動車 2024年Q4決算サマリー",
-        description="トヨタ自動車の2024年第4四半期決算短信の内容を音声で解説した動画です。",
+        title=f"{COMPANY_NAME} 決算サマリー",
+        description=f"{COMPANY_NAME}の決算短信の内容を音声で解説した動画です。",
         privacy="private",
-        company_name="トヨタ自動車",
+        company_name=COMPANY_NAME,
         subtitle_path=str(test_subtitle) if test_subtitle.exists() else None
     )
 

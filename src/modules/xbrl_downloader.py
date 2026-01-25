@@ -1,11 +1,12 @@
 """
 TDnet RSS → 企業名取得 → JPX企業名検索 → XBRLダウンロード
-（企業名をファイル名に含める仕様）
+（企業名と公開日をファイル名に含める仕様）
 """
 
 import requests
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from datetime import datetime
 import time
 import re
 import os
@@ -47,22 +48,41 @@ class TdnetXBRLDownloader:
             if "決算短信" not in title:
                 continue
 
+            # 企業名抽出
             m = re.match(r"^([^:：]+)[：:]", title)
             if not m:
                 print(f"[SKIP] タイトル解析失敗: {title}")
                 continue
 
             company = re.sub(r"\b\d{4}\b", "", m.group(1)).strip()
-            print(f"[RSS] 企業名抽出: {company}")
 
-            items.append({"company": company, "title": title})
+            # 公開日取得（pubDate）
+            pub_date_str = item.findtext("pubDate", "").strip()
+            pub_date = None
+
+            if pub_date_str:
+                try:
+                    # RFC 2822形式をパース: "Mon, 27 Jan 2025 15:00:00 +0900"
+                    dt = datetime.strptime(pub_date_str, "%a, %d %b %Y %H:%M:%S %z")
+                    pub_date = dt.strftime("%Y%m%d")  # YYYYMMDD形式
+                    print(f"[RSS] 企業名: {company}, 公開日: {pub_date}")
+                except Exception as e:
+                    print(f"[WARN] 日付解析失敗: {pub_date_str} ({e})")
+            else:
+                print(f"[RSS] 企業名抽出: {company} (公開日なし)")
+
+            items.append({
+                "company": company,
+                "title": title,
+                "pub_date": pub_date
+            })
 
         print(f"RSS解析完了: {len(items)} 社")
         return items
 
     # -------------------------------------------------
-    def rename_downloaded_files(self, company_name, download_before_count):
-        """ダウンロードされたファイルに企業名を付与"""
+    def rename_downloaded_files(self, company_name, pub_date, download_before_count):
+        """ダウンロードされたファイルに企業名と公開日を付与"""
         time.sleep(3)  # ダウンロード完了を待つ
 
         # ダウンロードフォルダ内の新しいZIPファイルを検索
@@ -80,7 +100,13 @@ class TdnetXBRLDownloader:
             # 企業名を含む新しいファイル名を作成
             # ファイル名に使えない文字を除去
             safe_company_name = re.sub(r'[\\/:*?"<>|]', '', company_name)
-            new_name = f"{safe_company_name}_{zip_file.name}"
+
+            # 公開日がある場合はファイル名に含める
+            if pub_date:
+                new_name = f"{safe_company_name}_{pub_date}_{zip_file.name}"
+            else:
+                new_name = f"{safe_company_name}_{zip_file.name}"
+
             new_path = zip_file.parent / new_name
 
             try:
@@ -93,8 +119,10 @@ class TdnetXBRLDownloader:
         return renamed_count
 
     # -------------------------------------------------
-    def download_xbrl_by_company(self, company, max_files=3):
+    def download_xbrl_by_company(self, company, pub_date=None, max_files=3):
         print(f"\n=== JPX検索開始: {company} ===")
+        if pub_date:
+            print(f"[INFO] 公開日: {pub_date}")
 
         # ダウンロード前のファイル数をカウント
         download_before_count = len(list(self.download_dir.glob("*.zip")))
@@ -190,9 +218,9 @@ class TdnetXBRLDownloader:
             # ブラウザを閉じる前にファイル名を変更
             driver.quit()
 
-            # ダウンロードされたファイルに企業名を付与
+            # ダウンロードされたファイルに企業名と公開日を付与
             if clicked > 0:
-                self.rename_downloaded_files(company, download_before_count)
+                self.rename_downloaded_files(company, pub_date, download_before_count)
 
             return clicked
 
@@ -220,7 +248,9 @@ class TdnetXBRLDownloader:
         for idx, item in enumerate(unique, 1):
             print(f"\n[{idx}/{len(unique)}] {item['company']}")
             total += self.download_xbrl_by_company(
-                item["company"], max_files_per_company
+                item["company"],
+                item.get("pub_date"),  # 公開日を渡す
+                max_files_per_company
             )
             time.sleep(3)
 

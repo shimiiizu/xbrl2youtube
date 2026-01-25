@@ -99,7 +99,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
             TextClip(
                 text=text_content,
                 font=FONT_PATH,
-                font_size=24,  # フォントサイズを大きく
+                font_size=30,  # フォントサイズを大きく
                 color="white",
                 size=(1100, None),
                 method="caption"
@@ -117,7 +117,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 
         # スクロール速度を計算（画面外から画面外まで移動）
         # 開始位置: 画面下端、終了位置: テキスト全体が画面上に消える位置
-        start_y = screen_height
+        start_y = screen_height-100
         end_y = scroll_area_top - text_height
 
         # スクロール距離
@@ -165,7 +165,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 # ===== デバッグ実行 =====
 if __name__ == "__main__":
     # ===== ここを変更するだけで企業を切り替え可能 =====
-    COMPANY_NAME = "オービーシステム"
+    COMPANY_NAME = "ヒガシＨＤ"
     # =============================================
 
     project_root = Path(__file__).parent.parent.parent
