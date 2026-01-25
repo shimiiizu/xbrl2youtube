@@ -6,7 +6,7 @@ from pathlib import Path
 # modulesフォルダをパスに追加
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
 
-# 各モジュールをインポート
+# 既存モジュールから必要な関数をインポート
 from xbrl_downloader import TdnetXBRLDownloader
 from qualitative_extractor import QualitativeExtractor
 from text_extraction import extract_text_from_xbrl, save_text
@@ -14,438 +14,6 @@ from audio_generation import generate_audio
 from subtitle_generation import generate_subtitle
 from video_generation import generate_video
 from youtube_upload import upload_to_youtube
-
-
-def download_xbrl_files(limit=10):
-    """XBRLファイルをダウンロード"""
-    print("\n" + "=" * 60)
-    print("ステップ1: XBRLファイルのダウンロード")
-    print("=" * 60)
-
-    try:
-        downloader = TdnetXBRLDownloader("downloads")
-        downloader.run(limit=limit, max_files_per_company=3)
-        print("✓ ダウンロード完了")
-        return True
-    except Exception as e:
-        print(f"✗ ダウンロードエラー: {type(e).__name__}: {e}")
-        return False
-
-
-def extract_qualitative_files():
-    """ZIPファイルからqualitative.htmを抽出"""
-    print("\n" + "=" * 60)
-    print("ステップ2: qualitative.htmの抽出")
-    print("=" * 60)
-
-    try:
-        extractor = QualitativeExtractor()
-        count = extractor.extract_qualitative_files()
-
-        if count > 0:
-            print("✓ 抽出完了")
-            return True
-        else:
-            print("✗ 抽出するファイルがありませんでした")
-            return False
-    except Exception as e:
-        print(f"✗ 抽出エラー: {type(e).__name__}: {e}")
-        return False
-
-
-def process_single_file_video(qualitative_path, processed_dir):
-    """1つのqualitative.htmファイルから動画を作成"""
-    try:
-        # ファイル名から企業名を抽出
-        file_stem = qualitative_path.stem
-        company_name = file_stem.replace('_qualitative', '')
-
-        print(f"\n{'=' * 60}")
-        print(f"処理開始: {company_name}")
-        print(f"{'=' * 60}")
-
-        # 出力ファイルのパスを設定
-        text_path = processed_dir / f"{company_name}_extracted_text.txt"
-        audio_path = processed_dir / f"{company_name}_output.mp3"
-        subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
-        video_path = processed_dir / f"{company_name}_output.mp4"
-
-        # 既存ファイルがあればスキップ
-        if video_path.exists():
-            print(f"[SKIP] 既に動画ファイルが存在します: {video_path.name}")
-            return True
-
-        # 1. XBRL → テキスト抽出
-        print(f"[1/5] テキスト抽出中...")
-        text = extract_text_from_xbrl(str(qualitative_path))
-
-        # 2. テキストをファイルに保存
-        print(f"[2/5] テキスト保存中...")
-        save_text(text, str(text_path))
-
-        # 3. テキストファイル → 音声
-        print(f"[3/5] 音声生成中...")
-        generate_audio(str(text_path), str(audio_path))
-
-        # 4. テキスト + 音声 → 字幕（company_name引数を削除）
-        print(f"[4/5] 字幕生成中...")
-        generate_subtitle(str(text_path), str(audio_path), str(subtitle_path),
-                          model_size="small")
-
-        # 5. 音声 → 動画（企業名を渡してサムネイルとタイトルに反映）
-        print(f"[5/5] 動画生成中...")
-        generate_video(
-            audio_path=str(audio_path),
-            output_path=str(video_path),
-            text_content=text,
-            company_name=company_name
-        )
-
-        print(f"✓ {company_name} の動画作成が完了しました")
-        return True
-
-    except Exception as e:
-        print(f"✗ エラーが発生しました: {company_name}")
-        print(f"  エラー内容: {type(e).__name__}: {e}")
-        return False
-
-
-def upload_single_file(processed_dir, video_filename):
-    """1つの動画ファイルをYouTubeにアップロード"""
-    try:
-        # ファイル名から企業名を抽出
-        company_name = video_filename.replace('_output.mp4', '')
-
-        print(f"\n{'=' * 60}")
-        print(f"アップロード開始: {company_name}")
-        print(f"{'=' * 60}")
-
-        # ファイルパスを設定
-        video_path = processed_dir / video_filename
-        subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
-
-        if not video_path.exists():
-            print(f"✗ 動画ファイルが見つかりません: {video_path}")
-            return False
-
-        # YouTubeへアップロード
-        video_title = f"{company_name} 決算サマリー"
-        video_description = f"{company_name}の決算短信の内容を音声で解説した動画です。"
-
-        print(f"[INFO] YouTubeアップロード中: {video_title}")
-        upload_to_youtube(
-            video_path=str(video_path),
-            title=video_title,
-            description=video_description,
-            privacy="private",
-            company_name=company_name,
-            subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
-        )
-
-        print(f"✓ {company_name} のアップロードが完了しました")
-        return True
-
-    except Exception as e:
-        print(f"✗ アップロードエラーが発生しました: {company_name}")
-        print(f"  エラー内容: {type(e).__name__}: {e}")
-        return False
-
-
-def create_videos():
-    """動画作成"""
-    print("\n" + "=" * 60)
-    print("ステップ3: 動画作成")
-    print("=" * 60)
-
-    # パスの設定
-    project_root = Path(__file__).parent.parent
-    qualitative_dir = project_root / "downloads" / "qualitative"
-    processed_dir = project_root / "data" / "processed"
-
-    # 処理済みディレクトリを作成
-    processed_dir.mkdir(parents=True, exist_ok=True)
-
-    # qualitativeフォルダ内のすべての.htmファイルを取得
-    htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
-
-    if not htm_files:
-        print("✗ 処理対象のqualitative.htmファイルが見つかりません")
-        print(f"  検索パス: {qualitative_dir}")
-        return False
-
-    print(f"検出されたファイル数: {len(htm_files)}")
-
-    # 処理結果のカウント
-    success_count = 0
-    error_count = 0
-
-    # 各ファイルを順番に処理
-    for idx, htm_file in enumerate(htm_files, 1):
-        print(f"\n進捗: [{idx}/{len(htm_files)}]")
-
-        if process_single_file_video(htm_file, processed_dir):
-            success_count += 1
-        else:
-            error_count += 1
-
-    # 最終結果を表示
-    print(f"\n{'=' * 60}")
-    print(f"動画作成完了")
-    print(f"{'=' * 60}")
-    print(f"成功: {success_count} 件")
-    print(f"失敗: {error_count} 件")
-    print(f"合計: {len(htm_files)} 件")
-
-    return success_count > 0
-
-
-def upload_videos():
-    """YouTubeアップロード"""
-    print("\n" + "=" * 60)
-    print("ステップ4: YouTubeアップロード")
-    print("=" * 60)
-
-    # パスの設定
-    project_root = Path(__file__).parent.parent
-    processed_dir = project_root / "data" / "processed"
-
-    # processedフォルダ内のすべての.mp4ファイルを取得
-    video_files = list(processed_dir.glob("*_output.mp4"))
-
-    if not video_files:
-        print("✗ アップロード対象の動画ファイルが見つかりません")
-        print(f"  検索パス: {processed_dir}")
-        return False
-
-    print(f"検出された動画ファイル数: {len(video_files)}")
-
-    # 処理結果のカウント
-    success_count = 0
-    error_count = 0
-
-    # 各動画を順番にアップロード
-    for idx, video_file in enumerate(video_files, 1):
-        print(f"\n進捗: [{idx}/{len(video_files)}]")
-
-        if upload_single_file(processed_dir, video_file.name):
-            success_count += 1
-        else:
-            error_count += 1
-
-    # 最終結果を表示
-    print(f"\n{'=' * 60}")
-    print(f"YouTubeアップロード完了")
-    print(f"{'=' * 60}")
-    print(f"成功: {success_count} 件")
-    print(f"失敗: {error_count} 件")
-    print(f"合計: {len(video_files)} 件")
-
-    return success_count > 0
-
-
-def extract_texts():
-    """テキスト抽出のみ"""
-    print("\n" + "=" * 60)
-    print("ステップ: テキスト抽出")
-    print("=" * 60)
-
-    # パスの設定
-    project_root = Path(__file__).parent.parent
-    qualitative_dir = project_root / "downloads" / "qualitative"
-    processed_dir = project_root / "data" / "processed"
-
-    # 処理済みディレクトリを作成
-    processed_dir.mkdir(parents=True, exist_ok=True)
-
-    # qualitativeフォルダ内のすべての.htmファイルを取得
-    htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
-
-    if not htm_files:
-        print("✗ 処理対象のqualitative.htmファイルが見つかりません")
-        print(f"  検索パス: {qualitative_dir}")
-        return False
-
-    print(f"検出されたファイル数: {len(htm_files)}")
-
-    # 処理結果のカウント
-    success_count = 0
-    error_count = 0
-
-    # 各ファイルを順番に処理
-    for idx, htm_file in enumerate(htm_files, 1):
-        print(f"\n進捗: [{idx}/{len(htm_files)}]")
-
-        try:
-            # ファイル名から企業名を抽出
-            file_stem = htm_file.stem
-            company_name = file_stem.replace('_qualitative', '')
-
-            print(f"処理中: {company_name}")
-
-            # 出力ファイルのパスを設定
-            text_path = processed_dir / f"{company_name}_extracted_text.txt"
-
-            # 既存ファイルがあればスキップ
-            if text_path.exists():
-                print(f"[SKIP] 既にテキストファイルが存在します: {text_path.name}")
-                success_count += 1
-                continue
-
-            # XBRL → テキスト抽出
-            text = extract_text_from_xbrl(str(htm_file))
-
-            # テキストをファイルに保存
-            save_text(text, str(text_path))
-
-            print(f"✓ {company_name} のテキスト抽出が完了しました")
-            success_count += 1
-
-        except Exception as e:
-            print(f"✗ エラーが発生しました: {company_name}")
-            print(f"  エラー内容: {type(e).__name__}: {e}")
-            error_count += 1
-
-    # 最終結果を表示
-    print(f"\n{'=' * 60}")
-    print(f"テキスト抽出完了")
-    print(f"{'=' * 60}")
-    print(f"成功: {success_count} 件")
-    print(f"失敗: {error_count} 件")
-    print(f"合計: {len(htm_files)} 件")
-
-    return success_count > 0
-
-
-def generate_audios():
-    """音声生成のみ"""
-    print("\n" + "=" * 60)
-    print("ステップ: 音声生成")
-    print("=" * 60)
-
-    # パスの設定
-    project_root = Path(__file__).parent.parent
-    processed_dir = project_root / "data" / "processed"
-
-    # processedフォルダ内のすべての_extracted_text.txtファイルを取得
-    text_files = list(processed_dir.glob("*_extracted_text.txt"))
-
-    if not text_files:
-        print("✗ 処理対象のテキストファイルが見つかりません")
-        print(f"  検索パス: {processed_dir}")
-        return False
-
-    print(f"検出されたテキストファイル数: {len(text_files)}")
-
-    # 処理結果のカウント
-    success_count = 0
-    error_count = 0
-
-    # 各テキストファイルを順番に処理
-    for idx, text_file in enumerate(text_files, 1):
-        print(f"\n進捗: [{idx}/{len(text_files)}]")
-
-        try:
-            # ファイル名から企業名を抽出
-            company_name = text_file.stem.replace('_extracted_text', '')
-
-            print(f"処理中: {company_name}")
-
-            # 出力ファイルのパスを設定
-            audio_path = processed_dir / f"{company_name}_output.mp3"
-
-            # 既存ファイルがあればスキップ
-            if audio_path.exists():
-                print(f"[SKIP] 既に音声ファイルが存在します: {audio_path.name}")
-                success_count += 1
-                continue
-
-            # テキスト → 音声
-            generate_audio(str(text_file), str(audio_path))
-
-            print(f"✓ {company_name} の音声生成が完了しました")
-            success_count += 1
-
-        except Exception as e:
-            print(f"✗ エラーが発生しました: {company_name}")
-            print(f"  エラー内容: {type(e).__name__}: {e}")
-            error_count += 1
-
-    # 最終結果を表示
-    print(f"\n{'=' * 60}")
-    print(f"音声生成完了")
-    print(f"{'=' * 60}")
-    print(f"成功: {success_count} 件")
-    print(f"失敗: {error_count} 件")
-    print(f"合計: {len(text_files)} 件")
-
-    return success_count > 0
-
-
-def generate_subtitles():
-    """字幕生成のみ"""
-    print("\n" + "=" * 60)
-    print("ステップ: 字幕生成")
-    print("=" * 60)
-
-    # パスの設定
-    project_root = Path(__file__).parent.parent
-    processed_dir = project_root / "data" / "processed"
-
-    # processedフォルダ内のすべての.mp3ファイルを取得
-    audio_files = list(processed_dir.glob("*_output.mp3"))
-
-    if not audio_files:
-        print("✗ 処理対象の音声ファイルが見つかりません")
-        print(f"  検索パス: {processed_dir}")
-        return False
-
-    print(f"検出された音声ファイル数: {len(audio_files)}")
-
-    # 処理結果のカウント
-    success_count = 0
-    error_count = 0
-
-    # 各音声ファイルを順番に処理
-    for idx, audio_file in enumerate(audio_files, 1):
-        print(f"\n進捗: [{idx}/{len(audio_files)}]")
-
-        try:
-            # ファイル名から企業名を抽出
-            company_name = audio_file.stem.replace('_output', '')
-
-            print(f"処理中: {company_name}")
-
-            # 出力ファイルのパスを設定
-            text_path = processed_dir / f"{company_name}_extracted_text.txt"
-            subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
-
-            # 既存ファイルがあればスキップ
-            if subtitle_path.exists():
-                print(f"[SKIP] 既に字幕ファイルが存在します: {subtitle_path.name}")
-                success_count += 1
-                continue
-
-            # 音声 → 字幕（company_name引数を削除）
-            generate_subtitle(str(text_path), str(audio_file), str(subtitle_path),
-                              model_size="small")
-
-            print(f"✓ {company_name} の字幕生成が完了しました")
-            success_count += 1
-
-        except Exception as e:
-            print(f"✗ エラーが発生しました: {company_name}")
-            print(f"  エラー内容: {type(e).__name__}: {e}")
-            error_count += 1
-
-    # 最終結果を表示
-    print(f"\n{'=' * 60}")
-    print(f"字幕生成完了")
-    print(f"{'=' * 60}")
-    print(f"成功: {success_count} 件")
-    print(f"失敗: {error_count} 件")
-    print(f"合計: {len(audio_files)} 件")
-
-    return success_count > 0
 
 
 def show_menu():
@@ -467,6 +35,8 @@ def show_menu():
 
 def main():
     """メイン処理"""
+    project_root = Path(__file__).parent.parent
+
     while True:
         show_menu()
         choice = input("\n選択してください (0-8): ").strip()
@@ -477,29 +47,62 @@ def main():
 
         elif choice == "1":
             # すべて実行
-            limit_input = input("ダウンロードする企業数を入力 (デフォルト: 10): ").strip()
-            limit = int(limit_input) if limit_input.isdigit() else 10
+            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
 
             print("\n" + "=" * 60)
             print("全自動処理を開始します")
             print("=" * 60)
 
-            # 1. ダウンロード
-            if not download_xbrl_files(limit):
-                print("\n⚠ ダウンロードに失敗しましたが、続行します")
+            # ダウンロード
+            try:
+                downloader = TdnetXBRLDownloader("downloads")
+                downloader.run(limit=limit, max_files_per_company=3)
+            except Exception as e:
+                print(f"⚠ ダウンロードエラー: {e}")
 
-            # 2. 抽出
-            if not extract_qualitative_files():
-                print("\n⚠ 抽出に失敗しました。処理を中断します")
+            # 抽出
+            try:
+                extractor = QualitativeExtractor()
+                if extractor.extract_qualitative_files() == 0:
+                    print("⚠ 抽出失敗。処理を中断します")
+                    continue
+            except Exception as e:
+                print(f"⚠ 抽出エラー: {e}")
                 continue
 
-            # 3. 動画作成
-            if not create_videos():
-                print("\n⚠ 動画作成に失敗しました。処理を中断します")
-                continue
+            # 動画作成
+            qualitative_dir = project_root / "downloads" / "qualitative"
+            processed_dir = project_root / "data" / "processed"
+            processed_dir.mkdir(parents=True, exist_ok=True)
 
-            # 4. YouTubeアップロード
-            upload_videos()
+            htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
+
+            for htm_file in htm_files:
+                company_name = htm_file.stem.replace('_qualitative', '')
+                try:
+                    text = extract_text_from_xbrl(str(htm_file))
+                    text_path = processed_dir / f"{company_name}_extracted_text.txt"
+                    audio_path = processed_dir / f"{company_name}_output.mp3"
+                    subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
+                    video_path = processed_dir / f"{company_name}_output.mp4"
+
+                    save_text(text, str(text_path))
+                    generate_audio(str(text_path), str(audio_path))
+                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    generate_video(str(audio_path), str(video_path), text, company_name)
+
+                    # YouTubeアップロード
+                    upload_to_youtube(
+                        video_path=str(video_path),
+                        title=f"{company_name} 決算サマリー",
+                        description=f"{company_name}の決算短信の内容を音声で解説した動画です。",
+                        privacy="private",
+                        company_name=company_name,
+                        subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
+                    )
+                    print(f"✓ {company_name} 完了")
+                except Exception as e:
+                    print(f"✗ {company_name} エラー: {e}")
 
             print("\n" + "=" * 60)
             print("すべての処理が完了しました!")
@@ -507,33 +110,108 @@ def main():
 
         elif choice == "2":
             # ダウンロードのみ
-            limit_input = input("ダウンロードする企業数を入力 (デフォルト: 10): ").strip()
-            limit = int(limit_input) if limit_input.isdigit() else 10
-            download_xbrl_files(limit)
+            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
+            try:
+                downloader = TdnetXBRLDownloader("downloads")
+                downloader.run(limit=limit, max_files_per_company=3)
+                print("✓ ダウンロード完了")
+            except Exception as e:
+                print(f"✗ エラー: {e}")
 
         elif choice == "3":
             # 抽出のみ
-            extract_qualitative_files()
+            try:
+                extractor = QualitativeExtractor()
+                count = extractor.extract_qualitative_files()
+                print(f"✓ {count}件抽出完了")
+            except Exception as e:
+                print(f"✗ エラー: {e}")
 
         elif choice == "4":
             # テキスト抽出のみ
-            extract_texts()
+            qualitative_dir = project_root / "downloads" / "qualitative"
+            processed_dir = project_root / "data" / "processed"
+            processed_dir.mkdir(parents=True, exist_ok=True)
+
+            for htm_file in qualitative_dir.glob("*_qualitative.htm"):
+                company_name = htm_file.stem.replace('_qualitative', '')
+                try:
+                    text = extract_text_from_xbrl(str(htm_file))
+                    text_path = processed_dir / f"{company_name}_extracted_text.txt"
+                    save_text(text, str(text_path))
+                    print(f"✓ {company_name}")
+                except Exception as e:
+                    print(f"✗ {company_name}: {e}")
 
         elif choice == "5":
             # 音声生成のみ
-            generate_audios()
+            processed_dir = project_root / "data" / "processed"
+
+            for text_file in processed_dir.glob("*_extracted_text.txt"):
+                company_name = text_file.stem.replace('_extracted_text', '')
+                try:
+                    audio_path = processed_dir / f"{company_name}_output.mp3"
+                    generate_audio(str(text_file), str(audio_path))
+                    print(f"✓ {company_name}")
+                except Exception as e:
+                    print(f"✗ {company_name}: {e}")
 
         elif choice == "6":
             # 字幕生成のみ
-            generate_subtitles()
+            processed_dir = project_root / "data" / "processed"
+
+            for audio_file in processed_dir.glob("*_output.mp3"):
+                company_name = audio_file.stem.replace('_output', '')
+                try:
+                    text_path = processed_dir / f"{company_name}_extracted_text.txt"
+                    subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
+                    generate_subtitle(str(text_path), str(audio_file), str(subtitle_path), model_size="small")
+                    print(f"✓ {company_name}")
+                except Exception as e:
+                    print(f"✗ {company_name}: {e}")
 
         elif choice == "7":
             # 動画作成のみ
-            create_videos()
+            qualitative_dir = project_root / "downloads" / "qualitative"
+            processed_dir = project_root / "data" / "processed"
+            processed_dir.mkdir(parents=True, exist_ok=True)
+
+            for htm_file in qualitative_dir.glob("*_qualitative.htm"):
+                company_name = htm_file.stem.replace('_qualitative', '')
+                try:
+                    text = extract_text_from_xbrl(str(htm_file))
+                    text_path = processed_dir / f"{company_name}_extracted_text.txt"
+                    audio_path = processed_dir / f"{company_name}_output.mp3"
+                    subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
+                    video_path = processed_dir / f"{company_name}_output.mp4"
+
+                    save_text(text, str(text_path))
+                    generate_audio(str(text_path), str(audio_path))
+                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    generate_video(str(audio_path), str(video_path), text, company_name)
+                    print(f"✓ {company_name}")
+                except Exception as e:
+                    print(f"✗ {company_name}: {e}")
 
         elif choice == "8":
             # YouTubeアップロードのみ
-            upload_videos()
+            processed_dir = project_root / "data" / "processed"
+
+            for video_file in processed_dir.glob("*_output.mp4"):
+                company_name = video_file.stem.replace('_output', '')
+                try:
+                    subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
+                    upload_to_youtube(
+                        video_path=str(video_file),
+                        title=f"{company_name} 決算サマリー",
+                        description=f"{company_name}の決算短信の内容を音声で解説した動画です。",
+                        privacy="private",
+                        company_name=company_name,
+                        subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
+                    )
+                    print(f"✓ {company_name}")
+                except Exception as e:
+                    print(f"✗ {company_name}: {e}")
 
         else:
             print("✗ 無効な選択です。0-8の数字を入力してください")
