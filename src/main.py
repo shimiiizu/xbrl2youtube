@@ -2,6 +2,7 @@
 
 import sys
 from pathlib import Path
+from datetime import datetime
 
 # modulesフォルダをパスに追加
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
@@ -14,6 +15,24 @@ from audio_generation import generate_audio
 from subtitle_generation import generate_subtitle
 from video_generation import generate_video
 from youtube_upload import upload_to_youtube
+
+
+def parse_date_from_filename(filename):
+    """ファイル名から日付を抽出して '2026年1月23日' 形式に変換"""
+    try:
+        # ファイル名から日付部分を抽出（例: オオバ_20260123 → 20260123）
+        parts = filename.split('_')
+        date_str = parts[1] if len(parts) > 1 else None
+
+        if date_str and len(date_str) == 8 and date_str.isdigit():
+            # 20260123 → 2026年1月23日
+            year = date_str[0:4]
+            month = str(int(date_str[4:6]))  # 01 → 1
+            day = str(int(date_str[6:8]))  # 23 → 23
+            return f"{year}年{month}月{day}日"
+    except:
+        pass
+    return None
 
 
 def show_menu():
@@ -79,6 +98,9 @@ def main():
 
             for htm_file in htm_files:
                 company_name = htm_file.stem.replace('_qualitative', '')
+                date_str = parse_date_from_filename(company_name)
+                company_only = company_name.split('_')[0]  # 企業名のみ取得
+
                 try:
                     text = extract_text_from_xbrl(str(htm_file))
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -89,15 +111,18 @@ def main():
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
                     generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
-                    generate_video(str(audio_path), str(video_path), text, company_name)
+
+                    # 動画タイトル作成
+                    video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
 
                     # YouTubeアップロード
                     upload_to_youtube(
                         video_path=str(video_path),
-                        title=f"{company_name} 決算サマリー",
-                        description=f"{company_name}の決算短信の内容を音声で解説した動画です。",
+                        title=video_title,
+                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
                         privacy="private",
-                        company_name=company_name,
+                        company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
                     )
                     print(f"✓ {company_name} 完了")
@@ -178,6 +203,9 @@ def main():
 
             for htm_file in qualitative_dir.glob("*_qualitative.htm"):
                 company_name = htm_file.stem.replace('_qualitative', '')
+                date_str = parse_date_from_filename(company_name)
+                company_only = company_name.split('_')[0]
+
                 try:
                     text = extract_text_from_xbrl(str(htm_file))
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -188,7 +216,7 @@ def main():
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
                     generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
-                    generate_video(str(audio_path), str(video_path), text, company_name)
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
                     print(f"✓ {company_name}")
                 except Exception as e:
                     print(f"✗ {company_name}: {e}")
@@ -199,14 +227,19 @@ def main():
 
             for video_file in processed_dir.glob("*_output.mp4"):
                 company_name = video_file.stem.replace('_output', '')
+                date_str = parse_date_from_filename(company_name)
+                company_only = company_name.split('_')[0]
+
                 try:
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
+                    video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
+
                     upload_to_youtube(
                         video_path=str(video_file),
-                        title=f"{company_name} 決算サマリー",
-                        description=f"{company_name}の決算短信の内容を音声で解説した動画です。",
+                        title=video_title,
+                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
                         privacy="private",
-                        company_name=company_name,
+                        company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
                     )
                     print(f"✓ {company_name}")

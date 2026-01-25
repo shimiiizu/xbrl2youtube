@@ -7,13 +7,15 @@ import os
 FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
 
 
-def generate_thumbnail(output_path: str, company_name: str = None) -> None:
+def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None) -> None:
     """動画用のカスタムサムネイルを生成"""
 
     print("[INFO] Generating thumbnail...")
 
     # タイトルテキスト作成
-    if company_name:
+    if company_name and date_str:
+        title_text = f"{company_name}\n{date_str}\n決算サマリー"
+    elif company_name:
         title_text = f"{company_name}\n決算サマリー"
     else:
         title_text = "決算サマリー"
@@ -49,7 +51,7 @@ def generate_thumbnail(output_path: str, company_name: str = None) -> None:
 
 
 def generate_video(audio_path: str, output_path: str, text_content: str = None,
-                   company_name: str = None) -> None:
+                   company_name: str = None, date_str: str = None) -> None:
     print(f"[INFO] Reading audio from: {audio_path}")
 
     # ===== フォント存在チェック（重要）=====
@@ -71,7 +73,9 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
     clips = [background]
 
     # ===== タイトル（固定表示）=====
-    if company_name:
+    if company_name and date_str:
+        title_text = f"{company_name} {date_str} 決算サマリー"
+    elif company_name:
         title_text = f"{company_name} 決算サマリー"
     else:
         title_text = "決算サマリー"
@@ -155,7 +159,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
     print(f"[INFO] Video saved to: {output_path}")
 
     # ===== サムネイル生成 =====
-    generate_thumbnail(output_path, company_name=company_name)
+    generate_thumbnail(output_path, company_name=company_name, date_str=date_str)
 
     # リソースのクリーンアップ
     audio.close()
@@ -166,6 +170,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 if __name__ == "__main__":
     # ===== ここを変更するだけで企業を切り替え可能 =====
     COMPANY_NAME = "ヒガシＨＤ"
+    DATE_STR = "2026年1月23日"
     # =============================================
 
     project_root = Path(__file__).parent.parent.parent
@@ -203,7 +208,8 @@ if __name__ == "__main__":
         audio_path=str(test_audio),
         output_path=str(test_output),
         text_content=text_content,
-        company_name=COMPANY_NAME
+        company_name=COMPANY_NAME,
+        date_str=DATE_STR
     )
 
     print("=" * 50)
