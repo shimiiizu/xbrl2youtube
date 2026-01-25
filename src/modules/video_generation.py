@@ -172,10 +172,10 @@ if __name__ == "__main__":
     processed_dir = project_root / "data" / "processed"
 
     # 企業名から各ファイルパスを自動生成
-    test_audio = processed_dir / f"{COMPANY_NAME}_output.mp3"
+    test_audio = processed_dir / f"{COMPANY_NAME}_audio.mp3"
     test_text = processed_dir / f"{COMPANY_NAME}_extracted_text.txt"
     test_subtitle = processed_dir / f"{COMPANY_NAME}_subtitle.srt"
-    test_output = processed_dir / f"{COMPANY_NAME}_output.mp4"
+    test_output = processed_dir / f"{COMPANY_NAME}_video.mp4"
 
     print("=" * 50)
     print(f"動画生成テスト開始: {COMPANY_NAME}")

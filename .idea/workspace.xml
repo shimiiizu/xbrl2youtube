@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="ファイル名に日付を付与">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/text_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/text_extraction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/audio_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/audio_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,22 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00006" summary="経営成績の概況だけテキスト抽出する仕様に変更した">
-      <option name="closed" value="true" />
-      <created>1768173640866</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1768173640866</updated>
-    </task>
-    <task id="LOCAL-00007" summary="10文字以上のテキストのみ抽出する仕様に変更">
-      <option name="closed" value="true" />
-      <created>1768173769940</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1768173769940</updated>
     </task>
     <task id="LOCAL-00008" summary="テキストの読み上げスピードを設定できるように変更">
       <option name="closed" value="true" />
@@ -634,7 +622,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769324067125</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="ファイル名に日付を付与">
+      <option name="closed" value="true" />
+      <created>1769324368786</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1769324368786</updated>
+    </task>
+    <task id="LOCAL-00056" summary="ファイル名に日付を付与">
+      <option name="closed" value="true" />
+      <created>1769324578563</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1769324578563</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

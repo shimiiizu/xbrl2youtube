@@ -56,10 +56,10 @@ if __name__ == "__main__":
     # ファイル名を生成
     if PUB_DATE:
         test_text_file = processed_dir / f"{COMPANY_NAME}_{PUB_DATE}_extracted_text.txt"
-        test_output = processed_dir / f"{COMPANY_NAME}_{PUB_DATE}_output.mp3"
+        test_output = processed_dir / f"{COMPANY_NAME}_{PUB_DATE}_audio.mp3"
     else:
         test_text_file = processed_dir / f"{COMPANY_NAME}_extracted_text.txt"
-        test_output = processed_dir / f"{COMPANY_NAME}_output.mp3"
+        test_output = processed_dir / f"{COMPANY_NAME}_audio.mp3"
 
     print("=" * 50)
     print(f"音声生成テスト開始: {COMPANY_NAME}")
