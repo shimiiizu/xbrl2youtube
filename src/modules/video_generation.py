@@ -164,21 +164,34 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 
 # ===== デバッグ実行 =====
 if __name__ == "__main__":
+    # ===== ここを変更するだけで企業を切り替え可能 =====
+    COMPANY_NAME = "オービーシステム"
+    # =============================================
+
     project_root = Path(__file__).parent.parent.parent
+    processed_dir = project_root / "data" / "processed"
 
-    test_audio = project_root / "data" / "processed" / "output.mp3"
-    test_text = project_root / "data" / "processed" / "extracted_text.txt"
-    test_subtitle = project_root / "data" / "processed" / "subtitle.srt"
-    test_output = project_root / "data" / "processed" / "output.mp4"
+    # 企業名から各ファイルパスを自動生成
+    test_audio = processed_dir / f"{COMPANY_NAME}_output.mp3"
+    test_text = processed_dir / f"{COMPANY_NAME}_extracted_text.txt"
+    test_subtitle = processed_dir / f"{COMPANY_NAME}_subtitle.srt"
+    test_output = processed_dir / f"{COMPANY_NAME}_output.mp4"
 
     print("=" * 50)
-    print("動画生成テスト開始")
+    print(f"動画生成テスト開始: {COMPANY_NAME}")
     print("=" * 50)
+
+    # ファイル存在確認
+    print(f"[CHECK] 音声ファイル: {test_audio.exists()}")
+    print(f"[CHECK] テキストファイル: {test_text.exists()}")
+    print(f"[CHECK] 字幕ファイル: {test_subtitle.exists()}")
 
     text_content = None
     if test_text.exists():
         text_content = test_text.read_text(encoding="utf-8")
         print(f"[INFO] テキスト読み込み: {len(text_content)} 文字")
+    else:
+        print(f"[WARNING] テキストファイルが見つかりません: {test_text}")
 
     # 字幕ファイルの確認
     if test_subtitle.exists():
@@ -190,7 +203,7 @@ if __name__ == "__main__":
         audio_path=str(test_audio),
         output_path=str(test_output),
         text_content=text_content,
-        company_name="トヨタ自動車"
+        company_name=COMPANY_NAME
     )
 
     print("=" * 50)
