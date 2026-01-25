@@ -3,6 +3,7 @@
 from gtts import gTTS
 import librosa
 import soundfile as sf
+from pathlib import Path
 import os
 
 
@@ -44,15 +45,36 @@ def generate_audio(text_path: str, output_path: str, speed: float = 1.3) -> None
 
 
 if __name__ == "__main__":
-    # デバッグ用
-    test_text_file = "../../data/processed/extracted_text.txt"
-    test_output = "../../data/processed/output.mp3"
+    # ===== ここを変更するだけで企業を切り替え可能 =====
+    COMPANY_NAME = "アジュバンＨＤ"
+    PUB_DATE = "20250127"  # None にすると日付なし
+    # =============================================
+
+    project_root = Path(__file__).parent.parent.parent
+    processed_dir = project_root / "data" / "processed"
+
+    # ファイル名を生成
+    if PUB_DATE:
+        test_text_file = processed_dir / f"{COMPANY_NAME}_{PUB_DATE}_extracted_text.txt"
+        test_output = processed_dir / f"{COMPANY_NAME}_{PUB_DATE}_output.mp3"
+    else:
+        test_text_file = processed_dir / f"{COMPANY_NAME}_extracted_text.txt"
+        test_output = processed_dir / f"{COMPANY_NAME}_output.mp3"
 
     print("=" * 50)
-    print("音声生成テスト開始")
+    print(f"音声生成テスト開始: {COMPANY_NAME}")
+    if PUB_DATE:
+        print(f"公開日: {PUB_DATE}")
     print("=" * 50)
 
-    generate_audio(test_text_file, test_output, speed=1.3)
+    # ファイル存在確認
+    print(f"[CHECK] 入力ファイル: {test_text_file.exists()}")
+
+    if not test_text_file.exists():
+        print(f"[ERROR] テキストファイルが見つかりません: {test_text_file}")
+        exit(1)
+
+    generate_audio(str(test_text_file), str(test_output), speed=1.3)
 
     print("\n" + "=" * 50)
     print("音声生成完了")

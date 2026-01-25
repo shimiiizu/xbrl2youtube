@@ -101,7 +101,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.qualitative_extractor">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -148,7 +148,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="video_generation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="text_extraction" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -162,7 +162,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/video_generation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/text_extraction.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -219,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.text_extraction" />
         <item itemvalue="Python.qualitative_extractor" />
         <item itemvalue="Python.xbrl_downloader" />
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.youtube_upload" />
-        <item itemvalue="Python.video_generation" />
       </list>
     </recent_temporary>
   </component>
