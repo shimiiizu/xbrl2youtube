@@ -127,7 +127,7 @@ class TdnetXBRLDownloader:
 
         return renamed_count
     # -------------------------------------------------
-    def download_xbrl_by_company(self, company, pub_date=None, max_files=1):
+    def download_xbrl_by_company(self, company, pub_date=None, max_files=3):
         print(f"\n=== JPX検索開始: {company} ===")
         if pub_date:
             print(f"[INFO] 公開日: {pub_date}")
@@ -238,7 +238,83 @@ class TdnetXBRLDownloader:
             return 0
 
     # -------------------------------------------------
-    def run(self, limit=10, max_files_per_company=1):
+    def show_company_list(self, items):
+        """企業リストを表示"""
+        print("\n" + "=" * 60)
+        print("企業リスト")
+        print("=" * 60)
+        for idx, item in enumerate(items, 1):
+            company = item["company"]
+            pub_date = item.get("pub_date")
+            if pub_date:
+                # YYYYMMDD → YYYY-MM-DD
+                formatted_date = f"{pub_date[0:4]}-{pub_date[4:6]}-{pub_date[6:8]}"
+                print(f"{idx:3d}. {company} ({formatted_date})")
+            else:
+                print(f"{idx:3d}. {company}")
+        print("=" * 60)
+
+    # -------------------------------------------------
+    def get_company_selection(self, max_num):
+        """ユーザーから企業番号の選択を取得"""
+        while True:
+            try:
+                user_input = input(f"\n企業を選択してください (例: 1 3 5 または 1-{max_num}でスペース区切り): ").strip()
+
+                if not user_input:
+                    print("✗ 入力が空です。もう一度入力してください。")
+                    continue
+
+                selected = set()
+                parts = user_input.split()
+
+                for part in parts:
+                    # 範囲指定（例: 1-5）
+                    if '-' in part:
+                        try:
+                            start, end = part.split('-')
+                            start = int(start)
+                            end = int(end)
+                            if start < 1 or end > max_num or start > end:
+                                print(f"✗ 無効な範囲: {part} (1-{max_num}の範囲で指定してください)")
+                                selected = None
+                                break
+                            selected.update(range(start, end + 1))
+                        except ValueError:
+                            print(f"✗ 無効な範囲形式: {part}")
+                            selected = None
+                            break
+                    else:
+                        # 単一番号
+                        try:
+                            num = int(part)
+                            if num < 1 or num > max_num:
+                                print(f"✗ 無効な番号: {num} (1-{max_num}の範囲で指定してください)")
+                                selected = None
+                                break
+                            selected.add(num)
+                        except ValueError:
+                            print(f"✗ 無効な入力: {part} (数字を入力してください)")
+                            selected = None
+                            break
+
+                if selected is not None:
+                    return sorted(list(selected))
+
+            except Exception as e:
+                print(f"✗ エラー: {e}")
+                continue
+
+    # -------------------------------------------------
+    def run(self, limit=10, max_files_per_company=3, interactive=True):
+        """
+        メイン処理
+
+        Args:
+            limit: 表示する企業数の上限
+            max_files_per_company: 1企業あたりの最大ダウンロード数
+            interactive: Trueの場合、企業選択UI を表示
+        """
         rss = self.fetch_rss()
         items = self.parse_rss(rss)
 
@@ -250,11 +326,25 @@ class TdnetXBRLDownloader:
                 unique.append(i)
 
         unique = unique[:limit]
-        print(f"\n=== 処理対象企業数: {len(unique)} ===")
+
+        if interactive:
+            # 企業リストを表示
+            self.show_company_list(unique)
+
+            # ユーザーに選択させる
+            selected_indices = self.get_company_selection(len(unique))
+
+            # 選択された企業のみを処理対象にする
+            selected_items = [unique[i - 1] for i in selected_indices]
+            print(f"\n=== 選択された企業数: {len(selected_items)} ===")
+        else:
+            # 非対話モード（従来通り）
+            selected_items = unique
+            print(f"\n=== 処理対象企業数: {len(selected_items)} ===")
 
         total = 0
-        for idx, item in enumerate(unique, 1):
-            print(f"\n[{idx}/{len(unique)}] {item['company']}")
+        for idx, item in enumerate(selected_items, 1):
+            print(f"\n[{idx}/{len(selected_items)}] {item['company']}")
             total += self.download_xbrl_by_company(
                 item["company"],
                 item.get("pub_date"),  # 公開日を渡す

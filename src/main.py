@@ -69,16 +69,16 @@ def main():
 
         elif choice == "1":
             # すべて実行
-            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
+            limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
 
             print("\n" + "=" * 60)
             print("全自動処理を開始します")
             print("=" * 60)
 
-            # ダウンロード
+            # ダウンロード（企業選択あり）
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=1)
+                downloader.run(limit=limit, max_files_per_company=1, interactive=True)
             except Exception as e:
                 print(f"⚠ ダウンロードエラー: {e}")
 
@@ -137,10 +137,10 @@ def main():
 
         elif choice == "2":
             # ダウンロードのみ
-            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
+            limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=1)
+                downloader.run(limit=limit, max_files_per_company=1, interactive=True)
                 print("✓ ダウンロード完了")
             except Exception as e:
                 print(f"✗ エラー: {e}")

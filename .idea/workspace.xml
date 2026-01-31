@@ -251,14 +251,6 @@
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
     </task>
-    <task id="LOCAL-00022" summary="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更">
-      <option name="closed" value="true" />
-      <created>1768699847925</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1768699847925</updated>
-    </task>
     <task id="LOCAL-00023" summary="認証のパスを修正">
       <option name="closed" value="true" />
       <created>1768700644385</created>
@@ -643,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769824035906</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="zipファイルのダウンロード数を1に変更">
+      <option name="closed" value="true" />
+      <created>1769841190440</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1769841190440</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
