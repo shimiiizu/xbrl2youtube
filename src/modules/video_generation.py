@@ -14,11 +14,11 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
 
     # タイトルテキスト作成
     if company_name and date_str:
-        title_text = f"{company_name}\n{date_str}\n決算サマリー"
+        title_text = f"{company_name}\n{date_str}\nさくっと決算"
     elif company_name:
-        title_text = f"{company_name}\n決算サマリー"
+        title_text = f"{company_name}\nさくっと決算"
     else:
-        title_text = "決算サマリー"
+        title_text = "さくっと決算"
 
     # サムネイルのサイズ（YouTube推奨: 1280x720）
     thumb_size = (1280, 720)
@@ -74,11 +74,11 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 
     # ===== タイトル（固定表示）=====
     if company_name and date_str:
-        title_text = f"{company_name} {date_str} 決算サマリー"
+        title_text = f"{company_name} {date_str} さくっと決算"
     elif company_name:
-        title_text = f"{company_name} 決算サマリー"
+        title_text = f"{company_name} さくっと決算"
     else:
-        title_text = "決算サマリー"
+        title_text = "さくっと決算"
 
     title_clip = (
         TextClip(

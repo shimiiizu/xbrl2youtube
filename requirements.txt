@@ -1,12 +1,28 @@
-beautifulsoup4
-lxml
-gtts
-librosa
-soundfile
-moviepy
-google-auth
-google-auth-oauthlib
-google-auth-httplib2
-google-api-python-client
-selenium
-webdriver-manager
+# PyTorch (CUDA対応版は別途インストール)
+# torch, torchvision, torchaudioは下記のコマンドで個別インストール
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# XBRL処理
+arelle-release>=2.0.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# 音声生成
+edge-tts>=6.1.0
+
+# 字幕生成
+openai-whisper>=20231117
+
+# 動画生成
+moviepy>=2.1.1
+Pillow>=10.0.0
+
+# YouTube API
+google-api-python-client>=2.0.0
+google-auth-httplib2>=0.2.0
+google-auth-oauthlib>=1.0.0
+
+# ユーティリティ
+requests>=2.31.0
+pandas>=2.0.0
+tqdm>=4.66.0

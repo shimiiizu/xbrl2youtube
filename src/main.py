@@ -3,6 +3,7 @@
 import sys
 from pathlib import Path
 from datetime import datetime
+import shutil
 
 # modulesフォルダをパスに追加
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
@@ -15,6 +16,7 @@ from audio_generation import generate_audio
 from subtitle_generation import generate_subtitle
 from video_generation import generate_video
 from youtube_upload import upload_to_youtube
+from reset_manager import reset_files
 
 
 def parse_date_from_filename(filename):
@@ -48,6 +50,7 @@ def show_menu():
     print("6. 字幕生成のみ")
     print("7. 動画作成のみ")
     print("8. YouTubeアップロードのみ")
+    print("9. リセット（全ファイルを退避フォルダに移動）")
     print("0. 終了")
     print("=" * 60)
 
@@ -58,7 +61,7 @@ def main():
 
     while True:
         show_menu()
-        choice = input("\n選択してください (0-8): ").strip()
+        choice = input("\n選択してください (0-9): ").strip()
 
         if choice == "0":
             print("\n終了します")
@@ -246,8 +249,12 @@ def main():
                 except Exception as e:
                     print(f"✗ {company_name}: {e}")
 
+        elif choice == "9":
+            # リセット
+            reset_files()
+
         else:
-            print("✗ 無効な選択です。0-8の数字を入力してください")
+            print("✗ 無効な選択です。0-9の数字を入力してください")
 
 
 if __name__ == "__main__":
