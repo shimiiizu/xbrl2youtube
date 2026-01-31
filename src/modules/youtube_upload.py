@@ -82,8 +82,8 @@ def upload_to_youtube(video_path: str,
 
     # プロジェクトルートからの絶対パスを構築
     project_root = Path(__file__).parent.parent.parent
-    client_secrets_path = project_root / "data" / "client_secrets.json"
-    token_path = project_root / "data" / "youtube_token.json"
+    client_secrets_path = project_root / "data" / "json" / "client_secrets.json"
+    token_path = project_root / "data" / "json" / "youtube_token.json"
 
     # 認証
     youtube = get_authenticated_service(str(client_secrets_path), str(token_path))
