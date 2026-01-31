@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="jsonファイルを移動した" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="zipファイルのダウンロード数を1に変更">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -248,22 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00020" summary="ダウンロードしたzipファイルを１つに変更">
-      <option name="closed" value="true" />
-      <created>1768699603697</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1768699603697</updated>
-    </task>
-    <task id="LOCAL-00021" summary="qualitative.htmﾌｧｲﾙ毎に処理する仕様に変更">
-      <option name="closed" value="true" />
-      <created>1768699763768</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1768699763768</updated>
     </task>
     <task id="LOCAL-00022" summary="qualitative.htmﾌｧｲﾙ毎に処理するメイン仕様を変更">
       <option name="closed" value="true" />
@@ -641,7 +627,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769823607676</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="zipファイルのダウンロード数を1に変更">
+      <option name="closed" value="true" />
+      <created>1769823790547</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1769823790547</updated>
+    </task>
+    <task id="LOCAL-00070" summary="zipファイルのダウンロード数を1に変更">
+      <option name="closed" value="true" />
+      <created>1769824035906</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1769824035906</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -668,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="機能を分離して、動画作成とアップロードを分けた" />
     <MESSAGE value="スコープを変更" />
     <MESSAGE value="音声と字幕の同期がとれるように変更" />
     <MESSAGE value=" Whisperで音声認識" />
@@ -693,7 +694,8 @@
     <MESSAGE value="保存先を変更した" />
     <MESSAGE value="字幕生成機能を除外した。個別には作成可能" />
     <MESSAGE value="jsonファイルを移動した" />
-    <option name="LAST_COMMIT_MESSAGE" value="jsonファイルを移動した" />
+    <MESSAGE value="zipファイルのダウンロード数を1に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="zipファイルのダウンロード数を1に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

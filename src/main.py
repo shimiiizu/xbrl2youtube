@@ -78,7 +78,7 @@ def main():
             # ダウンロード
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=3)
+                downloader.run(limit=limit, max_files_per_company=1)
             except Exception as e:
                 print(f"⚠ ダウンロードエラー: {e}")
 
@@ -140,7 +140,7 @@ def main():
             limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=3)
+                downloader.run(limit=limit, max_files_per_company=1)
                 print("✓ ダウンロード完了")
             except Exception as e:
                 print(f"✗ エラー: {e}")
