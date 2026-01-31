@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="zipファイルのダウンロード数を1に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="企業を選別してダウンロードする形式に変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00023" summary="認証のパスを修正">
-      <option name="closed" value="true" />
-      <created>1768700644385</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1768700644385</updated>
     </task>
     <task id="LOCAL-00024" summary="メニュー形式で選択可能に変更">
       <option name="closed" value="true" />
@@ -643,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769841190440</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="企業を選別してダウンロードする形式に変更">
+      <option name="closed" value="true" />
+      <created>1769841886887</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1769841886887</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -670,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="スコープを変更" />
     <MESSAGE value="音声と字幕の同期がとれるように変更" />
     <MESSAGE value=" Whisperで音声認識" />
     <MESSAGE value="テキストの抽出のみの機能を追加" />
@@ -695,7 +695,8 @@
     <MESSAGE value="字幕生成機能を除外した。個別には作成可能" />
     <MESSAGE value="jsonファイルを移動した" />
     <MESSAGE value="zipファイルのダウンロード数を1に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="zipファイルのダウンロード数を1に変更" />
+    <MESSAGE value="企業を選別してダウンロードする形式に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="企業を選別してダウンロードする形式に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

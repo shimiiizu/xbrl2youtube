@@ -7,10 +7,20 @@ import os
 FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
 
 
-def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None) -> None:
-    """動画用のカスタムサムネイルを生成"""
+def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None, duration: float = 3.0) -> str:
+    """動画用のオープニング映像（サムネイル）を生成
 
-    print("[INFO] Generating thumbnail...")
+    Args:
+        output_path: 出力動画ファイルのパス
+        company_name: 企業名
+        date_str: 日付文字列
+        duration: オープニングの長さ（秒）
+
+    Returns:
+        サムネイル画像のパス
+    """
+
+    print(f"[INFO] Generating opening thumbnail ({duration}s)...")
 
     # タイトルテキスト作成
     if company_name and date_str:
@@ -24,7 +34,7 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
     thumb_size = (1280, 720)
 
     # 背景（グラデーション風に濃いめの色）
-    background = ColorClip(size=thumb_size, color=(20, 30, 50)).with_duration(1)
+    background = ColorClip(size=thumb_size, color=(20, 30, 50)).with_duration(duration)
 
     # タイトル（大きく中央に）
     title_clip = (
@@ -36,18 +46,21 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             size=(1100, None),
             method="caption"
         )
-        .with_duration(1)
+        .with_duration(duration)
         .with_position("center")
     )
 
     # 合成
     thumbnail = CompositeVideoClip([background, title_clip])
 
-    # 最初のフレームを画像として保存
+    # 静止画像として保存（YouTubeサムネイル用）
     thumbnail_path = output_path.replace(".mp4", "_thumbnail.png")
     thumbnail.save_frame(thumbnail_path, t=0)
 
-    print(f"[INFO] Thumbnail saved to: {thumbnail_path}")
+    print(f"[INFO] Thumbnail image saved to: {thumbnail_path}")
+
+    # オープニング動画クリップを返す
+    return thumbnail
 
 
 def generate_video(audio_path: str, output_path: str, text_content: str = None,
@@ -59,20 +72,26 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
         raise FileNotFoundError(f"Font not found: {FONT_PATH}")
 
     audio = AudioFileClip(audio_path)
-    duration = audio.duration
+    audio_duration = audio.duration
 
-    print(f"[INFO] Audio duration: {duration:.2f} seconds")
-    print("[INFO] Creating video with scrolling text")
+    print(f"[INFO] Audio duration: {audio_duration:.2f} seconds")
+    print("[INFO] Creating video with opening and scrolling text")
 
-    # ===== 背景 =====
+    # ===== オープニング（3秒）=====
+    opening_duration = 3.0
+    opening_clip = generate_thumbnail(output_path, company_name=company_name, date_str=date_str,
+                                      duration=opening_duration)
+
+    # ===== 本編部分（音声と同期）=====
+    # 背景
     background = (
         ColorClip(size=(1280, 720), color=(0, 0, 0))
-        .with_duration(duration)
+        .with_duration(audio_duration)
     )
 
     clips = [background]
 
-    # ===== タイトル（固定表示）=====
+    # タイトル（固定表示）
     if company_name and date_str:
         title_text = f"{company_name} {date_str} さくっと決算"
     elif company_name:
@@ -90,80 +109,77 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
             method="caption"
         )
         .with_start(0)
-        .with_duration(duration)
+        .with_duration(audio_duration)
         .with_position(("center", 20))
     )
 
     clips.append(title_clip)
 
-    # ===== 本文（スクロール表示）=====
+    # 本文（スクロール表示）
     if text_content:
-        # フォントサイズを大きく（13 → 24）
         body_clip = (
             TextClip(
                 text=text_content,
                 font=FONT_PATH,
-                font_size=30,  # フォントサイズを大きく
+                font_size=30,
                 color="white",
                 size=(1100, None),
                 method="caption"
             )
             .with_start(0)
-            .with_duration(duration)
+            .with_duration(audio_duration)
         )
 
         # テキストの高さを取得
         text_height = body_clip.h
         screen_height = 720
-        scroll_area_top = 100  # タイトルの下
-        scroll_area_bottom = 720  # 画面下端
-        scroll_area_height = scroll_area_bottom - scroll_area_top
-
-        # スクロール速度を計算（画面外から画面外まで移動）
-        # 開始位置: 画面下端、終了位置: テキスト全体が画面上に消える位置
-        start_y = screen_height-100
+        scroll_area_top = 100
+        scroll_area_bottom = 720
+        start_y = screen_height - 100
         end_y = scroll_area_top - text_height
-
-        # スクロール距離
         scroll_distance = start_y - end_y
 
-        # スクロール関数: 時間に応じてY座標を変化
+        # スクロール関数
         def scroll_position(t):
-            # t: 現在の時間（0 ~ duration）
-            # 線形にスクロール
-            progress = t / duration  # 0.0 ~ 1.0
+            progress = t / audio_duration
             current_y = start_y - (scroll_distance * progress)
             return ("center", current_y)
 
-        # スクロール適用
         body_clip = body_clip.with_position(scroll_position)
-
         clips.append(body_clip)
 
         print(f"[INFO] Text height: {text_height}px")
         print(f"[INFO] Scroll distance: {scroll_distance}px")
-        print(f"[INFO] Scroll speed: {scroll_distance / duration:.2f}px/sec")
+        print(f"[INFO] Scroll speed: {scroll_distance / audio_duration:.2f}px/sec")
 
-    # ===== 合成 & 音声 =====
-    video = CompositeVideoClip(clips).with_audio(audio)
+    # 本編を合成
+    main_video = CompositeVideoClip(clips).with_audio(audio)
+
+    # ===== オープニング + 本編を結合 =====
+    from moviepy import concatenate_videoclips
+
+    print(f"[INFO] Concatenating opening ({opening_duration}s) + main video ({audio_duration}s)")
+    final_video = concatenate_videoclips([opening_clip, main_video])
 
     print("[INFO] Writing video file...")
 
-    video.write_videofile(
+    final_video.write_videofile(
         output_path,
         fps=24,
         codec="libx264",
-        audio_codec="aac"
+        audio_codec="aac",
+        verbose=False,
+        logger=None
     )
 
     print(f"[INFO] Video saved to: {output_path}")
-
-    # ===== サムネイル生成 =====
-    generate_thumbnail(output_path, company_name=company_name, date_str=date_str)
+    print(f"[INFO] Total duration: {final_video.duration:.2f} seconds")
 
     # リソースのクリーンアップ
     audio.close()
-    video.close()
+    opening_clip.close()
+    main_video.close()
+    final_video.close()
 
 
 # ===== デバッグ実行 =====
