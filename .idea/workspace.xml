@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="日付を動画に追加">
-      <change afterPath="$PROJECT_DIR$/src/modules/reset_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/xbrl2youtube.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/xbrl2youtube.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
-    </list>
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="reset機能を追加" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -253,14 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00012" summary="youtubeに自動Uploadすることに成功">
-      <option name="closed" value="true" />
-      <created>1768194755634</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1768194755634</updated>
     </task>
     <task id="LOCAL-00013" summary="xbrl_downloader.pyを取りあえず作成">
       <option name="closed" value="true" />
@@ -646,7 +630,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769344093075</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="reset機能を追加">
+      <option name="closed" value="true" />
+      <created>1769820467700</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1769820467700</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -673,7 +665,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py" />
     <MESSAGE value="文字化け対策" />
     <MESSAGE value="本文の表示のタイミングを早めた" />
     <MESSAGE value="タイトルを表示するサムネイルを作成する機能を追加" />
@@ -698,7 +689,8 @@
     <MESSAGE value="company_name引数を渡さないように修正" />
     <MESSAGE value="main.pyをシンプル化" />
     <MESSAGE value="日付を動画に追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="日付を動画に追加" />
+    <MESSAGE value="reset機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="reset機能を追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
