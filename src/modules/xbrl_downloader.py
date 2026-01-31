@@ -238,7 +238,7 @@ class TdnetXBRLDownloader:
             return 0
 
     # -------------------------------------------------
-    def run(self, limit=10, max_files_per_company=3):
+    def run(self, limit=10, max_files_per_company=1):
         rss = self.fetch_rss()
         items = self.parse_rss(rss)
 

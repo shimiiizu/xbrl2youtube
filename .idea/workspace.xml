@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="保存先を変更した">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="jsonファイルを移動した" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,11 +101,11 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\json" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\zip" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed\Upload済み" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\処理後zip" />
-      <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -251,22 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00018" summary="qualitative.htmの抽出に成功">
-      <option name="closed" value="true" />
-      <created>1768696587591</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1768696587591</updated>
-    </task>
-    <task id="LOCAL-00019" summary="ダウンロードしたzipファイルに企業名を追加">
-      <option name="closed" value="true" />
-      <created>1768699428695</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1768699428696</updated>
     </task>
     <task id="LOCAL-00020" summary="ダウンロードしたzipファイルを１つに変更">
       <option name="closed" value="true" />
@@ -644,7 +625,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769822267726</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="字幕生成機能を除外した。個別には作成可能">
+      <option name="closed" value="true" />
+      <created>1769823328991</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1769823328991</updated>
+    </task>
+    <task id="LOCAL-00068" summary="jsonファイルを移動した">
+      <option name="closed" value="true" />
+      <created>1769823607676</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1769823607676</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,8 +668,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
-    <MESSAGE value="メインを追加機能に対応する形に変更した。" />
     <MESSAGE value="機能を分離して、動画作成とアップロードを分けた" />
     <MESSAGE value="スコープを変更" />
     <MESSAGE value="音声と字幕の同期がとれるように変更" />
@@ -696,7 +691,9 @@
     <MESSAGE value="デバッグ機能を強化" />
     <MESSAGE value="アーカイブ先を整理" />
     <MESSAGE value="保存先を変更した" />
-    <option name="LAST_COMMIT_MESSAGE" value="保存先を変更した" />
+    <MESSAGE value="字幕生成機能を除外した。個別には作成可能" />
+    <MESSAGE value="jsonファイルを移動した" />
+    <option name="LAST_COMMIT_MESSAGE" value="jsonファイルを移動した" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
