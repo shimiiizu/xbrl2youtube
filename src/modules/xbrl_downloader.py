@@ -306,7 +306,7 @@ class TdnetXBRLDownloader:
                 continue
 
     # -------------------------------------------------
-    def run(self, limit=10, max_files_per_company=3, interactive=True):
+    def run(self, limit=10, max_files_per_company=3, interactive=True, filter_date=None):
         """
         メイン処理
 
@@ -314,6 +314,7 @@ class TdnetXBRLDownloader:
             limit: 表示する企業数の上限
             max_files_per_company: 1企業あたりの最大ダウンロード数
             interactive: Trueの場合、企業選択UI を表示
+            filter_date: 日付フィルタ（YYYYMMDD形式）。指定すると、その日付の企業のみ表示
         """
         rss = self.fetch_rss()
         items = self.parse_rss(rss)
@@ -324,6 +325,13 @@ class TdnetXBRLDownloader:
             if i["company"] not in seen:
                 seen.add(i["company"])
                 unique.append(i)
+
+        # 日付フィルタを適用
+        if filter_date:
+            print(f"\n[INFO] 日付フィルタ適用: {filter_date}")
+            filtered = [item for item in unique if item.get("pub_date") == filter_date]
+            print(f"[INFO] {filter_date}の企業数: {len(filtered)}件")
+            unique = filtered
 
         unique = unique[:limit]
 

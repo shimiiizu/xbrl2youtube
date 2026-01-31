@@ -69,6 +69,9 @@ def main():
 
         elif choice == "1":
             # すべて実行
+            date_input = input("日付を指定 (例: 20250127) または Enter でスキップ: ").strip()
+            filter_date = date_input if date_input and len(date_input) == 8 and date_input.isdigit() else None
+
             limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
 
             print("\n" + "=" * 60)
@@ -78,7 +81,7 @@ def main():
             # ダウンロード（企業選択あり）
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=1, interactive=True)
+                downloader.run(limit=limit, max_files_per_company=1, interactive=True, filter_date=filter_date)
             except Exception as e:
                 print(f"⚠ ダウンロードエラー: {e}")
 
@@ -137,10 +140,13 @@ def main():
 
         elif choice == "2":
             # ダウンロードのみ
+            date_input = input("日付を指定 (例: 20250127) または Enter でスキップ: ").strip()
+            filter_date = date_input if date_input and len(date_input) == 8 and date_input.isdigit() else None
+
             limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=1, interactive=True)
+                downloader.run(limit=limit, max_files_per_company=1, interactive=True, filter_date=filter_date)
                 print("✓ ダウンロード完了")
             except Exception as e:
                 print(f"✗ エラー: {e}")
