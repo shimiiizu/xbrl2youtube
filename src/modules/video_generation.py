@@ -163,14 +163,23 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 
     print("[INFO] Writing video file...")
 
-    final_video.write_videofile(
-        output_path,
-        fps=24,
-        codec="libx264",
-        audio_codec="aac",
-        verbose=False,
-        logger=None
-    )
+    try:
+        # 新しいバージョンのmoviepy
+        final_video.write_videofile(
+            output_path,
+            fps=24,
+            codec="libx264",
+            audio_codec="aac",
+            logger=None
+        )
+    except TypeError:
+        # 古いバージョンのmoviepy (loggerをサポートしていない場合)
+        final_video.write_videofile(
+            output_path,
+            fps=24,
+            codec="libx264",
+            audio_codec="aac"
+        )
 
     print(f"[INFO] Video saved to: {output_path}")
     print(f"[INFO] Total duration: {final_video.duration:.2f} seconds")
