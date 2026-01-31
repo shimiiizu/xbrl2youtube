@@ -112,7 +112,7 @@ def main():
 
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
-                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
 
                     # 動画タイトル作成
                     video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
@@ -215,7 +215,7 @@ def main():
 
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
-                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
                     generate_video(str(audio_path), str(video_path), text, company_only, date_str)
                     print(f"✓ {company_name}")
                 except Exception as e:

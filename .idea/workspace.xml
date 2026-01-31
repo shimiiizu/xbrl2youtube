@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="アーカイブ先を整理">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="保存先を変更した">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +111,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.reset_manager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -228,8 +229,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.reset_manager" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.reset_manager" />
         <item itemvalue="Python.subtitle_generation" />
         <item itemvalue="Python.text_extraction" />
         <item itemvalue="Python.qualitative_extractor" />
@@ -250,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00017" summary="保存さきを変更に成功">
-      <option name="closed" value="true" />
-      <created>1768695314117</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1768695314117</updated>
     </task>
     <task id="LOCAL-00018" summary="qualitative.htmの抽出に成功">
       <option name="closed" value="true" />
@@ -643,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769821525823</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="保存先を変更した">
+      <option name="closed" value="true" />
+      <created>1769822267725</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1769822267726</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -670,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="タイトルに企業名を追加" />
     <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
     <MESSAGE value="メインを追加機能に対応する形に変更した。" />
     <MESSAGE value="機能を分離して、動画作成とアップロードを分けた" />
@@ -695,7 +695,8 @@
     <MESSAGE value="リセット機能二デバッグ機能を追加" />
     <MESSAGE value="デバッグ機能を強化" />
     <MESSAGE value="アーカイブ先を整理" />
-    <option name="LAST_COMMIT_MESSAGE" value="アーカイブ先を整理" />
+    <MESSAGE value="保存先を変更した" />
+    <option name="LAST_COMMIT_MESSAGE" value="保存先を変更した" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
