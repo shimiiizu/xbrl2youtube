@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="reset機能を追加" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="リセット機能二デバッグ機能を追加">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,72 +42,74 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.audio_generation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.qualitative_extractor.executor&quot;: &quot;Run&quot;,
-    &quot;Python.subtitle_generation (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.subtitle_generation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.subtitle_generator.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.text_extraction.executor&quot;: &quot;Run&quot;,
-    &quot;Python.video_generation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test10.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test11.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test12.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test13.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test14.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test15.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test16.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test17.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test18.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test19.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test2.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test20.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test21.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test22.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test24.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test25.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test26.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test27.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test29.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test3.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test31.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test32.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test4.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test5.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test6.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test7.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test8.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xbrl_downloader_test9.executor&quot;: &quot;Run&quot;,
-    &quot;Python.youtube_upload.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Shimizu/PycharmProjects/xbrl2youtube/src/modules&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.audio_generation.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.qualitative_extractor.executor": "Run",
+    "Python.reset_manager.executor": "Run",
+    "Python.subtitle_generation (1).executor": "Run",
+    "Python.subtitle_generation.executor": "Run",
+    "Python.subtitle_generator.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.text_extraction.executor": "Run",
+    "Python.video_generation.executor": "Run",
+    "Python.xbrl_downloader.executor": "Run",
+    "Python.xbrl_downloader_test.executor": "Run",
+    "Python.xbrl_downloader_test10.executor": "Run",
+    "Python.xbrl_downloader_test11.executor": "Run",
+    "Python.xbrl_downloader_test12.executor": "Run",
+    "Python.xbrl_downloader_test13.executor": "Run",
+    "Python.xbrl_downloader_test14.executor": "Run",
+    "Python.xbrl_downloader_test15.executor": "Run",
+    "Python.xbrl_downloader_test16.executor": "Run",
+    "Python.xbrl_downloader_test17.executor": "Run",
+    "Python.xbrl_downloader_test18.executor": "Run",
+    "Python.xbrl_downloader_test19.executor": "Run",
+    "Python.xbrl_downloader_test2.executor": "Run",
+    "Python.xbrl_downloader_test20.executor": "Run",
+    "Python.xbrl_downloader_test21.executor": "Run",
+    "Python.xbrl_downloader_test22.executor": "Run",
+    "Python.xbrl_downloader_test24.executor": "Run",
+    "Python.xbrl_downloader_test25.executor": "Run",
+    "Python.xbrl_downloader_test26.executor": "Run",
+    "Python.xbrl_downloader_test27.executor": "Run",
+    "Python.xbrl_downloader_test29.executor": "Run",
+    "Python.xbrl_downloader_test3.executor": "Run",
+    "Python.xbrl_downloader_test31.executor": "Run",
+    "Python.xbrl_downloader_test32.executor": "Run",
+    "Python.xbrl_downloader_test4.executor": "Run",
+    "Python.xbrl_downloader_test5.executor": "Run",
+    "Python.xbrl_downloader_test6.executor": "Run",
+    "Python.xbrl_downloader_test7.executor": "Run",
+    "Python.xbrl_downloader_test8.executor": "Run",
+    "Python.xbrl_downloader_test9.executor": "Run",
+    "Python.youtube_upload.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/Shimizu/PycharmProjects/xbrl2youtube/src/modules",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed\Upload済み" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\処理後zip" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.reset_manager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -144,6 +148,29 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/qualitative_extractor.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="reset_manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xbrl2youtube" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/modules" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/reset_manager.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -198,36 +225,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="xbrl_downloader" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="xbrl2youtube" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/modules" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/modules/xbrl_downloader.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.reset_manager" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.subtitle_generation" />
         <item itemvalue="Python.text_extraction" />
         <item itemvalue="Python.qualitative_extractor" />
-        <item itemvalue="Python.xbrl_downloader" />
       </list>
     </recent_temporary>
   </component>
@@ -245,22 +249,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00013" summary="xbrl_downloader.pyを取りあえず作成">
-      <option name="closed" value="true" />
-      <created>1768195849420</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1768195849420</updated>
-    </task>
-    <task id="LOCAL-00014" summary="zipファイルを取得することに成功">
-      <option name="closed" value="true" />
-      <created>1768662249393</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1768662249393</updated>
     </task>
     <task id="LOCAL-00015" summary="保存さきを変更前">
       <option name="closed" value="true" />
@@ -638,7 +626,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769820467700</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="リセット機能二デバッグ機能を追加">
+      <option name="closed" value="true" />
+      <created>1769820705780</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1769820705780</updated>
+    </task>
+    <task id="LOCAL-00063" summary="リセット機能二デバッグ機能を追加">
+      <option name="closed" value="true" />
+      <created>1769820978380</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1769820978380</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -665,7 +669,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="文字化け対策" />
     <MESSAGE value="本文の表示のタイミングを早めた" />
     <MESSAGE value="タイトルを表示するサムネイルを作成する機能を追加" />
     <MESSAGE value="タイトルに企業名を追加" />
@@ -690,7 +693,8 @@
     <MESSAGE value="main.pyをシンプル化" />
     <MESSAGE value="日付を動画に追加" />
     <MESSAGE value="reset機能を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="reset機能を追加" />
+    <MESSAGE value="リセット機能二デバッグ機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="リセット機能二デバッグ機能を追加" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
