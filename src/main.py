@@ -93,11 +93,10 @@ def main():
                 continue
 
             # 動画作成
-            qualitative_dir = project_root / "downloads" / "qualitative"
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
+            htm_files = list(processed_dir.glob("*_qualitative.htm"))
 
             for htm_file in htm_files:
                 company_name = htm_file.stem.replace('_qualitative', '')
@@ -157,11 +156,10 @@ def main():
 
         elif choice == "4":
             # テキスト抽出のみ
-            qualitative_dir = project_root / "downloads" / "qualitative"
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            for htm_file in qualitative_dir.glob("*_qualitative.htm"):
+            for htm_file in processed_dir.glob("*_qualitative.htm"):
                 company_name = htm_file.stem.replace('_qualitative', '')
                 try:
                     text = extract_text_from_xbrl(str(htm_file))
@@ -200,11 +198,10 @@ def main():
 
         elif choice == "7":
             # 動画作成のみ
-            qualitative_dir = project_root / "downloads" / "qualitative"
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            for htm_file in qualitative_dir.glob("*_qualitative.htm"):
+            for htm_file in processed_dir.glob("*_qualitative.htm"):
                 company_name = htm_file.stem.replace('_qualitative', '')
                 date_str = parse_date_from_filename(company_name)
                 company_only = company_name.split('_')[0]

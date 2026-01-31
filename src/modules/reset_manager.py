@@ -25,13 +25,13 @@ def reset_files():
     # 移動対象のファイルパターンと退避先のマッピング
     move_targets = [
         {
-            "source_dir": project_root / "downloads" / "zip",
+            "source_dir": project_root / "data" / "processed",
             "archive_dir": archive_base / "zip",
             "pattern": "*.zip",
             "description": "ZIPファイル"
         },
         {
-            "source_dir": project_root / "downloads" / "qualitative",
+            "source_dir": project_root / "data" / "processed",
             "archive_dir": archive_base / "html",
             "pattern": "*.htm",
             "description": "HTMLファイル"

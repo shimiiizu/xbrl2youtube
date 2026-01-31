@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="リセット機能二デバッグ機能を追加">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="アーカイブ先を整理">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,6 +104,7 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed" />
+      <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\zip" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed\Upload済み" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\処理後zip" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\src\modules" />
@@ -249,22 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00015" summary="保存さきを変更前">
-      <option name="closed" value="true" />
-      <created>1768694368735</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1768694368735</updated>
-    </task>
-    <task id="LOCAL-00016" summary="保存さきを変更後">
-      <option name="closed" value="true" />
-      <created>1768694390556</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1768694390556</updated>
     </task>
     <task id="LOCAL-00017" summary="保存さきを変更に成功">
       <option name="closed" value="true" />
@@ -642,7 +627,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769820978380</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="デバッグ機能を強化">
+      <option name="closed" value="true" />
+      <created>1769821163351</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1769821163351</updated>
+    </task>
+    <task id="LOCAL-00065" summary="アーカイブ先を整理">
+      <option name="closed" value="true" />
+      <created>1769821525823</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1769821525823</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -669,8 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="本文の表示のタイミングを早めた" />
-    <MESSAGE value="タイトルを表示するサムネイルを作成する機能を追加" />
     <MESSAGE value="タイトルに企業名を追加" />
     <MESSAGE value="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加" />
     <MESSAGE value="メインを追加機能に対応する形に変更した。" />
@@ -694,7 +693,9 @@
     <MESSAGE value="日付を動画に追加" />
     <MESSAGE value="reset機能を追加" />
     <MESSAGE value="リセット機能二デバッグ機能を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="リセット機能二デバッグ機能を追加" />
+    <MESSAGE value="デバッグ機能を強化" />
+    <MESSAGE value="アーカイブ先を整理" />
+    <option name="LAST_COMMIT_MESSAGE" value="アーカイブ先を整理" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

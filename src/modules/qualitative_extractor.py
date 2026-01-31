@@ -11,7 +11,7 @@ import re
 
 
 class QualitativeExtractor:
-    def __init__(self, zip_dir="downloads/zip", output_dir="downloads/qualitative"):
+    def __init__(self, zip_dir="data/processed", output_dir="data/processed"):
         # プロジェクトルートからの絶対パスを構築
         project_root = Path(__file__).parent.parent.parent
         self.zip_dir = project_root / zip_dir

@@ -26,7 +26,7 @@ class TdnetXBRLDownloader:
         self.jpx_url = "https://www2.jpx.co.jp/tseHpFront/JJK010010Action.do?Show=Show"
         # プロジェクトルートからの絶対パスを構築
         project_root = Path(__file__).parent.parent.parent
-        self.download_dir = project_root / download_dir / "zip"
+        self.download_dir = project_root / "data" / "processed"
         self.download_dir.mkdir(parents=True, exist_ok=True)
 
     # -------------------------------------------------
