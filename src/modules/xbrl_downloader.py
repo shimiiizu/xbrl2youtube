@@ -127,7 +127,7 @@ class TdnetXBRLDownloader:
 
         return renamed_count
     # -------------------------------------------------
-    def download_xbrl_by_company(self, company, pub_date=None, max_files=3):
+    def download_xbrl_by_company(self, company, pub_date=None, max_files=1):
         print(f"\n=== JPX検索開始: {company} ===")
         if pub_date:
             print(f"[INFO] 公開日: {pub_date}")
