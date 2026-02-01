@@ -170,11 +170,15 @@ def register_task(schedule):
         ps_script = f"""
 $taskName = "{task_name}"
 $task = Get-ScheduledTask -TaskName $taskName
+
+# 電源管理の修正
 $settings = $task.Settings
 $settings.StopIfGoingOnBatteries = $false
 $settings.DisallowStartIfOnBatteries = $false
-$principal = $task.Principal
-$principal.LogonType = [Microsoft.Win32.TaskScheduler.TaskLogonType]::InteractiveOnly
+
+# ログオンモードの修正（Interactive = パスワード不要で対話型セッションで動作）
+$principal = New-ScheduledTaskPrincipal -UserId "$env:USERNAME" -LogonType Interactive -RunLevel Highest
+
 Set-ScheduledTask -TaskName $taskName -Settings $settings -Principal $principal
 Write-Host "[OK] タスク設定の修正完了"
 """
