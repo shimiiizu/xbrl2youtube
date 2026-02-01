@@ -3,8 +3,53 @@
 import json
 import subprocess
 import sys
+import logging
 from pathlib import Path
 from datetime import datetime
+
+
+def setup_logging():
+    """ログファイルとコンソールに同時に出力するロギング設定"""
+    project_root = Path(__file__).parent.parent.parent
+    log_dir = project_root / "data" / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    # ログファイル名に日時を付与
+    log_filename = log_dir / f"auto_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+
+    # ルートロガーの設定
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    # フォーマット
+    formatter = logging.Formatter('[%(asctime)s] %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
+    # ファイル出力
+    file_handler = logging.FileHandler(log_filename, encoding='utf-8')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    # コンソール出力
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(formatter)
+    logger.addHandler(console_handler)
+
+    # printをloggingにリダイレクト
+    import builtins
+    original_print = builtins.print
+
+    def log_print(*args, **kwargs):
+        message = ' '.join(str(a) for a in args)
+        # file引数が指定されている場合はloggingを使わない
+        if 'file' in kwargs:
+            original_print(*args, **kwargs)
+        else:
+            logging.info(message)
+
+    builtins.print = log_print
+
+    return log_filename
+
 
 # デフォルト設定
 DEFAULT_SCHEDULE = {
@@ -227,6 +272,12 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
     Args:
         各モジュールの関数やクラスを外から受け取る
     """
+    # ログ設定（すべての出力がログファイルに記録される）
+    log_file = setup_logging()
+
+    print(f"[LOG] ログファイル: {log_file}")
+    print("=" * 60)
+
     schedule = load_schedule()
 
     if not schedule["enabled"]:
