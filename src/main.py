@@ -17,6 +17,7 @@ from subtitle_generation import generate_subtitle
 from video_generation import generate_video
 from youtube_upload import upload_to_youtube
 from reset_manager import reset_files
+from schedule_manager import show_schedule_menu, run_auto
 
 
 def parse_date_from_filename(filename):
@@ -51,17 +52,33 @@ def show_menu():
     print("7. 動画作成のみ")
     print("8. YouTubeアップロードのみ")
     print("9. リセット（全ファイルを退避フォルダに移動）")
+    print("10. スケジュール設定・確認")
     print("0. 終了")
     print("=" * 60)
 
 
 def main():
     """メイン処理"""
+
+    # --auto引数の処理（タスクスケジュラーによる自動実行）
+    if "--auto" in sys.argv:
+        run_auto(
+            downloader_class=TdnetXBRLDownloader,
+            extractor_class=QualitativeExtractor,
+            extract_text_fn=extract_text_from_xbrl,
+            save_text_fn=save_text,
+            generate_audio_fn=generate_audio,
+            generate_video_fn=generate_video,
+            upload_fn=upload_to_youtube,
+            parse_date_fn=parse_date_from_filename
+        )
+        return
+
     project_root = Path(__file__).parent.parent
 
     while True:
         show_menu()
-        choice = input("\n選択してください (0-9): ").strip()
+        choice = input("\n選択してください (0-10): ").strip()
 
         if choice == "0":
             print("\n終了します")
