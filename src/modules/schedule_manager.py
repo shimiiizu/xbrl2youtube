@@ -126,7 +126,6 @@ def register_task(schedule):
     )
 
     # タスク登録コマンド
-    # /sc WEEKLY で週単位、/d MON,TUE,WED,THU,FRI で平日のみ
     try:
         result = subprocess.run(
             [
@@ -144,12 +143,8 @@ def register_task(schedule):
             text=True
         )
 
-        if result.returncode == 0:
-            print("[OK] タスクスケジュラーに登録しました")
-        else:
-            print(f"[ERROR] タスク登録に失敗: {result.stderr}")
-            # SYSTEM で失敗した場合、カレントユーザーで再試行
-            print("[INFO] カレントユーザーで再試行しています...")
+        if result.returncode != 0:
+            print(f"[INFO] SYSTEMで失敗。カレントユーザーで再試行しています...")
             result = subprocess.run(
                 [
                     "schtasks", "/create",
@@ -163,10 +158,41 @@ def register_task(schedule):
                 capture_output=True,
                 text=True
             )
-            if result.returncode == 0:
-                print("[OK] カレントユーザーでタスクスケジュラーに登録しました")
-            else:
-                print(f"[ERROR] タスク登録に失敗: {result.stderr}")
+
+        if result.returncode == 0:
+            print("[OK] タスクスケジュラーに登録しました")
+        else:
+            print(f"[ERROR] タスク登録に失敗: {result.stderr}")
+            return
+
+        # PowerShellでログオンモードと電源管理を修正
+        print("[INFO] タスク設定を修正しています...")
+        ps_script = f"""
+$taskName = "{task_name}"
+$task = Get-ScheduledTask -TaskName $taskName
+
+# 電源管理の修正
+$settings = $task.Settings
+$settings.StopIfGoingOnBatteries = $false
+$settings.DisallowStartIfOnBatteries = $false
+
+# ログオンモードの修正（Interactive = パスワード不要で対話型セッションで動作）
+$principal = New-ScheduledTaskPrincipal -UserId "$env:USERNAME" -LogonType Interactive -RunLevel Highest
+
+Set-ScheduledTask -TaskName $taskName -Settings $settings -Principal $principal
+Write-Host "[OK] タスク設定の修正完了"
+"""
+        ps_result = subprocess.run(
+            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps_script],
+            capture_output=True,
+            text=True,
+            encoding="shift_jis"
+        )
+
+        if ps_result.returncode == 0:
+            print("[OK] ログオンモード・電源管理の設定を修正しました")
+        else:
+            print(f"[ERROR] タスク設定の修正に失敗: {ps_result.stderr}")
 
     except Exception as e:
         print(f"[ERROR] タスク登録エラー: {e}")
@@ -195,6 +221,51 @@ def unregister_task():
         print(f"[ERROR] タスク削除エラー: {e}")
 
 
+def check_task():
+    """タスクスケジュラーの登録状況を表示する"""
+    task_name = get_task_name()
+
+    print(f"\n[INFO] タスク登録状況を確認しています...")
+    print(f"  タスク名: {task_name}\n")
+
+    try:
+        result = subprocess.run(
+            ["schtasks", "/query", "/tn", task_name, "/v", "/fo", "LIST"],
+            capture_output=True,
+            text=True,
+            encoding="shift_jis"
+        )
+
+        if result.returncode == 0:
+            # 必要な項目だけ抽出して表示
+            display_keys = [
+                "タスク名",
+                "次回の実行時刻",
+                "状態",
+                "ログオン モード",
+                "前回の実行時刻",
+                "前回の結果",
+                "実行するタスク",
+                "スケジュールされたタスクの状態",
+                "電源管理",
+                "日",
+                "開始時刻",
+            ]
+
+            print("=" * 60)
+            for line in result.stdout.splitlines():
+                for key in display_keys:
+                    if line.startswith(key):
+                        print(line)
+                        break
+            print("=" * 60)
+        else:
+            print("✗ タスクが登録されていません")
+
+    except Exception as e:
+        print(f"[ERROR] タスク確認エラー: {e}")
+
+
 def show_schedule_menu():
     """スケジュール設定メニューを表示・操作"""
     while True:
@@ -213,10 +284,11 @@ def show_schedule_menu():
         print("3. 企業数を変更")
         print("4. タスクスケジュラーに登録する")
         print("5. タスクスケジュラーから削除する")
+        print("6. タスク登録状況を確認する")
         print("0. 戻る")
         print("=" * 60)
 
-        choice = input("\n選択してください (0-5): ").strip()
+        choice = input("\n選択してください (0-6): ").strip()
 
         if choice == "0":
             break
@@ -260,12 +332,15 @@ def show_schedule_menu():
         elif choice == "5":
             unregister_task()
 
+        elif choice == "6":
+            check_task()
+
         else:
-            print("✗ 無効な選択です。0-5の数字を入力してください")
+            print("✗ 無効な選択です。0-6の数字を入力してください")
 
 
 def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
-             generate_audio_fn, generate_video_fn, upload_fn, parse_date_fn):
+             generate_audio_fn, generate_video_fn, upload_fn, parse_date_fn, fetch_stock_info_fn):
     """
     自動実行モード（--auto引数で起動時に呼ばれる）
 
@@ -331,7 +406,18 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
         company_only = company_name.split('_')[0]
 
         try:
+            # 株情報の取得
+            info = fetch_stock_info_fn(company_only)
+            if not info:
+                print(f"✗ {company_name} スキップ（株情報取得できず）")
+                continue
+
             text = extract_text_fn(str(htm_file))
+
+            # 企業概要を冒頭に追加
+            intro = f"【{company_only}】業種: {info.get('sector', 'N/A')} / PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+            text = intro + text
+
             text_path = processed_dir / f"{company_name}_extracted_text.txt"
             audio_path = processed_dir / f"{company_name}_output.mp3"
             subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
@@ -342,13 +428,13 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
 
             # 動画タイトル作成
             video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
-            generate_video_fn(str(audio_path), str(video_path), text, company_only, date_str)
+            generate_video_fn(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
 
             # YouTubeアップロード
             upload_fn(
                 video_path=str(video_path),
                 title=video_title,
-                description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
+                description=f"{company_only}の決算短信の内容を音声で解説した動画です。\n業種: {info.get('sector', 'N/A')}\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
                 privacy="private",
                 company_name=company_only,
                 subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
