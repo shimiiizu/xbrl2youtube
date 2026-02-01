@@ -195,6 +195,51 @@ def unregister_task():
         print(f"[ERROR] タスク削除エラー: {e}")
 
 
+def check_task():
+    """タスクスケジュラーの登録状況を表示する"""
+    task_name = get_task_name()
+
+    print(f"\n[INFO] タスク登録状況を確認しています...")
+    print(f"  タスク名: {task_name}\n")
+
+    try:
+        result = subprocess.run(
+            ["schtasks", "/query", "/tn", task_name, "/v", "/fo", "LIST"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8"
+        )
+
+        if result.returncode == 0:
+            # 必要な項目だけ抽出して表示
+            display_keys = [
+                "タスク名",
+                "次回の実行時刻",
+                "状態",
+                "ログオン モード",
+                "前回の実行時刻",
+                "前回の結果",
+                "実行するタスク",
+                "スケジュールされたタスクの状態",
+                "電源管理",
+                "日",
+                "開始時刻",
+            ]
+
+            print("=" * 60)
+            for line in result.stdout.splitlines():
+                for key in display_keys:
+                    if line.startswith(key):
+                        print(line)
+                        break
+            print("=" * 60)
+        else:
+            print("✗ タスクが登録されていません")
+
+    except Exception as e:
+        print(f"[ERROR] タスク確認エラー: {e}")
+
+
 def show_schedule_menu():
     """スケジュール設定メニューを表示・操作"""
     while True:
@@ -213,10 +258,11 @@ def show_schedule_menu():
         print("3. 企業数を変更")
         print("4. タスクスケジュラーに登録する")
         print("5. タスクスケジュラーから削除する")
+        print("6. タスク登録状況を確認する")
         print("0. 戻る")
         print("=" * 60)
 
-        choice = input("\n選択してください (0-5): ").strip()
+        choice = input("\n選択してください (0-6): ").strip()
 
         if choice == "0":
             break
@@ -260,8 +306,11 @@ def show_schedule_menu():
         elif choice == "5":
             unregister_task()
 
+        elif choice == "6":
+            check_task()
+
         else:
-            print("✗ 無効な選択です。0-5の数字を入力してください")
+            print("✗ 無効な選択です。0-6の数字を入力してください")
 
 
 def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
