@@ -18,6 +18,7 @@ from video_generation import generate_video
 from youtube_upload import upload_to_youtube
 from reset_manager import reset_files
 from schedule_manager import show_schedule_menu, run_auto
+from stock_info import fetch_stock_info
 
 
 def parse_date_from_filename(filename):
@@ -70,7 +71,8 @@ def main():
             generate_audio_fn=generate_audio,
             generate_video_fn=generate_video,
             upload_fn=upload_to_youtube,
-            parse_date_fn=parse_date_from_filename
+            parse_date_fn=parse_date_from_filename,
+            fetch_stock_info_fn=fetch_stock_info
         )
         return
 
@@ -124,7 +126,18 @@ def main():
                 company_only = company_name.split('_')[0]  # 企業名のみ取得
 
                 try:
+                    # 株情報の取得
+                    info = fetch_stock_info(company_only)
+                    if not info:
+                        print(f"✗ {company_name} スキップ（株情報取得できず）")
+                        continue
+
                     text = extract_text_from_xbrl(str(htm_file))
+
+                    # 企業概要を冒頭に追加
+                    intro = f"【{company_only}】業種: {info.get('sector', 'N/A')} / PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+                    text = intro + text
+
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
                     audio_path = processed_dir / f"{company_name}_output.mp3"
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
@@ -136,13 +149,13 @@ def main():
 
                     # 動画タイトル作成
                     video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
-                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
 
                     # YouTubeアップロード
                     upload_to_youtube(
                         video_path=str(video_path),
                         title=video_title,
-                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
+                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。\n業種: {info.get('sector', 'N/A')}\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
                         privacy="private",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
@@ -230,7 +243,18 @@ def main():
                 company_only = company_name.split('_')[0]
 
                 try:
+                    # 株情報の取得
+                    info = fetch_stock_info(company_only)
+                    if not info:
+                        print(f"✗ {company_name} スキップ（株情報取得できず）")
+                        continue
+
                     text = extract_text_from_xbrl(str(htm_file))
+
+                    # 企業概要を冒頭に追加
+                    intro = f"【{company_only}】業種: {info.get('sector', 'N/A')} / PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+                    text = intro + text
+
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
                     audio_path = processed_dir / f"{company_name}_output.mp3"
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
@@ -239,7 +263,7 @@ def main():
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
                     # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
-                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
                     print(f"✓ {company_name}")
                 except Exception as e:
                     print(f"✗ {company_name}: {e}")

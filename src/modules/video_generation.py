@@ -7,7 +7,8 @@ import os
 FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
 
 
-def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None, duration: float = 3.0) -> str:
+def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None,
+                       duration: float = 3.0, stock_info: dict = None) -> str:
     """動画用のオープニング映像（サムネイル）を生成
 
     Args:
@@ -15,43 +16,104 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         company_name: 企業名
         date_str: 日付文字列
         duration: オープニングの長さ（秒）
+        stock_info: 株情報 {"per": "25.3", "pbr": "3.2", "sector": "電気機器"}
 
     Returns:
-        サムネイル画像のパス
+        オープニング動画クリップ
     """
 
     print(f"[INFO] Generating opening thumbnail ({duration}s)...")
 
-    # タイトルテキスト作成
-    if company_name and date_str:
-        title_text = f"{company_name}\n{date_str}\nさくっと決算"
-    elif company_name:
-        title_text = f"{company_name}\nさくっと決算"
-    else:
-        title_text = "さくっと決算"
-
     # サムネイルのサイズ（YouTube推奨: 1280x720）
     thumb_size = (1280, 720)
 
-    # 背景（グラデーション風に濃いめの色）
+    # 背景
     background = ColorClip(size=thumb_size, color=(20, 30, 50)).with_duration(duration)
 
-    # タイトル（大きく中央に）
-    title_clip = (
+    clips = [background]
+
+    # ===== 企業名（大きく・ポップに） =====
+    if company_name:
+        company_clip = (
+            TextClip(
+                text=company_name,
+                font=FONT_PATH,
+                font_size=120,
+                color="#FFD700",  # ゴールド色
+                size=(1100, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position(("center", 150))
+        )
+        clips.append(company_clip)
+
+    # ===== 業種 =====
+    if stock_info and stock_info.get("sector"):
+        sector_clip = (
+            TextClip(
+                text=stock_info["sector"],
+                font=FONT_PATH,
+                font_size=36,
+                color="#87CEEB",  # スカイブルー
+                size=(800, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position(("center", 310))
+        )
+        clips.append(sector_clip)
+
+    # ===== 日付 =====
+    if date_str:
+        date_clip = (
+            TextClip(
+                text=date_str,
+                font=FONT_PATH,
+                font_size=40,
+                color="white",
+                size=(800, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position(("center", 370))
+        )
+        clips.append(date_clip)
+
+    # ===== PER・PBR =====
+    if stock_info and stock_info.get("per") and stock_info.get("pbr"):
+        per_pbr_text = f"PER: {stock_info['per']}x    PBR: {stock_info['pbr']}x"
+        per_pbr_clip = (
+            TextClip(
+                text=per_pbr_text,
+                font=FONT_PATH,
+                font_size=48,
+                color="#98FB98",  # ライトグリーン
+                size=(900, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position(("center", 470))
+        )
+        clips.append(per_pbr_clip)
+
+    # ===== さくっと決算（下端） =====
+    tagline_clip = (
         TextClip(
-            text=title_text,
+            text="さくっと決算",
             font=FONT_PATH,
-            font_size=90,
-            color="white",
-            size=(1100, None),
+            font_size=32,
+            color="#AAAAAA",
+            size=(600, None),
             method="caption"
         )
         .with_duration(duration)
-        .with_position("center")
+        .with_position(("center", 620))
     )
+    clips.append(tagline_clip)
 
     # 合成
-    thumbnail = CompositeVideoClip([background, title_clip])
+    thumbnail = CompositeVideoClip(clips)
 
     # 静止画像として保存（YouTubeサムネイル用）
     thumbnail_path = output_path.replace(".mp4", "_thumbnail.png")
@@ -64,7 +126,7 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
 
 
 def generate_video(audio_path: str, output_path: str, text_content: str = None,
-                   company_name: str = None, date_str: str = None) -> None:
+                   company_name: str = None, date_str: str = None, stock_info: dict = None) -> None:
     print(f"[INFO] Reading audio from: {audio_path}")
 
     # ===== フォント存在チェック（重要）=====
@@ -80,7 +142,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
     # ===== オープニング（3秒）=====
     opening_duration = 3.0
     opening_clip = generate_thumbnail(output_path, company_name=company_name, date_str=date_str,
-                                      duration=opening_duration)
+                                      duration=opening_duration, stock_info=stock_info)
 
     # ===== 本編部分（音声と同期）=====
     # 背景
