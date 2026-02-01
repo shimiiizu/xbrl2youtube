@@ -273,8 +273,12 @@ def main():
             # リセット
             reset_files()
 
+        elif choice == "10":
+            # スケジュール設定
+            show_schedule_menu()
+
         else:
-            print("✗ 無効な選択です。0-9の数字を入力してください")
+            print("✗ 無効な選択です。0-10の数字を入力してください")
 
 
 if __name__ == "__main__":
