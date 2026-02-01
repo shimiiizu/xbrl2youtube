@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="登録状況確認機能を追加">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/schedule_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/schedule_manager.py" afterDir="false" />
-    </list>
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="スケジュール登録機能を追加し忘れ対応" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -251,6 +248,46 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py">
+      <option name="closed" value="true" />
+      <created>1768744838485</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1768744838485</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py">
+      <option name="closed" value="true" />
+      <created>1768744843691</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1768744843691</updated>
+    </task>
+    <task id="LOCAL-00032" summary="文字化け対策">
+      <option name="closed" value="true" />
+      <created>1768745759351</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1768745759351</updated>
+    </task>
+    <task id="LOCAL-00033" summary="本文の表示のタイミングを早めた">
+      <option name="closed" value="true" />
+      <created>1768747079699</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1768747079699</updated>
+    </task>
+    <task id="LOCAL-00034" summary="タイトルを表示するサムネイルを作成する機能を追加">
+      <option name="closed" value="true" />
+      <created>1769241813437</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1769241813437</updated>
     </task>
     <task id="LOCAL-00035" summary="タイトルに企業名を追加">
       <option name="closed" value="true" />
@@ -604,47 +641,7 @@
       <option name="project" value="LOCAL" />
       <updated>1769919516752</updated>
     </task>
-    <task id="LOCAL-00079" summary="タスク登録状況を確認する機能を追加">
-      <option name="closed" value="true" />
-      <created>1769920507237</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1769920507237</updated>
-    </task>
-    <task id="LOCAL-00080" summary="自動実行時のlogを残す機能を追加">
-      <option name="closed" value="true" />
-      <created>1769920617150</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1769920617150</updated>
-    </task>
-    <task id="LOCAL-00081" summary="登録状況確認機能を追加">
-      <option name="closed" value="true" />
-      <created>1769921314198</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1769921314198</updated>
-    </task>
-    <task id="LOCAL-00082" summary="登録状況確認機能を追加">
-      <option name="closed" value="true" />
-      <created>1769921430284</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1769921430284</updated>
-    </task>
-    <task id="LOCAL-00083" summary="登録状況確認機能を追加">
-      <option name="closed" value="true" />
-      <created>1769921946631</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1769921946631</updated>
-    </task>
-    <option name="localTasksCounter" value="84" />
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,6 +668,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="音声ファイル生成機能を追加" />
+    <MESSAGE value="字幕スクロール。字幕ファイル読み込み機能追加" />
+    <MESSAGE value="企業名の入れ替えを簡単に変更" />
+    <MESSAGE value="公開日をファイル名に付与する仕様に変更" />
+    <MESSAGE value="公開日をファイル名に付与する仕様に変更（シンプルに）" />
     <MESSAGE value="シンプルにならなかったエラーを修正" />
     <MESSAGE value="ファイル名に日付を付与" />
     <MESSAGE value="company_name引数を渡さないように修正" />
@@ -691,12 +693,7 @@
     <MESSAGE value="進捗を表示" />
     <MESSAGE value="スケジュール登録機能を追加" />
     <MESSAGE value="スケジュール登録機能を追加し忘れ対応" />
-    <MESSAGE value="タスク登録状況を確認する機能を追加" />
-    <MESSAGE value="自動実行時のlogを残す機能を追加" />
-    <MESSAGE value="エラー対応" />
-    <MESSAGE value="修正して" />
-    <MESSAGE value="登録状況確認機能を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="登録状況確認機能を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="スケジュール登録機能を追加し忘れ対応" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
