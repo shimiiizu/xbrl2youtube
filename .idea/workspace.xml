@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="日付を指定する方式に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="エラーに対応">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,11 +103,11 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\archive\movie" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\json" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\zip" />
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed\Upload済み" />
-      <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\downloads\処理後zip" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -250,14 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00026" summary="『（１）当四半期の経営成績の概況』のみを抜き出す仕様に変更">
-      <option name="closed" value="true" />
-      <created>1768703595773</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1768703595773</updated>
     </task>
     <task id="LOCAL-00027" summary="抽出終了条件を変更">
       <option name="closed" value="true" />
@@ -643,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769870034474</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="エラーに対応">
+      <option name="closed" value="true" />
+      <created>1769872649958</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1769872649959</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -670,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="テキストの抽出のみの機能を追加" />
     <MESSAGE value="字幕生成のみの機能を追加" />
     <MESSAGE value="字幕ファイルに企業名を追加する機能を追加" />
     <MESSAGE value="エラーを修正" />
@@ -695,7 +694,8 @@
     <MESSAGE value="企業を選別してダウンロードする形式に変更" />
     <MESSAGE value="表示をシンプルにした" />
     <MESSAGE value="日付を指定する方式に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="日付を指定する方式に変更" />
+    <MESSAGE value="エラーに対応" />
+    <option name="LAST_COMMIT_MESSAGE" value="エラーに対応" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
