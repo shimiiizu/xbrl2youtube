@@ -126,7 +126,6 @@ def register_task(schedule):
     )
 
     # タスク登録コマンド
-    # /sc WEEKLY で週単位、/d MON,TUE,WED,THU,FRI で平日のみ
     try:
         result = subprocess.run(
             [
@@ -144,12 +143,8 @@ def register_task(schedule):
             text=True
         )
 
-        if result.returncode == 0:
-            print("[OK] タスクスケジュラーに登録しました")
-        else:
-            print(f"[ERROR] タスク登録に失敗: {result.stderr}")
-            # SYSTEM で失敗した場合、カレントユーザーで再試行
-            print("[INFO] カレントユーザーで再試行しています...")
+        if result.returncode != 0:
+            print(f"[INFO] SYSTEMで失敗。カレントユーザーで再試行しています...")
             result = subprocess.run(
                 [
                     "schtasks", "/create",
@@ -163,10 +158,37 @@ def register_task(schedule):
                 capture_output=True,
                 text=True
             )
-            if result.returncode == 0:
-                print("[OK] カレントユーザーでタスクスケジュラーに登録しました")
-            else:
-                print(f"[ERROR] タスク登録に失敗: {result.stderr}")
+
+        if result.returncode == 0:
+            print("[OK] タスクスケジュラーに登録しました")
+        else:
+            print(f"[ERROR] タスク登録に失敗: {result.stderr}")
+            return
+
+        # PowerShellでログオンモードと電源管理を修正
+        print("[INFO] タスク設定を修正しています...")
+        ps_script = f"""
+$taskName = "{task_name}"
+$task = Get-ScheduledTask -TaskName $taskName
+$settings = $task.Settings
+$settings.StopIfGoingOnBatteries = $false
+$settings.DisallowStartIfOnBatteries = $false
+$principal = $task.Principal
+$principal.LogonType = [Microsoft.Win32.TaskScheduler.TaskLogonType]::InteractiveOnly
+Set-ScheduledTask -TaskName $taskName -Settings $settings -Principal $principal
+Write-Host "[OK] タスク設定の修正完了"
+"""
+        ps_result = subprocess.run(
+            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps_script],
+            capture_output=True,
+            text=True,
+            encoding="shift_jis"
+        )
+
+        if ps_result.returncode == 0:
+            print("[OK] ログオンモード・電源管理の設定を修正しました")
+        else:
+            print(f"[ERROR] タスク設定の修正に失敗: {ps_result.stderr}")
 
     except Exception as e:
         print(f"[ERROR] タスク登録エラー: {e}")
@@ -207,7 +229,7 @@ def check_task():
             ["schtasks", "/query", "/tn", task_name, "/v", "/fo", "LIST"],
             capture_output=True,
             text=True,
-            encoding="utf-8"
+            encoding="shift_jis"
         )
 
         if result.returncode == 0:
