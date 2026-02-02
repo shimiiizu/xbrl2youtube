@@ -415,7 +415,7 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
             text = extract_text_fn(str(htm_file))
 
             # 企業概要を冒頭に追加
-            intro = f"【{company_only}】業種: {info.get('sector', 'N/A')} / PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+            intro = f"【{company_only}】PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
             text = intro + text
 
             text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -434,7 +434,7 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
             upload_fn(
                 video_path=str(video_path),
                 title=video_title,
-                description=f"{company_only}の決算短信の内容を音声で解説した動画です。\n業種: {info.get('sector', 'N/A')}\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
+                description=f"{company_only}の決算短信の内容を音声で解説した動画です。\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
                 privacy="private",
                 company_name=company_only,
                 subtitle_path=str(subtitle_path) if subtitle_path.exists() else None

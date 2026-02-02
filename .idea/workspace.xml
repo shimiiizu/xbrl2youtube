@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="スケジュール登録機能を追加し忘れ対応">
-      <change afterPath="$PROJECT_DIR$/src/modules/stock_info.py" afterDir="false" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="PER・PBR情報を取得する仕様に変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/stock_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/stock_info.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,22 +252,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py">
-      <option name="closed" value="true" />
-      <created>1768744838485</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1768744838485</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/modules/video_generation.py">
-      <option name="closed" value="true" />
-      <created>1768744843691</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1768744843691</updated>
     </task>
     <task id="LOCAL-00032" summary="文字化け対策">
       <option name="closed" value="true" />
@@ -644,7 +629,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769919516752</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="PER・PBR情報を取得する仕様に変更">
+      <option name="closed" value="true" />
+      <created>1769947378703</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1769947378707</updated>
+    </task>
+    <task id="LOCAL-00080" summary="PER・PBR情報を取得する仕様に変更">
+      <option name="closed" value="true" />
+      <created>1769947916085</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1769947916085</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,8 +672,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="音声ファイル生成機能を追加" />
-    <MESSAGE value="字幕スクロール。字幕ファイル読み込み機能追加" />
     <MESSAGE value="企業名の入れ替えを簡単に変更" />
     <MESSAGE value="公開日をファイル名に付与する仕様に変更" />
     <MESSAGE value="公開日をファイル名に付与する仕様に変更（シンプルに）" />
@@ -696,7 +695,9 @@
     <MESSAGE value="進捗を表示" />
     <MESSAGE value="スケジュール登録機能を追加" />
     <MESSAGE value="スケジュール登録機能を追加し忘れ対応" />
-    <option name="LAST_COMMIT_MESSAGE" value="スケジュール登録機能を追加し忘れ対応" />
+    <MESSAGE value="PER取得時のエラーに対応" />
+    <MESSAGE value="PER・PBR情報を取得する仕様に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="PER・PBR情報を取得する仕様に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

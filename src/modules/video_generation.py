@@ -16,7 +16,7 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         company_name: 企業名
         date_str: 日付文字列
         duration: オープニングの長さ（秒）
-        stock_info: 株情報 {"per": "25.3", "pbr": "3.2", "sector": "電気機器"}
+        stock_info: 株情報 {"per": "25.3", "pbr": "3.2"}
 
     Returns:
         オープニング動画クリップ
@@ -44,25 +44,9 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 150))
+            .with_position(("center", 180))
         )
         clips.append(company_clip)
-
-    # ===== 業種 =====
-    if stock_info and stock_info.get("sector"):
-        sector_clip = (
-            TextClip(
-                text=stock_info["sector"],
-                font=FONT_PATH,
-                font_size=36,
-                color="#87CEEB",  # スカイブルー
-                size=(800, None),
-                method="caption"
-            )
-            .with_duration(duration)
-            .with_position(("center", 310))
-        )
-        clips.append(sector_clip)
 
     # ===== 日付 =====
     if date_str:
@@ -76,7 +60,7 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 370))
+            .with_position(("center", 340))
         )
         clips.append(date_clip)
 
@@ -93,7 +77,7 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 470))
+            .with_position(("center", 430))
         )
         clips.append(per_pbr_clip)
 
@@ -197,7 +181,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
         screen_height = 720
         scroll_area_top = 100
         scroll_area_bottom = 720
-        start_y = screen_height - 100
+        start_y = 360  # 画面中央から開始（720の半分）
         end_y = scroll_area_top - text_height
         scroll_distance = start_y - end_y
 

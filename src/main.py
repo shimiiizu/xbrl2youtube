@@ -54,6 +54,7 @@ def show_menu():
     print("8. YouTubeアップロードのみ")
     print("9. リセット（全ファイルを退避フォルダに移動）")
     print("10. スケジュール設定・確認")
+    print("11. 株情報確認のみ")
     print("0. 終了")
     print("=" * 60)
 
@@ -80,7 +81,7 @@ def main():
 
     while True:
         show_menu()
-        choice = input("\n選択してください (0-10): ").strip()
+        choice = input("\n選択してください (0-11): ").strip()
 
         if choice == "0":
             print("\n終了します")
@@ -135,7 +136,7 @@ def main():
                     text = extract_text_from_xbrl(str(htm_file))
 
                     # 企業概要を冒頭に追加
-                    intro = f"【{company_only}】業種: {info.get('sector', 'N/A')} / PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+                    intro = f"【{company_only}】PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
                     text = intro + text
 
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -155,7 +156,7 @@ def main():
                     upload_to_youtube(
                         video_path=str(video_path),
                         title=video_title,
-                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。\n業種: {info.get('sector', 'N/A')}\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
+                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
                         privacy="private",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
@@ -252,7 +253,7 @@ def main():
                     text = extract_text_from_xbrl(str(htm_file))
 
                     # 企業概要を冒頭に追加
-                    intro = f"【{company_only}】業種: {info.get('sector', 'N/A')} / PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+                    intro = f"【{company_only}】PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
                     text = intro + text
 
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -301,8 +302,28 @@ def main():
             # スケジュール設定
             show_schedule_menu()
 
+        elif choice == "11":
+            # 株情報確認のみ
+            user_input = input("\n企業名を入力してください (スペース区切りで複数可, 例: トヨタ自動車 ソニー): ").strip()
+            if not user_input:
+                print("✗ 入力が空です")
+                continue
+
+            companies = user_input.split()
+            print(f"\n=== 株情報確認: {len(companies)}社 ===\n")
+
+            for company in companies:
+                info = fetch_stock_info(company)
+                if info:
+                    print(f"  ✓ {company}")
+                    print(f"      PER:  {info.get('per', 'N/A')}倍")
+                    print(f"      PBR:  {info.get('pbr', 'N/A')}倍")
+                else:
+                    print(f"  ✗ {company} - 取得できませんでした")
+                print()
+
         else:
-            print("✗ 無効な選択です。0-10の数字を入力してください")
+            print("✗ 無効な選択です。0-11の数字を入力してください")
 
 
 if __name__ == "__main__":
