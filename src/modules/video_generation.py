@@ -4,7 +4,7 @@ from moviepy import AudioFileClip, ColorClip, TextClip, CompositeVideoClip
 from pathlib import Path
 import os
 
-FONT_PATH = r"C:\Windows\Fonts\ipam.ttf"
+FONT_PATH = r"C:\Windows\Fonts\YuGothB.ttc"
 
 
 def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None,
@@ -64,22 +64,52 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         )
         clips.append(date_clip)
 
-    # ===== PER・PBR =====
+    # ===== PER・PBR・ROE（1行目） =====
     if stock_info and stock_info.get("per") and stock_info.get("pbr"):
-        per_pbr_text = f"PER: {stock_info['per']}x    PBR: {stock_info['pbr']}x"
-        per_pbr_clip = (
+        line1_parts = []
+        line1_parts.append(f"PER: {stock_info['per']}")
+        line1_parts.append(f"PBR: {stock_info['pbr']}")
+        if stock_info.get("roe"):
+            line1_parts.append(f"ROE: {stock_info['roe']}%")
+
+        line1_text = "    ".join(line1_parts)
+        line1_clip = (
             TextClip(
-                text=per_pbr_text,
+                text=line1_text,
                 font=FONT_PATH,
-                font_size=48,
+                font_size=42,
                 color="#98FB98",  # ライトグリーン
-                size=(900, None),
+                size=(1100, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 430))
+            .with_position(("center", 410))
         )
-        clips.append(per_pbr_clip)
+        clips.append(line1_clip)
+
+    # ===== 配当利回り・時価総額（2行目） =====
+    if stock_info:
+        line2_parts = []
+        if stock_info.get("dividend_yield"):
+            line2_parts.append(f"配当: {stock_info['dividend_yield']}%")
+        if stock_info.get("market_cap"):
+            line2_parts.append(f"時価総額: {stock_info['market_cap']}")
+
+        if line2_parts:
+            line2_text = "    ".join(line2_parts)
+            line2_clip = (
+                TextClip(
+                    text=line2_text,
+                    font=FONT_PATH,
+                    font_size=42,
+                    color="#98FB98",  # ライトグリーン
+                    size=(1100, None),
+                    method="caption"
+                )
+                .with_duration(duration)
+                .with_position(("center", 470))
+            )
+            clips.append(line2_clip)
 
     # ===== さくっと決算（下端） =====
     tagline_clip = (

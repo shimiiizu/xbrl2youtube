@@ -415,7 +415,16 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
             text = extract_text_fn(str(htm_file))
 
             # 企業概要を冒頭に追加
-            intro = f"【{company_only}】PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
+            intro_parts = [f"【{company_only}】"]
+            intro_parts.append(f"PER: {info.get('per', 'N/A')}")
+            intro_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
+            if info.get('roe'):
+                intro_parts.append(f"ROE: {info.get('roe')}%")
+            if info.get('dividend_yield'):
+                intro_parts.append(f"配当: {info.get('dividend_yield')}%")
+            if info.get('market_cap'):
+                intro_parts.append(f"時価総額: {info.get('market_cap')}")
+            intro = " / ".join(intro_parts) + "\n\n"
             text = intro + text
 
             text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -430,11 +439,23 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
             video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
             generate_video_fn(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
 
+            # YouTube説明欄作成
+            desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
+            desc_parts.append(f"PER: {info.get('per', 'N/A')}")
+            desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
+            if info.get('roe'):
+                desc_parts.append(f"ROE: {info.get('roe')}%")
+            if info.get('dividend_yield'):
+                desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
+            if info.get('market_cap'):
+                desc_parts.append(f"時価総額: {info.get('market_cap')}")
+            description = "\n".join(desc_parts)
+
             # YouTubeアップロード
             upload_fn(
                 video_path=str(video_path),
                 title=video_title,
-                description=f"{company_only}の決算短信の内容を音声で解説した動画です。\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
+                description=description,
                 privacy="private",
                 company_name=company_only,
                 subtitle_path=str(subtitle_path) if subtitle_path.exists() else None

@@ -88,7 +88,7 @@ def get_stock_info(stock_code: str) -> dict | None:
         all_text = soup.get_text()
 
         # デバッグ用: PER・PBR周辺のテキストを出力
-        for keyword in ["PER", "PBR"]:
+        for keyword in ["PER", "PBR", "ROE", "配当利回り", "時価総額"]:
             indices = [m.start() for m in re.finditer(keyword, all_text)]
             for idx in indices[:3]:  # 最初の3件まで
                 snippet = all_text[idx:idx + 80].replace('\n', ' ').strip()
@@ -122,8 +122,54 @@ def get_stock_info(stock_code: str) -> dict | None:
                 print(f"[DEBUG] PBR matched with pattern: {pattern}")
                 break
 
-        # PERとPBRが両方取得できた場合のみ返す
+        # ROEの検索
+        roe_patterns = [
+            r"ROE[（(][^）)]*[）)][^0-9]*([\d.]+)%",  # ROE（実績）15.20%
+            r"ROE[（(][^）)]*[）)]\s*([\d.]+)",  # ROE（実績）15.20
+            r"ROE\s*[：:]\s*([\d.]+)",  # ROE：15.20
+        ]
+        for pattern in roe_patterns:
+            roe_match = re.search(pattern, all_text)
+            if roe_match:
+                info["roe"] = roe_match.group(1)
+                print(f"[DEBUG] ROE matched with pattern: {pattern}")
+                break
+
+        # 配当利回りの検索
+        dividend_patterns = [
+            r"配当利回り[（(][^）)]*[）)][^0-9]*([\d.]+)%",  # 配当利回り（会社予想）2.50%
+            r"配当利回り\s*[：:]\s*([\d.]+)",  # 配当利回り：2.50
+            r"利回り[^0-9]*([\d.]+)%",  # 利回り 2.50%
+        ]
+        for pattern in dividend_patterns:
+            div_match = re.search(pattern, all_text)
+            if div_match:
+                info["dividend_yield"] = div_match.group(1)
+                print(f"[DEBUG] 配当利回り matched with pattern: {pattern}")
+                break
+
+        # 時価総額の検索（例: 1.2兆円、5,000億円、300億円）
+        market_cap_patterns = [
+            r"時価総額[^0-9]*([\d,]+\.?\d*)\s*兆円",  # 1.2兆円
+            r"時価総額[^0-9]*([\d,]+)\s*億円",  # 5,000億円
+            r"時価総額\s*[：:]\s*([\d,]+\.?\d*)\s*兆円",
+            r"時価総額\s*[：:]\s*([\d,]+)\s*億円",
+        ]
+        for pattern in market_cap_patterns:
+            cap_match = re.search(pattern, all_text)
+            if cap_match:
+                value = cap_match.group(1).replace(',', '')
+                if '兆円' in pattern:
+                    info["market_cap"] = f"{value}兆円"
+                else:
+                    info["market_cap"] = f"{value}億円"
+                print(f"[DEBUG] 時価総額 matched with pattern: {pattern}")
+                break
+
+        # PERとPBRが両方取得できた場合のみ返す（ROE等はオプション）
         if "per" in info and "pbr" in info:
+            print(
+                f"[INFO] 取得成功 - PER: {info.get('per', 'N/A')}, PBR: {info.get('pbr', 'N/A')}, ROE: {info.get('roe', 'N/A')}, 配当: {info.get('dividend_yield', 'N/A')}, 時価総額: {info.get('market_cap', 'N/A')}")
             return info
         else:
             print(f"[WARN] PER/PBR取得できず (コード: {stock_code}): {info}")
@@ -164,5 +210,5 @@ def fetch_stock_info(company_name: str) -> dict | None:
         return None
 
     print(
-        f"[INFO] 株情報取得完了: {company_name} → PER: {info.get('per', 'N/A')}, PBR: {info.get('pbr', 'N/A')}, 業種: {info.get('sector', 'N/A')}")
+        f"[INFO] 株情報取得完了: {company_name} → PER: {info.get('per', 'N/A')}, PBR: {info.get('pbr', 'N/A')}, ROE: {info.get('roe', 'N/A')}%, 配当: {info.get('dividend_yield', 'N/A')}%, 時価総額: {info.get('market_cap', 'N/A')}")
     return info

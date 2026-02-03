@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="PER・PBR情報を取得する仕様に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="不要な情報を削除">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/schedule_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/schedule_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/stock_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/stock_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,14 +254,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00032" summary="文字化け対策">
-      <option name="closed" value="true" />
-      <created>1768745759351</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1768745759351</updated>
     </task>
     <task id="LOCAL-00033" summary="本文の表示のタイミングを早めた">
       <option name="closed" value="true" />
@@ -645,7 +639,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769947916085</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="不要な情報を削除">
+      <option name="closed" value="true" />
+      <created>1770041043764</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1770041043765</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -672,7 +674,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="企業名の入れ替えを簡単に変更" />
     <MESSAGE value="公開日をファイル名に付与する仕様に変更" />
     <MESSAGE value="公開日をファイル名に付与する仕様に変更（シンプルに）" />
     <MESSAGE value="シンプルにならなかったエラーを修正" />
@@ -697,7 +698,8 @@
     <MESSAGE value="スケジュール登録機能を追加し忘れ対応" />
     <MESSAGE value="PER取得時のエラーに対応" />
     <MESSAGE value="PER・PBR情報を取得する仕様に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="PER・PBR情報を取得する仕様に変更" />
+    <MESSAGE value="不要な情報を削除" />
+    <option name="LAST_COMMIT_MESSAGE" value="不要な情報を削除" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -3,7 +3,6 @@
 import sys
 from pathlib import Path
 from datetime import datetime
-import shutil
 
 # modulesフォルダをパスに追加
 sys.path.insert(0, str(Path(__file__).parent / "modules"))
@@ -16,9 +15,6 @@ from audio_generation import generate_audio
 from subtitle_generation import generate_subtitle
 from video_generation import generate_video
 from youtube_upload import upload_to_youtube
-from reset_manager import reset_files
-from schedule_manager import show_schedule_menu, run_auto
-from stock_info import fetch_stock_info
 
 
 def parse_date_from_filename(filename):
@@ -52,36 +48,17 @@ def show_menu():
     print("6. 字幕生成のみ")
     print("7. 動画作成のみ")
     print("8. YouTubeアップロードのみ")
-    print("9. リセット（全ファイルを退避フォルダに移動）")
-    print("10. スケジュール設定・確認")
-    print("11. 株情報確認のみ")
     print("0. 終了")
     print("=" * 60)
 
 
 def main():
     """メイン処理"""
-
-    # --auto引数の処理（タスクスケジュラーによる自動実行）
-    if "--auto" in sys.argv:
-        run_auto(
-            downloader_class=TdnetXBRLDownloader,
-            extractor_class=QualitativeExtractor,
-            extract_text_fn=extract_text_from_xbrl,
-            save_text_fn=save_text,
-            generate_audio_fn=generate_audio,
-            generate_video_fn=generate_video,
-            upload_fn=upload_to_youtube,
-            parse_date_fn=parse_date_from_filename,
-            fetch_stock_info_fn=fetch_stock_info
-        )
-        return
-
     project_root = Path(__file__).parent.parent
 
     while True:
         show_menu()
-        choice = input("\n選択してください (0-11): ").strip()
+        choice = input("\n選択してください (0-8): ").strip()
 
         if choice == "0":
             print("\n終了します")
@@ -89,19 +66,16 @@ def main():
 
         elif choice == "1":
             # すべて実行
-            date_input = input("日付を指定 (例: 20250127) または Enter でスキップ: ").strip()
-            filter_date = date_input if date_input and len(date_input) == 8 and date_input.isdigit() else None
-
-            limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
+            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
 
             print("\n" + "=" * 60)
             print("全自動処理を開始します")
             print("=" * 60)
 
-            # ダウンロード（企業選択あり）
+            # ダウンロード
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=1, interactive=True, filter_date=filter_date)
+                downloader.run(limit=limit, max_files_per_company=3)
             except Exception as e:
                 print(f"⚠ ダウンロードエラー: {e}")
 
@@ -116,10 +90,11 @@ def main():
                 continue
 
             # 動画作成
+            qualitative_dir = project_root / "downloads" / "qualitative"
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            htm_files = list(processed_dir.glob("*_qualitative.htm"))
+            htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
 
             for htm_file in htm_files:
                 company_name = htm_file.stem.replace('_qualitative', '')
@@ -127,18 +102,7 @@ def main():
                 company_only = company_name.split('_')[0]  # 企業名のみ取得
 
                 try:
-                    # 株情報の取得
-                    info = fetch_stock_info(company_only)
-                    if not info:
-                        print(f"✗ {company_name} スキップ（株情報取得できず）")
-                        continue
-
                     text = extract_text_from_xbrl(str(htm_file))
-
-                    # 企業概要を冒頭に追加
-                    intro = f"【{company_only}】PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
-                    text = intro + text
-
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
                     audio_path = processed_dir / f"{company_name}_output.mp3"
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
@@ -146,17 +110,17 @@ def main():
 
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
-                    # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
 
                     # 動画タイトル作成
                     video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
-                    generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
 
                     # YouTubeアップロード
                     upload_to_youtube(
                         video_path=str(video_path),
                         title=video_title,
-                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。\nPER: {info.get('per', 'N/A')}倍\nPBR: {info.get('pbr', 'N/A')}倍",
+                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
                         privacy="private",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
@@ -171,13 +135,10 @@ def main():
 
         elif choice == "2":
             # ダウンロードのみ
-            date_input = input("日付を指定 (例: 20250127) または Enter でスキップ: ").strip()
-            filter_date = date_input if date_input and len(date_input) == 8 and date_input.isdigit() else None
-
-            limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
+            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=1, interactive=True, filter_date=filter_date)
+                downloader.run(limit=limit, max_files_per_company=3)
                 print("✓ ダウンロード完了")
             except Exception as e:
                 print(f"✗ エラー: {e}")
@@ -193,10 +154,11 @@ def main():
 
         elif choice == "4":
             # テキスト抽出のみ
+            qualitative_dir = project_root / "downloads" / "qualitative"
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            for htm_file in processed_dir.glob("*_qualitative.htm"):
+            for htm_file in qualitative_dir.glob("*_qualitative.htm"):
                 company_name = htm_file.stem.replace('_qualitative', '')
                 try:
                     text = extract_text_from_xbrl(str(htm_file))
@@ -235,27 +197,17 @@ def main():
 
         elif choice == "7":
             # 動画作成のみ
+            qualitative_dir = project_root / "downloads" / "qualitative"
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            for htm_file in processed_dir.glob("*_qualitative.htm"):
+            for htm_file in qualitative_dir.glob("*_qualitative.htm"):
                 company_name = htm_file.stem.replace('_qualitative', '')
                 date_str = parse_date_from_filename(company_name)
                 company_only = company_name.split('_')[0]
 
                 try:
-                    # 株情報の取得
-                    info = fetch_stock_info(company_only)
-                    if not info:
-                        print(f"✗ {company_name} スキップ（株情報取得できず）")
-                        continue
-
                     text = extract_text_from_xbrl(str(htm_file))
-
-                    # 企業概要を冒頭に追加
-                    intro = f"【{company_only}】PER: {info.get('per', 'N/A')}倍 / PBR: {info.get('pbr', 'N/A')}倍\n\n"
-                    text = intro + text
-
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
                     audio_path = processed_dir / f"{company_name}_output.mp3"
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
@@ -263,8 +215,8 @@ def main():
 
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
-                    # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
-                    generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
+                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
                     print(f"✓ {company_name}")
                 except Exception as e:
                     print(f"✗ {company_name}: {e}")
@@ -294,36 +246,8 @@ def main():
                 except Exception as e:
                     print(f"✗ {company_name}: {e}")
 
-        elif choice == "9":
-            # リセット
-            reset_files()
-
-        elif choice == "10":
-            # スケジュール設定
-            show_schedule_menu()
-
-        elif choice == "11":
-            # 株情報確認のみ
-            user_input = input("\n企業名を入力してください (スペース区切りで複数可, 例: トヨタ自動車 ソニー): ").strip()
-            if not user_input:
-                print("✗ 入力が空です")
-                continue
-
-            companies = user_input.split()
-            print(f"\n=== 株情報確認: {len(companies)}社 ===\n")
-
-            for company in companies:
-                info = fetch_stock_info(company)
-                if info:
-                    print(f"  ✓ {company}")
-                    print(f"      PER:  {info.get('per', 'N/A')}倍")
-                    print(f"      PBR:  {info.get('pbr', 'N/A')}倍")
-                else:
-                    print(f"  ✗ {company} - 取得できませんでした")
-                print()
-
         else:
-            print("✗ 無効な選択です。0-11の数字を入力してください")
+            print("✗ 無効な選択です。0-8の数字を入力してください")
 
 
 if __name__ == "__main__":
