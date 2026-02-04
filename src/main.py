@@ -72,16 +72,19 @@ def main():
 
         elif choice == "1":
             # すべて実行
-            limit = int(input("ダウンロードする企業数 (デフォルト: 10): ").strip() or "10")
+            date_input = input("日付を指定 (例: 20250127) または Enter でスキップ: ").strip()
+            filter_date = date_input if date_input and len(date_input) == 8 and date_input.isdigit() else None
+
+            limit = int(input("表示する企業数 (デフォルト: 50): ").strip() or "50")
 
             print("\n" + "=" * 60)
             print("全自動処理を開始します")
             print("=" * 60)
 
-            # ダウンロード
+            # ダウンロード（企業選択あり）
             try:
                 downloader = TdnetXBRLDownloader("downloads")
-                downloader.run(limit=limit, max_files_per_company=3)
+                downloader.run(limit=limit, max_files_per_company=1, interactive=True, filter_date=filter_date)
             except Exception as e:
                 print(f"⚠ ダウンロードエラー: {e}")
 
@@ -95,20 +98,39 @@ def main():
                 print(f"⚠ 抽出エラー: {e}")
                 continue
 
-            # 動画作成
-            qualitative_dir = project_root / "downloads" / "qualitative"
+            # 動画作成とアップロード
             processed_dir = project_root / "data" / "processed"
             processed_dir.mkdir(parents=True, exist_ok=True)
 
-            htm_files = list(qualitative_dir.glob("*_qualitative.htm"))
+            htm_files = list(processed_dir.glob("*_qualitative.htm"))
 
             for htm_file in htm_files:
                 company_name = htm_file.stem.replace('_qualitative', '')
                 date_str = parse_date_from_filename(company_name)
-                company_only = company_name.split('_')[0]  # 企業名のみ取得
+                company_only = company_name.split('_')[0]
 
                 try:
+                    # 株情報の取得
+                    info = fetch_stock_info(company_only)
+                    if not info:
+                        print(f"✗ {company_name} スキップ（株情報取得できず）")
+                        continue
+
                     text = extract_text_from_xbrl(str(htm_file))
+
+                    # 企業概要を冒頭に追加
+                    intro_parts = [f"【{company_only}】"]
+                    intro_parts.append(f"PER: {info.get('per', 'N/A')}")
+                    intro_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
+                    if info.get('roe'):
+                        intro_parts.append(f"ROE: {info.get('roe')}%")
+                    if info.get('dividend_yield'):
+                        intro_parts.append(f"配当: {info.get('dividend_yield')}%")
+                    if info.get('market_cap'):
+                        intro_parts.append(f"時価総額: {info.get('market_cap')}")
+                    intro = " / ".join(intro_parts) + "\n\n"
+                    text = intro + text
+
                     text_path = processed_dir / f"{company_name}_extracted_text.txt"
                     audio_path = processed_dir / f"{company_name}_output.mp3"
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
@@ -116,17 +138,29 @@ def main():
 
                     save_text(text, str(text_path))
                     generate_audio(str(text_path), str(audio_path))
-                    generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
+                    # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
 
                     # 動画タイトル作成
                     video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
-                    generate_video(str(audio_path), str(video_path), text, company_only, date_str)
+                    generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
+
+                    # YouTube説明欄作成
+                    desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
+                    desc_parts.append(f"PER: {info.get('per', 'N/A')}")
+                    desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
+                    if info.get('roe'):
+                        desc_parts.append(f"ROE: {info.get('roe')}%")
+                    if info.get('dividend_yield'):
+                        desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
+                    if info.get('market_cap'):
+                        desc_parts.append(f"時価総額: {info.get('market_cap')}")
+                    description = "\n".join(desc_parts)
 
                     # YouTubeアップロード
                     upload_to_youtube(
                         video_path=str(video_path),
                         title=video_title,
-                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
+                        description=description,
                         privacy="public",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
