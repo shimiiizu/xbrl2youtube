@@ -121,7 +121,7 @@ def main():
                         video_path=str(video_path),
                         title=video_title,
                         description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
-                        privacy="private",
+                        privacy="public",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
                     )
@@ -238,7 +238,7 @@ def main():
                         video_path=str(video_file),
                         title=video_title,
                         description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
-                        privacy="private",
+                        privacy="public",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
                     )

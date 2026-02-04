@@ -456,7 +456,7 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
                 video_path=str(video_path),
                 title=video_title,
                 description=description,
-                privacy="private",
+                privacy="public",
                 company_name=company_only,
                 subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
             )
