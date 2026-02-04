@@ -48,6 +48,9 @@ def show_menu():
     print("6. 字幕生成のみ")
     print("7. 動画作成のみ")
     print("8. YouTubeアップロードのみ")
+    print("9. リセット（全ファイルを退避フォルダに移動）")
+    print("10. スケジュール設定・確認")
+    print("11. 株情報確認のみ")
     print("0. 終了")
     print("=" * 60)
 
@@ -58,7 +61,7 @@ def main():
 
     while True:
         show_menu()
-        choice = input("\n選択してください (0-8): ").strip()
+        choice = input("\n選択してください (0-11): ").strip()
 
         if choice == "0":
             print("\n終了します")
@@ -246,8 +249,42 @@ def main():
                 except Exception as e:
                     print(f"✗ {company_name}: {e}")
 
+        elif choice == "9":
+            # リセット
+            reset_files()
+
+        elif choice == "10":
+            # スケジュール設定
+            show_schedule_menu()
+
+        elif choice == "11":
+            # 株情報確認のみ
+            user_input = input("\n企業名を入力してください (スペース区切りで複数可, 例: トヨタ自動車 ソニー): ").strip()
+            if not user_input:
+                print("✗ 入力が空です")
+                continue
+
+            companies = user_input.split()
+            print(f"\n=== 株情報確認: {len(companies)}社 ===\n")
+
+            for company in companies:
+                info = fetch_stock_info(company)
+                if info:
+                    print(f"  ✓ {company}")
+                    print(f"      PER:  {info.get('per', 'N/A')}")
+                    print(f"      PBR:  {info.get('pbr', 'N/A')}")
+                    if info.get('roe'):
+                        print(f"      ROE:  {info.get('roe')}%")
+                    if info.get('dividend_yield'):
+                        print(f"      配当利回り:  {info.get('dividend_yield')}%")
+                    if info.get('market_cap'):
+                        print(f"      時価総額:  {info.get('market_cap')}")
+                else:
+                    print(f"  ✗ {company} - 取得できませんでした")
+                print()
+
         else:
-            print("✗ 無効な選択です。0-8の数字を入力してください")
+            print("✗ 無効な選択です。0-11の数字を入力してください")
 
 
 if __name__ == "__main__":
