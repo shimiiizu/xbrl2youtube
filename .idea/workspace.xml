@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="文字を太く、ROEなどの情報を追加">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="消えてしまった機能を復活" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -250,22 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00034" summary="タイトルを表示するサムネイルを作成する機能を追加">
-      <option name="closed" value="true" />
-      <created>1769241813437</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1769241813437</updated>
-    </task>
-    <task id="LOCAL-00035" summary="タイトルに企業名を追加">
-      <option name="closed" value="true" />
-      <created>1769242851446</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1769242851446</updated>
     </task>
     <task id="LOCAL-00036" summary="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加">
       <option name="closed" value="true" />
@@ -643,7 +625,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770129404321</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="公開状態でUploadする仕様に変更">
+      <option name="closed" value="true" />
+      <created>1770211831509</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1770211831509</updated>
+    </task>
+    <task id="LOCAL-00084" summary="消えてしまった機能を復活">
+      <option name="closed" value="true" />
+      <created>1770212001737</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1770212001738</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -670,8 +668,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="公開日をファイル名に付与する仕様に変更（シンプルに）" />
-    <MESSAGE value="シンプルにならなかったエラーを修正" />
     <MESSAGE value="ファイル名に日付を付与" />
     <MESSAGE value="company_name引数を渡さないように修正" />
     <MESSAGE value="main.pyをシンプル化" />
@@ -695,7 +691,9 @@
     <MESSAGE value="PER・PBR情報を取得する仕様に変更" />
     <MESSAGE value="不要な情報を削除" />
     <MESSAGE value="文字を太く、ROEなどの情報を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="文字を太く、ROEなどの情報を追加" />
+    <MESSAGE value="公開状態でUploadする仕様に変更" />
+    <MESSAGE value="消えてしまった機能を復活" />
+    <option name="LAST_COMMIT_MESSAGE" value="消えてしまった機能を復活" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

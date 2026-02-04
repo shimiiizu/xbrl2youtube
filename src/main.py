@@ -15,6 +15,9 @@ from audio_generation import generate_audio
 from subtitle_generation import generate_subtitle
 from video_generation import generate_video
 from youtube_upload import upload_to_youtube
+from reset_manager import reset_files
+from schedule_manager import show_schedule_menu
+from stock_info import fetch_stock_info
 
 
 def parse_date_from_filename(filename):
