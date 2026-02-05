@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="消えてしまった機能を復活" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="エラーを修正">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -248,22 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00036" summary="タグの自動生成&#10;字幕ファイルのアップロード&#10;トークンの保存・再利用&#10;の機能追加">
-      <option name="closed" value="true" />
-      <created>1769244594077</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1769244594077</updated>
-    </task>
-    <task id="LOCAL-00037" summary="メインを追加機能に対応する形に変更した。">
-      <option name="closed" value="true" />
-      <created>1769245198143</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1769245198143</updated>
     </task>
     <task id="LOCAL-00038" summary="機能を分離して、動画作成とアップロードを分けた">
       <option name="closed" value="true" />
@@ -641,7 +627,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770212001738</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="エラーを修正">
+      <option name="closed" value="true" />
+      <created>1770212116519</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1770212116519</updated>
+    </task>
+    <task id="LOCAL-00086" summary="エラーを修正">
+      <option name="closed" value="true" />
+      <created>1770212304930</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1770212304930</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -668,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ファイル名に日付を付与" />
     <MESSAGE value="company_name引数を渡さないように修正" />
     <MESSAGE value="main.pyをシンプル化" />
     <MESSAGE value="日付を動画に追加" />
@@ -693,7 +694,8 @@
     <MESSAGE value="文字を太く、ROEなどの情報を追加" />
     <MESSAGE value="公開状態でUploadする仕様に変更" />
     <MESSAGE value="消えてしまった機能を復活" />
-    <option name="LAST_COMMIT_MESSAGE" value="消えてしまった機能を復活" />
+    <MESSAGE value="エラーを修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="エラーを修正" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

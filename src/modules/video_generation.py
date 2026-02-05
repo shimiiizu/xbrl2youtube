@@ -27,102 +27,184 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
     # サムネイルのサイズ（YouTube推奨: 1280x720）
     thumb_size = (1280, 720)
 
-    # 背景
-    background = ColorClip(size=thumb_size, color=(20, 30, 50)).with_duration(duration)
+    # グラデーション背景（濃紺→黒）
+    from moviepy import ImageClip
+    import numpy as np
+
+    # グラデーション作成
+    gradient = np.zeros((720, 1280, 3), dtype=np.uint8)
+    for y in range(720):
+        # 上から下へ濃紺→黒のグラデーション
+        ratio = y / 720
+        r = int(10 * (1 - ratio))
+        g = int(30 * (1 - ratio))
+        b = int(80 * (1 - ratio))
+        gradient[y, :] = [r, g, b]
+
+    background = ImageClip(gradient).with_duration(duration)
 
     clips = [background]
 
-    # ===== 企業名（大きく・ポップに） =====
-    if company_name:
-        company_clip = (
-            TextClip(
-                text=company_name,
-                font=FONT_PATH,
-                font_size=120,
-                color="#FFD700",  # ゴールド色
-                size=(1100, None),
-                method="caption"
-            )
-            .with_duration(duration)
-            .with_position(("center", 180))
+    # ===== 「決算速報」バッジ（左上） =====
+    badge_clip = (
+        TextClip(
+            text="決算速報",
+            font=FONT_PATH,
+            font_size=36,
+            color="white",
+            bg_color="#FF4444",
+            size=(160, 50),
+            method="caption"
         )
-        clips.append(company_clip)
+        .with_duration(duration)
+        .with_position((40, 40))
+    )
+    clips.append(badge_clip)
 
-    # ===== 日付 =====
+    # ===== 日付（右上） =====
     if date_str:
         date_clip = (
             TextClip(
                 text=date_str,
                 font=FONT_PATH,
-                font_size=40,
-                color="white",
-                size=(800, None),
+                font_size=32,
+                color="#CCCCCC",
+                size=(300, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 340))
+            .with_position((920, 50))
         )
         clips.append(date_clip)
 
-    # ===== PER・PBR・ROE（1行目） =====
-    if stock_info and stock_info.get("per") and stock_info.get("pbr"):
-        line1_parts = []
-        line1_parts.append(f"PER: {stock_info['per']}")
-        line1_parts.append(f"PBR: {stock_info['pbr']}")
-        if stock_info.get("roe"):
-            line1_parts.append(f"ROE: {stock_info['roe']}%")
-
-        line1_text = "    ".join(line1_parts)
-        line1_clip = (
+    # ===== 企業名（超特大・中央上） =====
+    if company_name:
+        company_clip = (
             TextClip(
-                text=line1_text,
+                text=company_name,
                 font=FONT_PATH,
-                font_size=42,
-                color="#98FB98",  # ライトグリーン
+                font_size=140,
+                color="#FFD700",  # ゴールド
+                stroke_color="#000000",  # 黒縁取り
+                stroke_width=3,
                 size=(1100, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 410))
+            .with_position(("center", 140))
         )
-        clips.append(line1_clip)
+        clips.append(company_clip)
 
-    # ===== 配当利回り・時価総額（2行目） =====
-    if stock_info:
-        line2_parts = []
-        if stock_info.get("dividend_yield"):
-            line2_parts.append(f"配当: {stock_info['dividend_yield']}%")
-        if stock_info.get("market_cap"):
-            line2_parts.append(f"時価総額: {stock_info['market_cap']}")
+    # ===== 装飾線 =====
+    line_clip = (
+        ColorClip(size=(800, 4), color=(255, 215, 0))  # ゴールド
+        .with_duration(duration)
+        .with_position(("center", 300))
+    )
+    clips.append(line_clip)
 
-        if line2_parts:
-            line2_text = "    ".join(line2_parts)
-            line2_clip = (
-                TextClip(
-                    text=line2_text,
-                    font=FONT_PATH,
-                    font_size=42,
-                    color="#98FB98",  # ライトグリーン
-                    size=(1100, None),
-                    method="caption"
-                )
-                .with_duration(duration)
-                .with_position(("center", 470))
+    # ===== PER・PBR（大きく・中央） =====
+    if stock_info and stock_info.get("per") and stock_info.get("pbr"):
+        per_value = stock_info['per']
+        pbr_value = stock_info['pbr']
+
+        # PER（左）
+        per_clip = (
+            TextClip(
+                text=f"PER\n{per_value}",
+                font=FONT_PATH,
+                font_size=70,
+                color="#00FF00",  # 緑
+                stroke_color="#000000",
+                stroke_width=2,
+                size=(300, None),
+                method="caption"
             )
-            clips.append(line2_clip)
+            .with_duration(duration)
+            .with_position((340, 360))
+        )
+        clips.append(per_clip)
 
-    # ===== さくっと決算（下端） =====
+        # PBR（右）
+        pbr_clip = (
+            TextClip(
+                text=f"PBR\n{pbr_value}",
+                font=FONT_PATH,
+                font_size=70,
+                color="#00BFFF",  # 水色
+                stroke_color="#000000",
+                stroke_width=2,
+                size=(300, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position((740, 360))
+        )
+        clips.append(pbr_clip)
+
+    # ===== ROE（あれば） =====
+    if stock_info and stock_info.get("roe"):
+        roe_text = f"ROE {stock_info['roe']}%"
+        roe_clip = (
+            TextClip(
+                text=roe_text,
+                font=FONT_PATH,
+                font_size=40,
+                color="#FFFF00",  # 黄色
+                size=(300, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position((100, 520))
+        )
+        clips.append(roe_clip)
+
+    # ===== 配当利回り（あれば） =====
+    if stock_info and stock_info.get("dividend_yield"):
+        div_text = f"配当 {stock_info['dividend_yield']}%"
+        div_clip = (
+            TextClip(
+                text=div_text,
+                font=FONT_PATH,
+                font_size=40,
+                color="#FF69B4",  # ピンク
+                size=(300, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position((400, 520))
+        )
+        clips.append(div_clip)
+
+    # ===== 時価総額（あれば） =====
+    if stock_info and stock_info.get("market_cap"):
+        cap_text = f"💰 {stock_info['market_cap']}"
+        cap_clip = (
+            TextClip(
+                text=cap_text,
+                font=FONT_PATH,
+                font_size=40,
+                color="#FFFFFF",
+                size=(500, None),
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position((700, 520))
+        )
+        clips.append(cap_clip)
+
+    # ===== 「さくっと決算」（下端・控えめ） =====
     tagline_clip = (
         TextClip(
             text="さくっと決算",
             font=FONT_PATH,
-            font_size=32,
-            color="#AAAAAA",
+            font_size=28,
+            color="#888888",
             size=(600, None),
             method="caption"
         )
         .with_duration(duration)
-        .with_position(("center", 620))
+        .with_position(("center", 650))
     )
     clips.append(tagline_clip)
 
