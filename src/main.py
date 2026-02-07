@@ -153,8 +153,14 @@ def main():
                     desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
                     if info.get('roe'):
                         desc_parts.append(f"ROE: {info.get('roe')}%")
+                    if info.get('peg'):
+                        desc_parts.append(f"PEG: {info.get('peg')}")
                     if info.get('dividend_yield'):
                         desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
+                    if info.get('equity_ratio'):
+                        desc_parts.append(f"自己資本比率: {info.get('equity_ratio')}%")
+                    if info.get('operating_margin'):
+                        desc_parts.append(f"営業利益率: {info.get('operating_margin')}%")
                     if info.get('market_cap'):
                         desc_parts.append(f"時価総額: {info.get('market_cap')}")
                     description = "\n".join(desc_parts)
@@ -292,8 +298,14 @@ def main():
                         desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
                         if info.get('roe'):
                             desc_parts.append(f"ROE: {info.get('roe')}%")
+                        if info.get('peg'):
+                            desc_parts.append(f"PEG: {info.get('peg')}")
                         if info.get('dividend_yield'):
                             desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
+                        if info.get('equity_ratio'):
+                            desc_parts.append(f"自己資本比率: {info.get('equity_ratio')}%")
+                        if info.get('operating_margin'):
+                            desc_parts.append(f"営業利益率: {info.get('operating_margin')}%")
                         if info.get('market_cap'):
                             desc_parts.append(f"時価総額: {info.get('market_cap')}")
                         description = "\n".join(desc_parts)
@@ -340,8 +352,14 @@ def main():
                     print(f"      PBR:  {info.get('pbr', 'N/A')}")
                     if info.get('roe'):
                         print(f"      ROE:  {info.get('roe')}%")
+                    if info.get('peg'):
+                        print(f"      PEG:  {info.get('peg')}")
                     if info.get('dividend_yield'):
                         print(f"      配当利回り:  {info.get('dividend_yield')}%")
+                    if info.get('equity_ratio'):
+                        print(f"      自己資本比率:  {info.get('equity_ratio')}%")
+                    if info.get('operating_margin'):
+                        print(f"      営業利益率:  {info.get('operating_margin')}%")
                     if info.get('market_cap'):
                         print(f"      時価総額:  {info.get('market_cap')}")
                 else:

@@ -87,8 +87,8 @@ def get_stock_info(stock_code: str) -> dict | None:
         #   または「PER（実績）45.23倍」のような形もある
         all_text = soup.get_text()
 
-        # デバッグ用: PER・PBR周辺のテキストを出力
-        for keyword in ["PER", "PBR", "ROE", "配当利回り", "時価総額"]:
+        # デバッグ用: 指標周辺のテキストを出力
+        for keyword in ["PER", "PBR", "ROE", "配当利回り", "時価総額", "PEG", "自己資本比率", "営業利益率"]:
             indices = [m.start() for m in re.finditer(keyword, all_text)]
             for idx in indices[:3]:  # 最初の3件まで
                 snippet = all_text[idx:idx + 80].replace('\n', ' ').strip()
@@ -166,10 +166,46 @@ def get_stock_info(stock_code: str) -> dict | None:
                 print(f"[DEBUG] 時価総額 matched with pattern: {pattern}")
                 break
 
-        # PERとPBRが両方取得できた場合のみ返す（ROE等はオプション）
+        # PEGレシオの検索
+        peg_patterns = [
+            r"PEG[^0-9]*([\d.]+)",  # PEG 1.5
+            r"PEG\s*[：:]\s*([\d.]+)",  # PEG：1.5
+        ]
+        for pattern in peg_patterns:
+            peg_match = re.search(pattern, all_text)
+            if peg_match:
+                info["peg"] = peg_match.group(1)
+                print(f"[DEBUG] PEG matched with pattern: {pattern}")
+                break
+
+        # 自己資本比率の検索
+        equity_ratio_patterns = [
+            r"自己資本比率[^0-9]*([\d.]+)%",  # 自己資本比率 65.5%
+            r"自己資本比率\s*[：:]\s*([\d.]+)",  # 自己資本比率：65.5
+        ]
+        for pattern in equity_ratio_patterns:
+            eq_match = re.search(pattern, all_text)
+            if eq_match:
+                info["equity_ratio"] = eq_match.group(1)
+                print(f"[DEBUG] 自己資本比率 matched with pattern: {pattern}")
+                break
+
+        # 営業利益率の検索
+        operating_margin_patterns = [
+            r"営業利益率[^0-9]*([\d.]+)%",  # 営業利益率 15.5%
+            r"営業利益率\s*[：:]\s*([\d.]+)",  # 営業利益率：15.5
+        ]
+        for pattern in operating_margin_patterns:
+            om_match = re.search(pattern, all_text)
+            if om_match:
+                info["operating_margin"] = om_match.group(1)
+                print(f"[DEBUG] 営業利益率 matched with pattern: {pattern}")
+                break
+
+        # PERとPBRが両方取得できた場合のみ返す（その他はオプション）
         if "per" in info and "pbr" in info:
             print(
-                f"[INFO] 取得成功 - PER: {info.get('per', 'N/A')}, PBR: {info.get('pbr', 'N/A')}, ROE: {info.get('roe', 'N/A')}, 配当: {info.get('dividend_yield', 'N/A')}, 時価総額: {info.get('market_cap', 'N/A')}")
+                f"[INFO] 取得成功 - コード: {info.get('code')}, PER: {info.get('per', 'N/A')}, PBR: {info.get('pbr', 'N/A')}, ROE: {info.get('roe', 'N/A')}, PEG: {info.get('peg', 'N/A')}, 自己資本比率: {info.get('equity_ratio', 'N/A')}%, 営業利益率: {info.get('operating_margin', 'N/A')}%")
             return info
         else:
             print(f"[WARN] PER/PBR取得できず (コード: {stock_code}): {info}")
