@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="エラーを修正">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="サムネイルをかっこよくした">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -250,14 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00038" summary="機能を分離して、動画作成とアップロードを分けた">
-      <option name="closed" value="true" />
-      <created>1769246511894</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1769246511894</updated>
     </task>
     <task id="LOCAL-00039" summary="エラーを修正">
       <option name="closed" value="true" />
@@ -643,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770212304930</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="サムネイルをかっこよくした">
+      <option name="closed" value="true" />
+      <created>1770300544332</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1770300544333</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -670,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="company_name引数を渡さないように修正" />
     <MESSAGE value="main.pyをシンプル化" />
     <MESSAGE value="日付を動画に追加" />
     <MESSAGE value="reset機能を追加" />
@@ -695,7 +694,8 @@
     <MESSAGE value="公開状態でUploadする仕様に変更" />
     <MESSAGE value="消えてしまった機能を復活" />
     <MESSAGE value="エラーを修正" />
-    <option name="LAST_COMMIT_MESSAGE" value="エラーを修正" />
+    <MESSAGE value="サムネイルをかっこよくした" />
+    <option name="LAST_COMMIT_MESSAGE" value="サムネイルをかっこよくした" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

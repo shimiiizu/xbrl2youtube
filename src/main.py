@@ -325,4 +325,21 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # --auto引数がある場合は自動実行モード
+    if len(sys.argv) > 1 and sys.argv[1] == "--auto":
+        from schedule_manager import run_auto
+
+        run_auto(
+            downloader_class=TdnetXBRLDownloader,
+            extractor_class=QualitativeExtractor,
+            extract_text_fn=extract_text_from_xbrl,
+            save_text_fn=save_text,
+            generate_audio_fn=generate_audio,
+            generate_video_fn=generate_video,
+            upload_fn=upload_to_youtube,
+            parse_date_fn=parse_date_from_filename,
+            fetch_stock_info_fn=fetch_stock_info
+        )
+    else:
+        # 通常のメニューモード
+        main()
