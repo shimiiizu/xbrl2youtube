@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="--auto引数に対応">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="最新版に変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -250,14 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00040" summary="スコープを変更">
-      <option name="closed" value="true" />
-      <created>1769247732327</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1769247732327</updated>
     </task>
     <task id="LOCAL-00041" summary="音声と字幕の同期がとれるように変更">
       <option name="closed" value="true" />
@@ -643,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770427540201</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="最新版に変更">
+      <option name="closed" value="true" />
+      <created>1770428931201</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1770428931207</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -670,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="日付を動画に追加" />
     <MESSAGE value="reset機能を追加" />
     <MESSAGE value="リセット機能二デバッグ機能を追加" />
     <MESSAGE value="デバッグ機能を強化" />
@@ -695,7 +694,8 @@
     <MESSAGE value="エラーを修正" />
     <MESSAGE value="サムネイルをかっこよくした" />
     <MESSAGE value="--auto引数に対応" />
-    <option name="LAST_COMMIT_MESSAGE" value="--auto引数に対応" />
+    <MESSAGE value="最新版に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="最新版に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

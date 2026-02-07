@@ -435,12 +435,15 @@ def run_auto(downloader_class, extractor_class, extract_text_fn, save_text_fn,
             save_text_fn(text, str(text_path))
             generate_audio_fn(str(text_path), str(audio_path))
 
-            # 動画タイトル作成
-            video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
+            # 動画タイトル作成（株価コード付き）
+            stock_code = f"【{info.get('code')}】" if info.get('code') else ""
+            video_title = f"{stock_code}{company_only} {date_str} 決算サマリー" if date_str else f"{stock_code}{company_only} 決算サマリー"
             generate_video_fn(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
 
             # YouTube説明欄作成
             desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
+            if info.get('code'):
+                desc_parts.append(f"株価コード: {info.get('code')}")
             desc_parts.append(f"PER: {info.get('per', 'N/A')}")
             desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
             if info.get('roe'):

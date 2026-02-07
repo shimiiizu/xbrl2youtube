@@ -53,7 +53,7 @@ def get_stock_info(stock_code: str) -> dict | None:
         stock_code: 株式コード（4桁）
 
     Returns:
-        {"per": "25.3", "pbr": "3.2", "sector": "電気機器"} のような辞書。
+        {"code": "6920", "per": "25.3", "pbr": "3.2", ...} のような辞書。
         取得できない場合はNone
     """
     try:
@@ -63,7 +63,7 @@ def get_stock_info(stock_code: str) -> dict | None:
 
         soup = BeautifulSoup(response.text, "html.parser")
 
-        info = {}
+        info = {"code": stock_code}  # 株価コードを追加
 
         # 業種の取得
         # Yahoo! ファイナンスの業種表示箇所を探す

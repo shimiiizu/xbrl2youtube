@@ -79,9 +79,13 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
 
     # ===== 企業名（超特大・中央上） =====
     if company_name:
+        # 株価コードがあれば追加
+        display_name = f"{company_name} ({stock_info.get('code')})" if stock_info and stock_info.get(
+            'code') else company_name
+
         company_clip = (
             TextClip(
-                text=company_name,
+                text=display_name,
                 font=FONT_PATH,
                 font_size=140,
                 color="#FFD700",  # ゴールド

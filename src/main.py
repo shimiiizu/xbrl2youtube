@@ -141,11 +141,14 @@ def main():
                     # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
 
                     # 動画タイトル作成
-                    video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
+                    stock_code = f"【{info.get('code')}】" if info.get('code') else ""
+                    video_title = f"{stock_code}{company_only} {date_str} 決算サマリー" if date_str else f"{stock_code}{company_only} 決算サマリー"
                     generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
 
                     # YouTube説明欄作成
                     desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
+                    if info.get('code'):
+                        desc_parts.append(f"株価コード: {info.get('code')}")
                     desc_parts.append(f"PER: {info.get('per', 'N/A')}")
                     desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
                     if info.get('roe'):
@@ -271,13 +274,36 @@ def main():
                 company_only = company_name.split('_')[0]
 
                 try:
+                    # 株情報の取得
+                    info = fetch_stock_info(company_only)
+
                     subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
-                    video_title = f"{company_only} {date_str} 決算サマリー" if date_str else f"{company_only} 決算サマリー"
+
+                    # 動画タイトル作成（株価コード付き）
+                    stock_code = f"【{info.get('code')}】" if info and info.get('code') else ""
+                    video_title = f"{stock_code}{company_only} {date_str} 決算サマリー" if date_str else f"{stock_code}{company_only} 決算サマリー"
+
+                    # YouTube説明欄作成
+                    if info:
+                        desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
+                        if info.get('code'):
+                            desc_parts.append(f"株価コード: {info.get('code')}")
+                        desc_parts.append(f"PER: {info.get('per', 'N/A')}")
+                        desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
+                        if info.get('roe'):
+                            desc_parts.append(f"ROE: {info.get('roe')}%")
+                        if info.get('dividend_yield'):
+                            desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
+                        if info.get('market_cap'):
+                            desc_parts.append(f"時価総額: {info.get('market_cap')}")
+                        description = "\n".join(desc_parts)
+                    else:
+                        description = f"{company_only}の決算短信の内容を音声で解説した動画です。"
 
                     upload_to_youtube(
                         video_path=str(video_file),
                         title=video_title,
-                        description=f"{company_only}の決算短信の内容を音声で解説した動画です。",
+                        description=description,
                         privacy="public",
                         company_name=company_only,
                         subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
@@ -308,6 +334,8 @@ def main():
                 info = fetch_stock_info(company)
                 if info:
                     print(f"  ✓ {company}")
+                    if info.get('code'):
+                        print(f"      株価コード:  {info.get('code')}")
                     print(f"      PER:  {info.get('per', 'N/A')}")
                     print(f"      PBR:  {info.get('pbr', 'N/A')}")
                     if info.get('roe'):
