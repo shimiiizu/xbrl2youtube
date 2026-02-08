@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="動画フォントサイズの調整">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="会社名だけを指定する形に変更">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
@@ -251,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00045" summary="字幕ファイルに企業名を追加する機能を追加">
-      <option name="closed" value="true" />
-      <created>1769267310173</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1769267310173</updated>
     </task>
     <task id="LOCAL-00046" summary="エラーを修正">
       <option name="closed" value="true" />
@@ -644,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770511372435</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="会社名だけを指定する形に変更">
+      <option name="closed" value="true" />
+      <created>1770511761192</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1770511761192</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="保存先を変更した" />
     <MESSAGE value="字幕生成機能を除外した。個別には作成可能" />
     <MESSAGE value="jsonファイルを移動した" />
     <MESSAGE value="zipファイルのダウンロード数を1に変更" />
@@ -696,7 +695,8 @@
     <MESSAGE value="その他の情報を取得" />
     <MESSAGE value="リファクタリング" />
     <MESSAGE value="動画フォントサイズの調整" />
-    <option name="LAST_COMMIT_MESSAGE" value="動画フォントサイズの調整" />
+    <MESSAGE value="会社名だけを指定する形に変更" />
+    <option name="LAST_COMMIT_MESSAGE" value="会社名だけを指定する形に変更" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
