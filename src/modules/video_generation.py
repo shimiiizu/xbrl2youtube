@@ -372,20 +372,51 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 if __name__ == "__main__":
     # ===== ここを変更するだけで企業を切り替え可能 =====
     COMPANY_NAME = "ヒガシＨＤ"
-    DATE_STR = "2026年1月23日"
     # =============================================
 
     project_root = Path(__file__).parent.parent.parent
     processed_dir = project_root / "data" / "processed"
 
-    # 企業名から各ファイルパスを自動生成
-    test_audio = processed_dir / f"{COMPANY_NAME}_audio.mp3"
-    test_text = processed_dir / f"{COMPANY_NAME}_extracted_text.txt"
-    test_subtitle = processed_dir / f"{COMPANY_NAME}_subtitle.srt"
-    test_output = processed_dir / f"{COMPANY_NAME}_video.mp4"
+    # data/processedから該当企業のファイルを検索
+    htm_files = list(processed_dir.glob(f"{COMPANY_NAME}_*_qualitative.htm"))
+
+    if not htm_files:
+        print(f"[ERROR] {COMPANY_NAME} のファイルが見つかりません")
+        print(f"[INFO] 検索パス: {processed_dir / f'{COMPANY_NAME}_*_qualitative.htm'}")
+        exit(1)
+
+    # 最初のファイルを使用（通常は1件のみ）
+    htm_file = htm_files[0]
+    company_name_with_date = htm_file.stem.replace('_qualitative', '')
+
+
+    # 日付を自動抽出
+    def parse_date_from_filename(filename):
+        try:
+            parts = filename.split('_')
+            date_str = parts[1] if len(parts) > 1 else None
+            if date_str and len(date_str) == 8 and date_str.isdigit():
+                year = date_str[0:4]
+                month = str(int(date_str[4:6]))
+                day = str(int(date_str[6:8]))
+                return f"{year}年{month}月{day}日"
+        except:
+            pass
+        return None
+
+
+    date_str = parse_date_from_filename(company_name_with_date)
+
+    # 各ファイルパスを自動生成
+    test_audio = processed_dir / f"{company_name_with_date}_output.mp3"
+    test_text = processed_dir / f"{company_name_with_date}_extracted_text.txt"
+    test_subtitle = processed_dir / f"{company_name_with_date}_subtitle.srt"
+    test_output = processed_dir / f"{company_name_with_date}_output.mp4"
 
     print("=" * 50)
     print(f"動画生成テスト開始: {COMPANY_NAME}")
+    print(f"ファイル名: {company_name_with_date}")
+    print(f"日付: {date_str if date_str else 'なし'}")
     print("=" * 50)
 
     # ファイル存在確認
@@ -411,7 +442,7 @@ if __name__ == "__main__":
         output_path=str(test_output),
         text_content=text_content,
         company_name=COMPANY_NAME,
-        date_str=DATE_STR
+        date_str=date_str
     )
 
     print("=" * 50)
