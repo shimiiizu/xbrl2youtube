@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="会社名だけを指定する形に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="文字を少し小さく">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
@@ -111,7 +111,7 @@
       <recent name="C:\Users\Shimizu\PycharmProjects\xbrl2youtube\data\processed\Upload済み" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.video_generation">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="xbrl2youtube" />
       <option name="ENV_FILES" value="" />
@@ -229,8 +229,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.video_generation" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.video_generation" />
         <item itemvalue="Python.reset_manager" />
         <item itemvalue="Python.subtitle_generation" />
         <item itemvalue="Python.text_extraction" />
@@ -251,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00046" summary="エラーを修正">
-      <option name="closed" value="true" />
-      <created>1769267800520</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1769267800520</updated>
     </task>
     <task id="LOCAL-00047" summary="エラーを修正">
       <option name="closed" value="true" />
@@ -644,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770511761192</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="文字を少し小さく">
+      <option name="closed" value="true" />
+      <created>1770530472165</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1770530472165</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="字幕生成機能を除外した。個別には作成可能" />
     <MESSAGE value="jsonファイルを移動した" />
     <MESSAGE value="zipファイルのダウンロード数を1に変更" />
     <MESSAGE value="企業を選別してダウンロードする形式に変更" />
@@ -696,7 +695,8 @@
     <MESSAGE value="リファクタリング" />
     <MESSAGE value="動画フォントサイズの調整" />
     <MESSAGE value="会社名だけを指定する形に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="会社名だけを指定する形に変更" />
+    <MESSAGE value="文字を少し小さく" />
+    <option name="LAST_COMMIT_MESSAGE" value="文字を少し小さく" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -11,6 +11,8 @@ from youtube_upload import upload_to_youtube
 from reset_manager import reset_files
 from schedule_manager import show_schedule_menu
 from stock_info import fetch_stock_info
+from video_helpers import create_intro_text, create_video_title, create_youtube_description
+from video_helpers import create_intro_text, create_video_title, create_youtube_description
 
 
 def handle_full_process(project_root, parse_date_fn):
@@ -62,16 +64,7 @@ def handle_full_process(project_root, parse_date_fn):
             text = extract_text_from_xbrl(str(htm_file))
 
             # 企業概要を冒頭に追加
-            intro_parts = [f"【{company_only}】"]
-            intro_parts.append(f"PER: {info.get('per', 'N/A')}")
-            intro_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
-            if info.get('roe'):
-                intro_parts.append(f"ROE: {info.get('roe')}%")
-            if info.get('dividend_yield'):
-                intro_parts.append(f"配当: {info.get('dividend_yield')}%")
-            if info.get('market_cap'):
-                intro_parts.append(f"時価総額: {info.get('market_cap')}")
-            intro = " / ".join(intro_parts) + "\n\n"
+            intro = create_intro_text(company_only, info)
             text = intro + text
 
             text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -84,29 +77,11 @@ def handle_full_process(project_root, parse_date_fn):
             # generate_subtitle(str(text_path), str(audio_path), str(subtitle_path), model_size="small")
 
             # 動画タイトル作成
-            stock_code = f"【{info.get('code')}】" if info.get('code') else ""
-            video_title = f"{stock_code}{company_only} {date_str} 決算サマリー" if date_str else f"{stock_code}{company_only} 決算サマリー"
+            video_title = create_video_title(company_only, date_str, info.get('code'))
             generate_video(str(audio_path), str(video_path), text, company_only, date_str, stock_info=info)
 
             # YouTube説明欄作成
-            desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
-            if info.get('code'):
-                desc_parts.append(f"株価コード: {info.get('code')}")
-            desc_parts.append(f"PER: {info.get('per', 'N/A')}")
-            desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
-            if info.get('roe'):
-                desc_parts.append(f"ROE: {info.get('roe')}%")
-            if info.get('peg'):
-                desc_parts.append(f"PEG: {info.get('peg')}")
-            if info.get('dividend_yield'):
-                desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
-            if info.get('equity_ratio'):
-                desc_parts.append(f"自己資本比率: {info.get('equity_ratio')}%")
-            if info.get('operating_margin'):
-                desc_parts.append(f"営業利益率: {info.get('operating_margin')}%")
-            if info.get('market_cap'):
-                desc_parts.append(f"時価総額: {info.get('market_cap')}")
-            description = "\n".join(desc_parts)
+            description = create_youtube_description(company_only, info)
 
             # YouTubeアップロード
             upload_to_youtube(
@@ -215,16 +190,7 @@ def handle_video_creation_only(project_root, parse_date_fn):
             text = extract_text_from_xbrl(str(htm_file))
 
             # 企業概要を冒頭に追加
-            intro_parts = [f"【{company_only}】"]
-            intro_parts.append(f"PER: {info.get('per', 'N/A')}")
-            intro_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
-            if info.get('roe'):
-                intro_parts.append(f"ROE: {info.get('roe')}%")
-            if info.get('dividend_yield'):
-                intro_parts.append(f"配当: {info.get('dividend_yield')}%")
-            if info.get('market_cap'):
-                intro_parts.append(f"時価総額: {info.get('market_cap')}")
-            intro = " / ".join(intro_parts) + "\n\n"
+            intro = create_intro_text(company_only, info)
             text = intro + text
 
             text_path = processed_dir / f"{company_name}_extracted_text.txt"
@@ -256,32 +222,12 @@ def handle_upload_only(project_root, parse_date_fn):
 
             subtitle_path = processed_dir / f"{company_name}_subtitle.srt"
 
-            # 動画タイトル作成（株価コード付き）
-            stock_code = f"【{info.get('code')}】" if info and info.get('code') else ""
-            video_title = f"{stock_code}{company_only} {date_str} 決算サマリー" if date_str else f"{stock_code}{company_only} 決算サマリー"
+            # 動画タイトル作成
+            video_title = create_video_title(company_only, date_str, info.get('code') if info else None)
 
             # YouTube説明欄作成
-            if info:
-                desc_parts = [f"{company_only}の決算短信の内容を音声で解説した動画です。"]
-                if info.get('code'):
-                    desc_parts.append(f"株価コード: {info.get('code')}")
-                desc_parts.append(f"PER: {info.get('per', 'N/A')}")
-                desc_parts.append(f"PBR: {info.get('pbr', 'N/A')}")
-                if info.get('roe'):
-                    desc_parts.append(f"ROE: {info.get('roe')}%")
-                if info.get('peg'):
-                    desc_parts.append(f"PEG: {info.get('peg')}")
-                if info.get('dividend_yield'):
-                    desc_parts.append(f"配当利回り: {info.get('dividend_yield')}%")
-                if info.get('equity_ratio'):
-                    desc_parts.append(f"自己資本比率: {info.get('equity_ratio')}%")
-                if info.get('operating_margin'):
-                    desc_parts.append(f"営業利益率: {info.get('operating_margin')}%")
-                if info.get('market_cap'):
-                    desc_parts.append(f"時価総額: {info.get('market_cap')}")
-                description = "\n".join(desc_parts)
-            else:
-                description = f"{company_only}の決算短信の内容を音声で解説した動画です。"
+            description = create_youtube_description(company_only,
+                                                     info) if info else f"{company_only}の決算短信の内容を音声で解説した動画です。"
 
             upload_to_youtube(
                 video_path=str(video_file),

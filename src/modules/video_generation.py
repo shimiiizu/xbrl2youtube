@@ -371,7 +371,8 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 # ===== デバッグ実行 =====
 if __name__ == "__main__":
     # ===== ここを変更するだけで企業を切り替え可能 =====
-    COMPANY_NAME = "ヒガシＨＤ"
+    COMPANY_NAME = ("ホシデン"
+                    "")
     # =============================================
 
     project_root = Path(__file__).parent.parent.parent
@@ -437,12 +438,23 @@ if __name__ == "__main__":
     else:
         print(f"[INFO] 字幕ファイルなし（スクロールテキストのみ）")
 
+    # 株情報を取得
+    from stock_info import fetch_stock_info
+
+    stock_info = fetch_stock_info(COMPANY_NAME)
+    if stock_info:
+        print(
+            f"[INFO] 株情報取得成功: コード={stock_info.get('code')}, PER={stock_info.get('per')}, PBR={stock_info.get('pbr')}")
+    else:
+        print(f"[WARNING] 株情報を取得できませんでした")
+
     generate_video(
         audio_path=str(test_audio),
         output_path=str(test_output),
         text_content=text_content,
         company_name=COMPANY_NAME,
-        date_str=date_str
+        date_str=date_str,
+        stock_info=stock_info  # 追加！
     )
 
     print("=" * 50)
