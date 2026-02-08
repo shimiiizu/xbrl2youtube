@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="その他の情報を取得">
-      <change afterPath="$PROJECT_DIR$/src/modules/menu_handlers.py" afterDir="false" />
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="リファクタリング">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00043" summary="テキストの抽出のみの機能を追加">
-      <option name="closed" value="true" />
-      <created>1769266868635</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1769266868635</updated>
     </task>
     <task id="LOCAL-00044" summary="字幕生成のみの機能を追加">
       <option name="closed" value="true" />
@@ -644,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770458989819</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="リファクタリング">
+      <option name="closed" value="true" />
+      <created>1770459840989</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1770459840989</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="デバッグ機能を強化" />
     <MESSAGE value="アーカイブ先を整理" />
     <MESSAGE value="保存先を変更した" />
     <MESSAGE value="字幕生成機能を除外した。個別には作成可能" />
@@ -696,7 +695,8 @@
     <MESSAGE value="最新版に変更" />
     <MESSAGE value="株価情報を取得" />
     <MESSAGE value="その他の情報を取得" />
-    <option name="LAST_COMMIT_MESSAGE" value="その他の情報を取得" />
+    <MESSAGE value="リファクタリング" />
+    <option name="LAST_COMMIT_MESSAGE" value="リファクタリング" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

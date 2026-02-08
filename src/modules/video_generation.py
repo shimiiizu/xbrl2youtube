@@ -77,33 +77,47 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         )
         clips.append(date_clip)
 
-    # ===== 企業名（超特大・中央上） =====
+    # ===== 企業名（大きく・中央上） =====
     if company_name:
-        # 株価コードがあれば追加
-        display_name = f"{company_name} ({stock_info.get('code')})" if stock_info and stock_info.get(
-            'code') else company_name
-
         company_clip = (
             TextClip(
-                text=display_name,
+                text=company_name,
                 font=FONT_PATH,
-                font_size=140,
+                font_size=95,  # 110 → 95にさらに縮小
                 color="#FFD700",  # ゴールド
                 stroke_color="#000000",  # 黒縁取り
                 stroke_width=3,
-                size=(1100, None),
+                size=(1000, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 140))
+            .with_position(("center", 160))  # 150 → 160
         )
         clips.append(company_clip)
+
+    # ===== 株価コード（企業名の下に小さく） =====
+    if stock_info and stock_info.get('code'):
+        code_clip = (
+            TextClip(
+                text=f"({stock_info.get('code')})",
+                font=FONT_PATH,
+                font_size=38,  # 50 → 38にさらに縮小
+                color="#FFD700",  # ゴールド
+                stroke_color="#000000",
+                stroke_width=1,  # 2 → 1に縮小
+                size=(180, None),  # 200 → 180に縮小
+                method="caption"
+            )
+            .with_duration(duration)
+            .with_position(("center", 255))  # 260 → 255
+        )
+        clips.append(code_clip)
 
     # ===== 装飾線 =====
     line_clip = (
         ColorClip(size=(800, 4), color=(255, 215, 0))  # ゴールド
         .with_duration(duration)
-        .with_position(("center", 300))
+        .with_position(("center", 320))  # 位置を下に調整
     )
     clips.append(line_clip)
 
@@ -117,15 +131,15 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             TextClip(
                 text=f"PER\n{per_value}",
                 font=FONT_PATH,
-                font_size=70,
+                font_size=60,  # 70 → 60に縮小
                 color="#00FF00",  # 緑
                 stroke_color="#000000",
                 stroke_width=2,
-                size=(300, None),
+                size=(280, None),  # 300 → 280に縮小
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((340, 360))
+            .with_position((360, 380))  # Y座標を下に調整
         )
         clips.append(per_clip)
 
@@ -134,15 +148,15 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             TextClip(
                 text=f"PBR\n{pbr_value}",
                 font=FONT_PATH,
-                font_size=70,
+                font_size=60,  # 70 → 60に縮小
                 color="#00BFFF",  # 水色
                 stroke_color="#000000",
                 stroke_width=2,
-                size=(300, None),
+                size=(280, None),  # 300 → 280に縮小
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((740, 360))
+            .with_position((720, 380))  # Y座標を下に調整
         )
         clips.append(pbr_clip)
 
