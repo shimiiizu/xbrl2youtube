@@ -83,15 +83,15 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             TextClip(
                 text=company_name,
                 font=FONT_PATH,
-                font_size=90,  # 95 → 90にさらに縮小
+                font_size=105,  # 90 → 105に拡大
                 color="#FFD700",  # ゴールド
                 stroke_color="#000000",  # 黒縁取り
                 stroke_width=3,
-                size=(1000, None),
+                size=(1100, None),  # 1000 → 1100に拡大
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 180))  # 160 → 180
+            .with_position(("center", 170))  # 180 → 170に上に
         )
         clips.append(company_clip)
 
@@ -101,23 +101,23 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             TextClip(
                 text=f"({stock_info.get('code')})",
                 font=FONT_PATH,
-                font_size=36,  # 38 → 36にさらに縮小
+                font_size=42,  # 36 → 42に拡大
                 color="#FFD700",  # ゴールド
                 stroke_color="#000000",
                 stroke_width=1,
-                size=(180, None),
+                size=(200, None),  # 180 → 200に拡大
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 270))  # 255 → 270
+            .with_position(("center", 275))  # 270 → 275
         )
         clips.append(code_clip)
 
     # ===== 装飾線 =====
     line_clip = (
-        ColorClip(size=(600, 3), color=(255, 215, 0))  # 800 → 600に縮小、4 → 3に
+        ColorClip(size=(650, 3), color=(255, 215, 0))  # 600 → 650に拡大
         .with_duration(duration)
-        .with_position(("center", 315))  # 320 → 315
+        .with_position(("center", 320))  # 315 → 320
     )
     clips.append(line_clip)
 
@@ -131,15 +131,15 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             TextClip(
                 text=f"PER\n{per_value}",
                 font=FONT_PATH,
-                font_size=52,  # 55 → 52に縮小
+                font_size=62,  # 52 → 62に拡大
                 color="#00FF00",  # 緑
                 stroke_color="#000000",
                 stroke_width=2,
-                size=(220, None),  # 250 → 220に縮小
+                size=(260, None),  # 220 → 260に拡大
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((400, 360))  # X=380→400, Y=350→360
+            .with_position((380, 365))  # X=400→380, Y=360→365
         )
         clips.append(per_clip)
 
@@ -148,15 +148,15 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
             TextClip(
                 text=f"PBR\n{pbr_value}",
                 font=FONT_PATH,
-                font_size=52,  # 55 → 52に縮小
+                font_size=62,  # 52 → 62に拡大
                 color="#00BFFF",  # 水色
                 stroke_color="#000000",
                 stroke_width=2,
-                size=(220, None),  # 250 → 220に縮小
+                size=(260, None),  # 220 → 260に拡大
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((660, 360))  # X=680→660, Y=350→360
+            .with_position((680, 365))  # X=660→680, Y=360→365
         )
         clips.append(pbr_clip)
 
@@ -371,8 +371,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 # ===== デバッグ実行 =====
 if __name__ == "__main__":
     # ===== ここを変更するだけで企業を切り替え可能 =====
-    COMPANY_NAME = ("ホシデン"
-                    "")
+    COMPANY_NAME = "ヒガシＨＤ"
     # =============================================
 
     project_root = Path(__file__).parent.parent.parent

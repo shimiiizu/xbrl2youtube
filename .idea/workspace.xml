@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="文字を少し小さく">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="リファクタリング">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/video_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/video_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,14 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00047" summary="エラーを修正">
-      <option name="closed" value="true" />
-      <created>1769267935460</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1769267935460</updated>
     </task>
     <task id="LOCAL-00048" summary="音声ファイル生成機能を追加">
       <option name="closed" value="true" />
@@ -644,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770530472165</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="リファクタリング">
+      <option name="closed" value="true" />
+      <created>1770546859862</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1770546859865</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -692,11 +691,11 @@
     <MESSAGE value="最新版に変更" />
     <MESSAGE value="株価情報を取得" />
     <MESSAGE value="その他の情報を取得" />
-    <MESSAGE value="リファクタリング" />
     <MESSAGE value="動画フォントサイズの調整" />
     <MESSAGE value="会社名だけを指定する形に変更" />
     <MESSAGE value="文字を少し小さく" />
-    <option name="LAST_COMMIT_MESSAGE" value="文字を少し小さく" />
+    <MESSAGE value="リファクタリング" />
+    <option name="LAST_COMMIT_MESSAGE" value="リファクタリング" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
