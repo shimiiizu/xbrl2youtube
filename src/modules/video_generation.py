@@ -301,7 +301,7 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
                 font=VC.FONT_PATH,
                 font_size=VC.FONT_SIZE_BODY,
                 color=VC.COLOR_WHITE,
-                size=(1100, None),
+                size=(1200, None),  # 1100→1200に変更（左右の余白を減らす）
                 method="caption"
             )
             .with_start(0)
@@ -317,11 +317,11 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
         end_y = scroll_area_top - text_height
         scroll_distance = start_y - end_y
 
-        # スクロール関数
+        # スクロール関数（左端に40pxの余白を追加）
         def scroll_position(t):
             progress = t / audio_duration
             current_y = start_y - (scroll_distance * progress)
-            return ("center", current_y)
+            return (40, current_y)  # "center"から40pxの固定位置に変更
 
         body_clip = body_clip.with_position(scroll_position)
         clips.append(body_clip)
