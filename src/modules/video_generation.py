@@ -3,8 +3,10 @@
 from moviepy import AudioFileClip, ColorClip, TextClip, CompositeVideoClip
 from pathlib import Path
 import os
+from config import VideoConfig as VC  # VCと略記して使いやすく
 
-FONT_PATH = r"C:\Windows\Fonts\YuGothB.ttc"
+# 後方互換性のため（他のファイルから参照されている可能性）
+FONT_PATH = VC.FONT_PATH
 
 
 def generate_thumbnail(output_path: str, company_name: str = None, date_str: str = None,
@@ -49,11 +51,11 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
     badge_clip = (
         TextClip(
             text="決算速報",
-            font=FONT_PATH,
-            font_size=36,
-            color="white",
-            bg_color="#FF4444",
-            size=(160, 50),
+            font=VC.FONT_PATH,
+            font_size=VC.FONT_SIZE_BADGE,
+            color=VC.COLOR_WHITE,
+            bg_color=VC.COLOR_RED,
+            size=VC.SIZE_BADGE,
             method="caption"
         )
         .with_duration(duration)
@@ -66,9 +68,9 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         date_clip = (
             TextClip(
                 text=date_str,
-                font=FONT_PATH,
-                font_size=32,
-                color="#CCCCCC",
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_DATE,
+                color=VC.COLOR_LIGHT_GRAY,
                 size=(300, None),
                 method="caption"
             )
@@ -82,16 +84,16 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         company_clip = (
             TextClip(
                 text=company_name,
-                font=FONT_PATH,
-                font_size=105,  # 90 → 105に拡大
-                color="#FFD700",  # ゴールド
-                stroke_color="#000000",  # 黒縁取り
-                stroke_width=3,
-                size=(1100, None),  # 1000 → 1100に拡大
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_COMPANY,
+                color=VC.COLOR_GOLD,
+                stroke_color=VC.COLOR_BLACK,
+                stroke_width=VC.STROKE_WIDTH_COMPANY,
+                size=VC.SIZE_COMPANY,
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 170))  # 180 → 170に上に
+            .with_position(("center", VC.POS_Y_COMPANY))
         )
         clips.append(company_clip)
 
@@ -100,24 +102,24 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         code_clip = (
             TextClip(
                 text=f"({stock_info.get('code')})",
-                font=FONT_PATH,
-                font_size=42,  # 36 → 42に拡大
-                color="#FFD700",  # ゴールド
-                stroke_color="#000000",
-                stroke_width=1,
-                size=(200, None),  # 180 → 200に拡大
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_CODE,
+                color=VC.COLOR_GOLD,
+                stroke_color=VC.COLOR_BLACK,
+                stroke_width=VC.STROKE_WIDTH_CODE,
+                size=VC.SIZE_CODE,
                 method="caption"
             )
             .with_duration(duration)
-            .with_position(("center", 275))  # 270 → 275
+            .with_position(("center", VC.POS_Y_CODE))
         )
         clips.append(code_clip)
 
     # ===== 装飾線 =====
     line_clip = (
-        ColorClip(size=(650, 3), color=(255, 215, 0))  # 600 → 650に拡大
+        ColorClip(size=(VC.LINE_WIDTH, VC.LINE_HEIGHT), color=VC.LINE_COLOR)
         .with_duration(duration)
-        .with_position(("center", 320))  # 315 → 320
+        .with_position(("center", VC.POS_Y_LINE))
     )
     clips.append(line_clip)
 
@@ -130,16 +132,16 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         per_clip = (
             TextClip(
                 text=f"PER\n{per_value}",
-                font=FONT_PATH,
-                font_size=62,  # 52 → 62に拡大
-                color="#00FF00",  # 緑
-                stroke_color="#000000",
-                stroke_width=2,
-                size=(260, None),  # 220 → 260に拡大
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_PER_PBR,
+                color=VC.COLOR_GREEN,
+                stroke_color=VC.COLOR_BLACK,
+                stroke_width=VC.STROKE_WIDTH_PER_PBR,
+                size=VC.SIZE_PER_PBR,
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((380, 365))  # X=400→380, Y=360→365
+            .with_position((VC.POS_X_PER, VC.POS_Y_PER_PBR))
         )
         clips.append(per_clip)
 
@@ -147,16 +149,16 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         pbr_clip = (
             TextClip(
                 text=f"PBR\n{pbr_value}",
-                font=FONT_PATH,
-                font_size=62,  # 52 → 62に拡大
-                color="#00BFFF",  # 水色
-                stroke_color="#000000",
-                stroke_width=2,
-                size=(260, None),  # 220 → 260に拡大
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_PER_PBR,
+                color=VC.COLOR_BLUE,
+                stroke_color=VC.COLOR_BLACK,
+                stroke_width=VC.STROKE_WIDTH_PER_PBR,
+                size=VC.SIZE_PER_PBR,
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((680, 365))  # X=660→680, Y=360→365
+            .with_position((VC.POS_X_PBR, VC.POS_Y_PER_PBR))
         )
         clips.append(pbr_clip)
 
@@ -166,14 +168,14 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         roe_clip = (
             TextClip(
                 text=roe_text,
-                font=FONT_PATH,
-                font_size=40,
-                color="#FFFF00",  # 黄色
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_ROE,
+                color=VC.COLOR_YELLOW,
                 size=(300, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((100, 520))
+            .with_position((VC.POS_X_ROE, VC.POS_Y_ROE))
         )
         clips.append(roe_clip)
 
@@ -183,14 +185,14 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         div_clip = (
             TextClip(
                 text=div_text,
-                font=FONT_PATH,
-                font_size=40,
-                color="#FF69B4",  # ピンク
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_DIVIDEND,
+                color=VC.COLOR_PINK,
                 size=(300, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((400, 520))
+            .with_position((VC.POS_X_DIVIDEND, VC.POS_Y_DIVIDEND))
         )
         clips.append(div_clip)
 
@@ -200,14 +202,14 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
         cap_clip = (
             TextClip(
                 text=cap_text,
-                font=FONT_PATH,
-                font_size=40,
-                color="#FFFFFF",
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_MARKET_CAP,
+                color=VC.COLOR_WHITE,
                 size=(500, None),
                 method="caption"
             )
             .with_duration(duration)
-            .with_position((700, 520))
+            .with_position((VC.POS_X_MARKET_CAP, VC.POS_Y_MARKET_CAP))
         )
         clips.append(cap_clip)
 
@@ -215,14 +217,14 @@ def generate_thumbnail(output_path: str, company_name: str = None, date_str: str
     tagline_clip = (
         TextClip(
             text="さくっと決算",
-            font=FONT_PATH,
-            font_size=28,
-            color="#888888",
+            font=VC.FONT_PATH,
+            font_size=VC.FONT_SIZE_TAGLINE,
+            color=VC.COLOR_GRAY,
             size=(600, None),
             method="caption"
         )
         .with_duration(duration)
-        .with_position(("center", 650))
+        .with_position(("center", VC.POS_Y_TAGLINE))
     )
     clips.append(tagline_clip)
 
@@ -253,15 +255,15 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
     print(f"[INFO] Audio duration: {audio_duration:.2f} seconds")
     print("[INFO] Creating video with opening and scrolling text")
 
-    # ===== オープニング（3秒）=====
-    opening_duration = 3.0
+    # ===== オープニング =====
+    opening_duration = VC.OPENING_DURATION
     opening_clip = generate_thumbnail(output_path, company_name=company_name, date_str=date_str,
                                       duration=opening_duration, stock_info=stock_info)
 
     # ===== 本編部分（音声と同期）=====
     # 背景
     background = (
-        ColorClip(size=(1280, 720), color=(0, 0, 0))
+        ColorClip(size=(VC.WIDTH, VC.HEIGHT), color=(0, 0, 0))
         .with_duration(audio_duration)
     )
 
@@ -278,9 +280,9 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
     title_clip = (
         TextClip(
             text=title_text,
-            font=FONT_PATH,
-            font_size=48,
-            color="white",
+            font=VC.FONT_PATH,
+            font_size=VC.FONT_SIZE_TITLE,
+            color=VC.COLOR_WHITE,
             size=(1200, None),
             method="caption"
         )
@@ -296,9 +298,9 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
         body_clip = (
             TextClip(
                 text=text_content,
-                font=FONT_PATH,
-                font_size=30,
-                color="white",
+                font=VC.FONT_PATH,
+                font_size=VC.FONT_SIZE_BODY,
+                color=VC.COLOR_WHITE,
                 size=(1100, None),
                 method="caption"
             )
@@ -308,10 +310,10 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
 
         # テキストの高さを取得
         text_height = body_clip.h
-        screen_height = 720
+        screen_height = VC.HEIGHT
         scroll_area_top = 100
-        scroll_area_bottom = 720
-        start_y = 360  # 画面中央から開始（720の半分）
+        scroll_area_bottom = VC.HEIGHT
+        start_y = VC.SCROLL_START_Y  # 画面中央から開始
         end_y = scroll_area_top - text_height
         scroll_distance = start_y - end_y
 
@@ -345,17 +347,17 @@ def generate_video(audio_path: str, output_path: str, text_content: str = None,
     try:
         final_video.write_videofile(
             output_path,
-            fps=24,
-            codec="libx264",
-            audio_codec="aac",
+            fps=VC.FPS,
+            codec=VC.CODEC,
+            audio_codec=VC.AUDIO_CODEC,
             logger="bar"
         )
     except TypeError:
         final_video.write_videofile(
             output_path,
-            fps=24,
-            codec="libx264",
-            audio_codec="aac"
+            fps=VC.FPS,
+            codec=VC.CODEC,
+            audio_codec=VC.AUDIO_CODEC
         )
 
     print(f"[INFO] Video saved to: {output_path}")

@@ -95,32 +95,44 @@ def get_stock_info(stock_code: str) -> dict | None:
                 print(f"[DEBUG] {keyword} found: '{snippet}'")
 
         # PERの検索（複数パターン対応）
-        per_patterns = [
-            r"PER[（(][^）)]*[）)][^0-9]*([\d.]+)倍",  # PER（会社予想）用語(連)54.66倍
-            r"PER[（(][^）)]*[）)]\s*([\d.]+)",  # PER（会社予想）45.23
-            r"PER\s*[：:]\s*([\d.]+)",  # PER：45.23
-            r"([\d.]+)\s*PER",  # 45.23 PER
-        ]
-        for pattern in per_patterns:
-            per_match = re.search(pattern, all_text)
-            if per_match:
-                info["per"] = per_match.group(1)
-                print(f"[DEBUG] PER matched with pattern: {pattern}")
-                break
+        # まず「---」をチェック
+        per_na_match = re.search(r"PER[（(][^）)]*[）)][^P]*?---", all_text)
+        if per_na_match:
+            info["per"] = "---"
+            print(f"[DEBUG] PER is N/A (---)")
+        else:
+            per_patterns = [
+                r"PER[（(][^）)]*[）)][^0-9]*([\d.]+)倍",  # PER（会社予想）用語(連)54.66倍
+                r"PER[（(][^）)]*[）)]\s*([\d.]+)",  # PER（会社予想）45.23
+                r"PER\s*[：:]\s*([\d.]+)",  # PER：45.23
+                r"([\d.]+)\s*PER",  # 45.23 PER
+            ]
+            for pattern in per_patterns:
+                per_match = re.search(pattern, all_text)
+                if per_match:
+                    info["per"] = per_match.group(1)
+                    print(f"[DEBUG] PER matched with pattern: {pattern}")
+                    break
 
         # PBRの検索（複数パターン対応）
-        pbr_patterns = [
-            r"PBR[（(][^）)]*[）)][^0-9]*([\d.]+)倍",  # PBR（実績）用語(連)15.90倍
-            r"PBR[（(][^）)]*[）)]\s*([\d.]+)",  # PBR（実績）54.66
-            r"PBR\s*[：:]\s*([\d.]+)",  # PBR：54.66
-            r"([\d.]+)\s*PBR",  # 54.66 PBR
-        ]
-        for pattern in pbr_patterns:
-            pbr_match = re.search(pattern, all_text)
-            if pbr_match:
-                info["pbr"] = pbr_match.group(1)
-                print(f"[DEBUG] PBR matched with pattern: {pattern}")
-                break
+        # まず「---」をチェック
+        pbr_na_match = re.search(r"PBR[（(][^）)]*[）)][^E]*?---", all_text)
+        if pbr_na_match:
+            info["pbr"] = "---"
+            print(f"[DEBUG] PBR is N/A (---)")
+        else:
+            pbr_patterns = [
+                r"PBR[（(][^）)]*[）)][^0-9]*([\d.]+)倍",  # PBR（実績）用語(連)15.90倍
+                r"PBR[（(][^）)]*[）)]\s*([\d.]+)",  # PBR（実績）54.66
+                r"PBR\s*[：:]\s*([\d.]+)",  # PBR：54.66
+                r"([\d.]+)\s*PBR",  # 54.66 PBR
+            ]
+            for pattern in pbr_patterns:
+                pbr_match = re.search(pattern, all_text)
+                if pbr_match:
+                    info["pbr"] = pbr_match.group(1)
+                    print(f"[DEBUG] PBR matched with pattern: {pattern}")
+                    break
 
         # ROEの検索
         roe_patterns = [
