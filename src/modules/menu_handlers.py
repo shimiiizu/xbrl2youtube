@@ -83,6 +83,9 @@ def handle_full_process(project_root, parse_date_fn):
             # YouTube説明欄作成
             description = create_youtube_description(company_only, info)
 
+            # サムネイルパスを定義
+            thumbnail_path = processed_dir / f"{company_name}_output_thumbnail.png"
+
             # YouTubeアップロード
             upload_to_youtube(
                 video_path=str(video_path),
@@ -90,7 +93,8 @@ def handle_full_process(project_root, parse_date_fn):
                 description=description,
                 privacy="public",
                 company_name=company_only,
-                subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
+                subtitle_path=str(subtitle_path) if subtitle_path.exists() else None,
+                thumbnail_path=str(thumbnail_path) if thumbnail_path.exists() else None
             )
             print(f"✓ {company_name} 完了")
         except Exception as e:
@@ -229,13 +233,17 @@ def handle_upload_only(project_root, parse_date_fn):
             description = create_youtube_description(company_only,
                                                      info) if info else f"{company_only}の決算短信の内容を音声で解説した動画です。"
 
+            # サムネイルパスを定義
+            thumbnail_path = processed_dir / f"{company_name}_output_thumbnail.png"
+
             upload_to_youtube(
                 video_path=str(video_file),
                 title=video_title,
                 description=description,
                 privacy="public",
                 company_name=company_only,
-                subtitle_path=str(subtitle_path) if subtitle_path.exists() else None
+                subtitle_path=str(subtitle_path) if subtitle_path.exists() else None,
+                thumbnail_path=str(thumbnail_path) if thumbnail_path.exists() else None
             )
             print(f"✓ {company_name}")
         except Exception as e:

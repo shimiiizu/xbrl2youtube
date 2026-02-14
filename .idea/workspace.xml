@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="サムネイル部分を修正">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/menu_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/menu_handlers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,14 +252,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00054" summary="ファイル名に日付を付与">
-      <option name="closed" value="true" />
-      <created>1769324067125</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1769324067125</updated>
     </task>
     <task id="LOCAL-00055" summary="ファイル名に日付を付与">
       <option name="closed" value="true" />
@@ -644,7 +637,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771079760767</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="サムネイル部分を修正">
+      <option name="closed" value="true" />
+      <created>1771080954367</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1771080954372</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
