@@ -63,7 +63,8 @@ def upload_to_youtube(video_path: str,
                       description: str = "決算短信の内容を音声で解説した動画です。",
                       privacy: str = "private",
                       company_name: str | None = None,
-                      subtitle_path: str | None = None) -> str:
+                      subtitle_path: str | None = None,
+                      thumbnail_path: str | None = None) -> str:
     """
     動画をYouTubeにアップロードする
 
@@ -74,6 +75,7 @@ def upload_to_youtube(video_path: str,
         privacy: 公開設定（public/private/unlisted）
         company_name: 企業名（タグに使用）
         subtitle_path: 字幕ファイル（.srt）のパス
+        thumbnail_path: サムネイル画像ファイル（.png/.jpg）のパス
 
     Returns:
         video_id: アップロードされた動画のID
@@ -127,6 +129,34 @@ def upload_to_youtube(video_path: str,
     print(f"[INFO] Video URL: {video_url}")
     print(f"[INFO] Tags: {', '.join(tags)}")
 
+    # サムネイル画像のアップロード
+    if thumbnail_path and os.path.exists(thumbnail_path):
+        print(f"[INFO] Uploading thumbnail: {thumbnail_path}")
+
+        try:
+            thumbnail_media = MediaFileUpload(thumbnail_path)
+
+            thumbnail_request = youtube.thumbnails().set(
+                videoId=video_id,
+                media_body=thumbnail_media
+            )
+
+            thumbnail_response = thumbnail_request.execute()
+            print(f"[INFO] Thumbnail uploaded successfully!")
+
+            # サムネイルのURLを表示（利用可能な場合）
+            if 'items' in thumbnail_response and len(thumbnail_response['items']) > 0:
+                thumb_url = thumbnail_response['items'][0].get('default', {}).get('url', 'N/A')
+                print(f"[INFO] Thumbnail URL: {thumb_url}")
+
+        except Exception as e:
+            print(f"[ERROR] Failed to upload thumbnail: {e}")
+            print(f"[WARNING] Video was uploaded successfully, but thumbnail upload failed.")
+
+    elif thumbnail_path:
+        print(f"[WARNING] Thumbnail file not found: {thumbnail_path}")
+        print(f"[INFO] Video uploaded without custom thumbnail.")
+
     # 字幕ファイルのアップロード
     if subtitle_path and os.path.exists(subtitle_path):
         print(f"[INFO] Uploading subtitle: {subtitle_path}")
@@ -166,6 +196,7 @@ if __name__ == "__main__":
     # 企業名から各ファイルパスを自動生成
     test_video = processed_dir / f"{COMPANY_NAME}_output.mp4"
     test_subtitle = processed_dir / f"{COMPANY_NAME}_subtitle.srt"
+    test_thumbnail = processed_dir / f"{COMPANY_NAME}_thumbnail.png"
 
     print("=" * 50)
     print(f"YouTube アップロードテスト開始: {COMPANY_NAME}")
@@ -174,6 +205,7 @@ if __name__ == "__main__":
     # ファイル存在確認
     print(f"[CHECK] 動画ファイル: {test_video.exists()}")
     print(f"[CHECK] 字幕ファイル: {test_subtitle.exists()}")
+    print(f"[CHECK] サムネイル: {test_thumbnail.exists()}")
 
     if not test_video.exists():
         print(f"[ERROR] 動画ファイルが見つかりません: {test_video}")
@@ -185,7 +217,8 @@ if __name__ == "__main__":
         description=f"{COMPANY_NAME}の決算短信の内容を音声で解説した動画です。",
         privacy="private",
         company_name=COMPANY_NAME,
-        subtitle_path=str(test_subtitle) if test_subtitle.exists() else None
+        subtitle_path=str(test_subtitle) if test_subtitle.exists() else None,
+        thumbnail_path=str(test_thumbnail) if test_thumbnail.exists() else None
     )
 
     print("\n" + "=" * 50)
