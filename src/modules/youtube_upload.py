@@ -337,7 +337,7 @@ if __name__ == "__main__":
     # 企業名から各ファイルパスを自動生成
     test_video = processed_dir / f"{COMPANY_NAME}_output.mp4"
     test_subtitle = processed_dir / f"{COMPANY_NAME}_subtitle.srt"
-    test_thumbnail = processed_dir / f"{COMPANY_NAME}_thumbnail.png"
+    test_thumbnail = processed_dir / f"{COMPANY_NAME}_output_thumbnail.png"  # _output_ を追加
 
     print("=" * 50)
     print(f"YouTube アップロードテスト開始: {COMPANY_NAME}")

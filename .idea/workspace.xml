@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="サムネイルの設定不要に変更">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="プレイリストの作成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00052" summary="公開日をファイル名に付与する仕様に変更（シンプルに）">
-      <option name="closed" value="true" />
-      <created>1769319370844</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1769319370844</updated>
     </task>
     <task id="LOCAL-00053" summary="シンプルにならなかったエラーを修正">
       <option name="closed" value="true" />
@@ -644,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771036767395</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="プレイリストの作成">
+      <option name="closed" value="true" />
+      <created>1771041093665</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1771041093669</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="日付を指定する方式に変更" />
     <MESSAGE value="エラーに対応" />
     <MESSAGE value="進捗を表示" />
     <MESSAGE value="スケジュール登録機能を追加" />
@@ -696,7 +695,8 @@
     <MESSAGE value="PERとPBRが算出不能の場合に対応" />
     <MESSAGE value="左端切れを修正" />
     <MESSAGE value="サムネイルの設定不要に変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="サムネイルの設定不要に変更" />
+    <MESSAGE value="プレイリストの作成" />
+    <option name="LAST_COMMIT_MESSAGE" value="プレイリストの作成" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
