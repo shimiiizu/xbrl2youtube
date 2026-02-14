@@ -15,6 +15,135 @@ SCOPES = [
 ]
 
 
+def load_playlists(playlists_path: str) -> dict:
+    """
+    再生リストの対応表をJSONから読み込む
+
+    Args:
+        playlists_path: playlists.jsonのパス
+
+    Returns:
+        企業名 -> プレイリストID の辞書
+    """
+    if os.path.exists(playlists_path):
+        with open(playlists_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def save_playlists(playlists_path: str, playlists: dict) -> None:
+    """
+    再生リストの対応表をJSONに保存する
+
+    Args:
+        playlists_path: playlists.jsonのパス
+        playlists: 企業名 -> プレイリストID の辞書
+    """
+    os.makedirs(os.path.dirname(playlists_path), exist_ok=True)
+    with open(playlists_path, 'w', encoding='utf-8') as f:
+        json.dump(playlists, f, ensure_ascii=False, indent=2)
+
+
+def create_playlist(youtube, company_name: str) -> str:
+    """
+    企業名で新しい再生リストを作成する
+
+    Args:
+        youtube: YouTube APIクライアント
+        company_name: 企業名
+
+    Returns:
+        作成された再生リストのID
+    """
+    playlist_title = f"【{company_name}】決算シリーズ"
+    playlist_description = f"{company_name}の決算短信を解説する動画シリーズです。"
+
+    print(f"[INFO] Creating new playlist: {playlist_title}")
+
+    playlist_body = {
+        'snippet': {
+            'title': playlist_title,
+            'description': playlist_description,
+            'defaultLanguage': 'ja'
+        },
+        'status': {
+            'privacyStatus': 'public'
+        }
+    }
+
+    request = youtube.playlists().insert(
+        part='snippet,status',
+        body=playlist_body
+    )
+
+    response = request.execute()
+    playlist_id = response['id']
+
+    print(f"[INFO] Playlist created! ID: {playlist_id}")
+    return playlist_id
+
+
+def add_video_to_playlist(youtube, playlist_id: str, video_id: str) -> None:
+    """
+    動画を再生リストに追加する
+
+    Args:
+        youtube: YouTube APIクライアント
+        playlist_id: 再生リストのID
+        video_id: 動画のID
+    """
+    print(f"[INFO] Adding video to playlist: {playlist_id}")
+
+    playlist_item_body = {
+        'snippet': {
+            'playlistId': playlist_id,
+            'resourceId': {
+                'kind': 'youtube#video',
+                'videoId': video_id
+            }
+        }
+    }
+
+    request = youtube.playlistItems().insert(
+        part='snippet',
+        body=playlist_item_body
+    )
+
+    response = request.execute()
+    print(f"[INFO] Video added to playlist successfully!")
+
+
+def get_or_create_playlist(youtube, company_name: str, playlists_path: str) -> str:
+    """
+    企業名に対応する再生リストを取得または作成する
+
+    Args:
+        youtube: YouTube APIクライアント
+        company_name: 企業名
+        playlists_path: playlists.jsonのパス
+
+    Returns:
+        再生リストのID
+    """
+    # 既存の対応表を読み込む
+    playlists = load_playlists(playlists_path)
+
+    # 企業名が既に登録されているか確認
+    if company_name in playlists:
+        playlist_id = playlists[company_name]
+        print(f"[INFO] Using existing playlist for {company_name}: {playlist_id}")
+        return playlist_id
+
+    # 新規作成
+    playlist_id = create_playlist(youtube, company_name)
+
+    # 対応表に追加して保存
+    playlists[company_name] = playlist_id
+    save_playlists(playlists_path, playlists)
+
+    return playlist_id
+
+
 def get_authenticated_service(client_secrets_path: str, token_path: str):
     """
     YouTube APIの認証を行い、サービスオブジェクトを返す
@@ -73,7 +202,7 @@ def upload_to_youtube(video_path: str,
         title: 動画のタイトル
         description: 動画の説明文
         privacy: 公開設定（public/private/unlisted）
-        company_name: 企業名（タグに使用）
+        company_name: 企業名（タグに使用、再生リストに自動追加）
         subtitle_path: 字幕ファイル（.srt）のパス
         thumbnail_path: サムネイル画像ファイル（.png/.jpg）のパス
 
@@ -86,6 +215,7 @@ def upload_to_youtube(video_path: str,
     project_root = Path(__file__).parent.parent.parent
     client_secrets_path = project_root / "data" / "json" / "client_secrets.json"
     token_path = project_root / "data" / "json" / "youtube_token.json"
+    playlists_path = project_root / "data" / "json" / "playlists.json"
 
     # 認証
     youtube = get_authenticated_service(str(client_secrets_path), str(token_path))
@@ -156,6 +286,17 @@ def upload_to_youtube(video_path: str,
     elif thumbnail_path:
         print(f"[WARNING] Thumbnail file not found: {thumbnail_path}")
         print(f"[INFO] Video uploaded without custom thumbnail.")
+
+    # 再生リストに追加（企業名が指定されている場合）
+    if company_name:
+        try:
+            print(f"\n[INFO] Managing playlist for: {company_name}")
+            playlist_id = get_or_create_playlist(youtube, company_name, str(playlists_path))
+            add_video_to_playlist(youtube, playlist_id, video_id)
+            print(f"[INFO] Playlist URL: https://www.youtube.com/playlist?list={playlist_id}")
+        except Exception as e:
+            print(f"[ERROR] Failed to add video to playlist: {e}")
+            print(f"[WARNING] Video was uploaded successfully, but playlist operation failed.")
 
     # 字幕ファイルのアップロード
     if subtitle_path and os.path.exists(subtitle_path):
