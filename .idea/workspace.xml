@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="プレイリストの作成">
+    <list default="true" id="47d01f99-de72-40ab-af74-ddc3ac298b86" name="変更" comment="サムネイル部分を修正">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,14 +251,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1768102402238</updated>
-    </task>
-    <task id="LOCAL-00053" summary="シンプルにならなかったエラーを修正">
-      <option name="closed" value="true" />
-      <created>1769323776004</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1769323776004</updated>
     </task>
     <task id="LOCAL-00054" summary="ファイル名に日付を付与">
       <option name="closed" value="true" />
@@ -644,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771041093669</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="サムネイル部分を修正">
+      <option name="closed" value="true" />
+      <created>1771079760767</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1771079760767</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +671,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="エラーに対応" />
     <MESSAGE value="進捗を表示" />
     <MESSAGE value="スケジュール登録機能を追加" />
     <MESSAGE value="スケジュール登録機能を追加し忘れ対応" />
@@ -696,7 +695,8 @@
     <MESSAGE value="左端切れを修正" />
     <MESSAGE value="サムネイルの設定不要に変更" />
     <MESSAGE value="プレイリストの作成" />
-    <option name="LAST_COMMIT_MESSAGE" value="プレイリストの作成" />
+    <MESSAGE value="サムネイル部分を修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="サムネイル部分を修正" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
